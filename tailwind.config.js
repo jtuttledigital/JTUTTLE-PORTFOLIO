@@ -19,6 +19,9 @@ module.exports = {
       boxShadow: {
         soft: "0 8px 28px rgba(0,0,0,0.06)",
       },
+      gridTemplateColumns: {
+        "portfolio-3": "minmax(0,2.15fr) minmax(0,1.2fr) minmax(0,1fr)",
+      },
     },
   },
   plugins: [],

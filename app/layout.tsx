@@ -5,7 +5,7 @@ import { BottomBar } from "@/components/BottomBar";
 
 export const metadata: Metadata = {
   title: "J. Tuttle Digital",
-  description: "Product Designer & Creative Technologist in Seattle, WA.",
+  description: "Interaction / Product Designer — J. Tuttle Digital portfolio",
 };
 
 export default function RootLayout({
@@ -15,9 +15,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-ink text-neutral-100">
+      <body className="bg-black text-neutral-100">
         <div className="min-h-screen flex flex-col">
-          <main className="flex-1 pb-24">{children}</main>
+          {/* children already include the Header */}
+          <main className="flex-1 pb-0">{children}</main>
           <BottomBar />
         </div>
       </body>

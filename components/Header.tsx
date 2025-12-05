@@ -1,12 +1,12 @@
+// components/Header.tsx
 import Image from "next/image";
 
 export function Header() {
   return (
     <header className="w-full sticky top-0 z-40 bg-[#0D0D0E]/95 backdrop-blur supports-[backdrop-filter]:bg-[#0D0D0E]/75 border-b border-neutral-800">
-      {/* INNER GRID — matches Joseph Zhang’s spacing */}
+      {/* ~24–25px padding left/right */}
       <div className="px-6 md:px-10">
-        
-        {/* TOP ROW — 3 columns */}
+        {/* 3 columns: logo | role | location */}
         <div
           className="
             grid 
@@ -16,30 +16,30 @@ export function Header() {
             text-sm
           "
         >
-          {/* LEFT — Logo */}
+          {/* Col 1: Logo */}
           <div className="flex items-center">
             <Image
               src="/logo-jtuttledigital.svg"
               width={145}
               height={32}
-              alt="JTuttle Digital"
+              alt="J. Tuttle Digital"
               priority
             />
           </div>
 
-          {/* MIDDLE — Role */}
+          {/* Col 2: Role */}
           <div className="text-neutral-300 text-[13px]">
             Interaction / Product Designer
           </div>
 
-          {/* RIGHT — Location */}
+          {/* Col 3: Location */}
           <div className="text-right text-neutral-300 text-[13px]">
             Seattle, WA
           </div>
         </div>
 
-        {/* DIVIDER LINE (should align w/ same grid columns) */}
-        <div className="border-t border-neutral-800"></div>
+        {/* Divider aligned with same width */}
+        <div className="border-t border-neutral-800" />
       </div>
     </header>
   );

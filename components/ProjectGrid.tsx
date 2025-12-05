@@ -1,66 +1,50 @@
 // components/ProjectGrid.tsx
-"use client";
-
 import Image from "next/image";
-import { useState } from "react";
-import { projects, Project } from "@/lib/projects";
-import { ProjectModal } from "./ProjectModal";
+import { projects } from "@/lib/projects";
 
 export function ProjectGrid() {
-  const [activeProject, setActiveProject] = useState<Project | null>(null);
-
   return (
-    <>
-      <section className="space-y-4">
-        <h2 className="text-[10px] font-mono tracking-[0.25em] text-neutral-500">
-          SELECTED WORK
-        </h2>
+    <div className="grid md:grid-cols-3 gap-6">
+      {projects.map((project) => (
+        <article
+          key={project.slug}
+          className="bg-[#111111] border border-neutral-800/80 hover:border-accent/70 transition-colors overflow-hidden flex flex-col"
+        >
+          {/* Tile image */}
+          <div className="relative aspect-[16/10] bg-black">
+            <Image
+              src={project.tileImage}
+              alt={project.title}
+              fill
+              className="object-cover"
+              sizes="(min-width: 1024px) 33vw, 100vw"
+              priority={project.slug === "brand-designer"}
+            />
+          </div>
 
-        <div className="grid md:grid-cols-3 gap-4 md:gap-5 auto-rows-[minmax(220px,auto)]">
-          {projects.map((project) => (
-            <button
-              key={project.id}
-              onClick={() => setActiveProject(project)}
-              className="group relative flex flex-col overflow-hidden border border-neutral-800 bg-neutral-900/40 hover:bg-neutral-900/80 transition-colors text-left"
-            >
-              <Image
-                src={project.tileImage}
-                alt={project.title}
-                width={800}
-                height={500}
-                className="h-48 w-full object-cover"
-              />
-              <div className="flex-1 px-4 py-3 flex flex-col justify-between">
-                <div className="space-y-1">
-                  <div className="text-[9px] font-mono tracking-[0.25em] text-neutral-500">
-                    {project.category}
-                  </div>
-                  <div className="text-sm font-medium text-neutral-100">
-                    {project.title}
-                  </div>
-                  <div className="text-[11px] text-neutral-400">
-                    {project.role}
-                  </div>
-                </div>
-                <div className="mt-3 text-[11px] text-neutral-400 group-hover:text-accent flex items-center gap-1">
-                  View project
-                  <span
-                    aria-hidden
-                    className="translate-x-[-3px] opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-transform"
-                  >
-                    →
-                  </span>
-                </div>
+          {/* Text */}
+          <div className="flex-1 px-6 py-5 flex flex-col justify-between">
+            <div>
+              <div className="mb-2 text-[10px] font-mono tracking-[0.25em] text-neutral-500 uppercase">
+                {project.category}
               </div>
-            </button>
-          ))}
-        </div>
-      </section>
+              <h3 className="text-sm font-medium text-neutral-100">
+                {project.title}
+              </h3>
+              <p className="mt-1 text-[11px] text-neutral-400">
+                {project.subtitle}
+              </p>
+            </div>
 
-      <ProjectModal
-        project={activeProject}
-        onClose={() => setActiveProject(null)}
-      />
-    </>
+            <button
+              type="button"
+              className="mt-6 text-[11px] text-neutral-300 hover:text-accent inline-flex items-center gap-1"
+            >
+              View project <span aria-hidden>→</span>
+            </button>
+          </div>
+        </article>
+      ))}
+    </div>
   );
 }

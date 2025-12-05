@@ -10,6 +10,11 @@ body {
   color: #f5f5f5;
 }
 
+.footer-link-underline {
+  border-bottom: 1px dotted rgba(148, 163, 184, 0.9); /* slate-400-ish */
+  padding-bottom: 1px; /* create a little breathing room under the text */
+}
+
 /* Subtle dot grid texture for footer */
 .footer-dot-grid {
   background-image: radial-gradient(

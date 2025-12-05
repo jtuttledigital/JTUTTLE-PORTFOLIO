@@ -6,14 +6,14 @@ export function BottomBar() {
     <footer className="border-t border-neutral-800 bg-[#111113] footer-dot-grid">
       <div
         className="
-          mx-auto max-w-6xl px-6 md:px-10
+          px-6 md:px-10
           py-12
           text-[11px] text-neutral-400
           grid gap-10
           md:grid-cols-[minmax(0,2.15fr)_minmax(0,1.2fr)_minmax(0,1fr)]
         "
       >
-        {/* Left: version pill */}
+        {/* Left: version pill + timestamp */}
         <div className="flex items-center gap-2">
           <span className="inline-flex items-center rounded-full border border-accent/70 px-2 py-0.5 font-mono text-[9px] tracking-wide text-accent bg-[#111113]/80">
             v1.0.0
@@ -21,23 +21,21 @@ export function BottomBar() {
           <span className="hidden sm:inline">Last updated 2025-12-04</span>
         </div>
 
-        {/* Middle: links */}
+        {/* Middle: stacked links (one per line) */}
         <div className="space-y-2">
-          <FooterLink href="#" label="Audio" index={1} />
-          <FooterLink href="#" label="LinkedIn" index={2} />
-          <FooterLink href="#" label="GitHub" index={3} />
-          <FooterLink href="#" label="X" index={4} />
-        </div>
+  <FooterLink href="#" label="Audio" />
+  <FooterLink href="#" label="LinkedIn" />
+  <FooterLink href="#" label="GitHub" />
+  <FooterLink href="#" label="X" />
+</div>
 
         {/* Right: terminal-style contact */}
-        <div className="text-right leading-tight text-neutral-300">
-          <div className="font-mono text-[10px] text-neutral-500">
-            $ run creativity --pair-mode
-          </div>
+        <div id="contact" className="text-right leading-tight">
           <a
-            href="mailto:john@jtuttledigital.com"
-            className="hover:text-accent transition-colors"
+            href="mailto:you@jtuttledigital.com"
+            className="text-[11px] text-neutral-200 hover:text-accent transition-colors"
           >
+            $ sudo make something awesome --together<br className="hidden md:block" />
             john@jtuttledigital.com
           </a>
         </div>

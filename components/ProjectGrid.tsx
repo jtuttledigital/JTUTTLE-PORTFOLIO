@@ -4,7 +4,8 @@ import { projects } from "@/lib/projects";
 
 export function ProjectGrid() {
   return (
-    <div className="grid md:grid-cols-3 gap-6">
+    // 3 columns, ≈15px gap between tiles so it visually matches the main grid
+    <div className="grid md:grid-cols-3 gap-[15px]">
       {projects.map((project) => (
         <article
           key={project.slug}

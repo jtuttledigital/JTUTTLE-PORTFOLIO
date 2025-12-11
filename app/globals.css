@@ -25,3 +25,7 @@ body {
   );
   background-size: 12px 12px;
 }
+
+:root {
+  --bottombar-height: 64px; /* adjust to match actual BottomBar height */
+}

@@ -4,7 +4,7 @@ import { LayoutGrid } from "./LayoutGrid";
 
 export function Header() {
   return (
-    <header className="w-full sticky top-0 z-40 bg-[#0D0D0E]/95 backdrop-blur supports-[backdrop-filter]:bg-[#0D0D0E]/75">
+    <header className="w-full sticky top-0 z-50 bg-[#0D0D0E]/95 backdrop-blur supports-[backdrop-filter]:bg-[#0D0D0E]/75">
       {/* Same grid as main content & footer */}
       <LayoutGrid className="items-center py-6 text-sm border-b border-neutral-800">
         {/* Col 1: Logo */}

@@ -1,30 +1,45 @@
 // components/HoverLink.tsx
 import Link from "next/link";
-import { ReactNode } from "react";
 
 type HoverLinkProps = {
   href: string;
-  children: ReactNode;
+  label: string;
 };
 
-export function HoverLink({ href, children }: HoverLinkProps) {
+export function HoverLink({ href, label }: HoverLinkProps) {
   const isExternal = href.startsWith("http");
-  const linkProps = isExternal
-    ? { target: "_blank", rel: "noreferrer" }
-    : undefined;
 
   return (
     <Link
       href={href}
-      {...linkProps}
-      className="group inline-flex items-center gap-1 text-xs text-neutral-300 hover:text-accent transition-colors"
+      className="
+        group inline-flex items-center gap-1
+        text-[11px] text-neutral-300
+        transition-colors
+        hover:text-accent
+      "
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noreferrer" : undefined}
     >
-      <span>{children}</span>
-      <span
-        aria-hidden
-        className="translate-x-[-4px] opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-transform duration-150"
-      >
-        ↗
+      <span className="relative inline-flex items-center">
+        {/* Label */}
+        <span className="transition-colors group-hover:text-accent">
+          {label}
+        </span>
+
+        {/* Arrow that fades in / nudges up on hover */}
+        <span
+          aria-hidden
+          className="
+            pointer-events-none
+            ml-1 text-[10px]
+            opacity-0 translate-y-[2px]
+            group-hover:opacity-100 group-hover:translate-y-0
+            transition-all
+          "
+        >
+          ↗
+        </span>
       </span>
     </Link>
   );

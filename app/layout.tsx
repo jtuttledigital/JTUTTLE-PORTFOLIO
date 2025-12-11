@@ -1,11 +1,11 @@
 // app/layout.tsx
-import type { Metadata } from "next";
 import "./globals.css";
+import type { Metadata } from "next";
 import { BottomBar } from "@/components/BottomBar";
 
 export const metadata: Metadata = {
   title: "J. Tuttle Digital",
-  description: "Interaction / Product Designer — J. Tuttle Digital portfolio",
+  description: "Interaction / Product Designer – portfolio",
 };
 
 export default function RootLayout({
@@ -15,10 +15,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-black text-neutral-100">
-        <div className="min-h-screen flex flex-col">
-          {/* children already include the Header */}
-          <main className="flex-1 pb-0">{children}</main>
+      <body className="bg-[#0B0B0C] text-neutral-100 antialiased">
+        <div className="relative min-h-screen">
+          {/* No bottom padding here – page.tsx handles spacing */}
+          <main className="relative">
+            {children}
+          </main>
+
+          {/* Fixed footer behind content */}
           <BottomBar />
         </div>
       </body>

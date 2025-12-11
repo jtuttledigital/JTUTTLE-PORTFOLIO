@@ -8,9 +8,10 @@ export default function HomePage() {
     <>
       <Header />
 
-      <main className="pt-12 pb-20">
+      {/* Content background + top padding; bottom space handled by spacer */}
+      <main className="pt-5 bg-[#0D0D0E]">
         {/* ABOUT / TEAM / DESCRIPTION on the shared 3-column grid */}
-        <LayoutGrid className="mb-20 text-sm gap-y-10">
+        <LayoutGrid className="mb-10 text-sm gap-y-10">
           {/* ABOUT — column 1 */}
           <div>
             <h2 className="mb-3 text-[10px] font-mono tracking-[0.25em] text-neutral-500">
@@ -62,7 +63,7 @@ export default function HomePage() {
             </ul>
           </div>
 
-          {/* DESCRIPTION — column 3 (aligned with 3rd tile + footer col 3) */}
+          {/* DESCRIPTION — column 3 */}
           <div>
             <h2 className="mb-3 text-[10px] font-mono tracking-[0.25em] text-neutral-500">
               DESCRIPTION
@@ -80,28 +81,15 @@ export default function HomePage() {
           </div>
         </LayoutGrid>
 
-        {/* SELECTED WORK + tiles, still on the same overall grid */}
+        {/* Tiles (no section label) */}
         <LayoutGrid className="gap-y-6">
-          {/* Section label spans all three columns */}
-          <div className="md:col-span-3">
-            <h2 className="mb-2 text-[10px] font-mono tracking-[0.25em] text-neutral-500">
-              SELECTED WORK
-            </h2>
-          </div>
-
-          {/* Tiles span all three columns, but manage their own internal 3-col grid */}
           <div className="md:col-span-3">
             <ProjectGrid />
           </div>
         </LayoutGrid>
 
-        {/* Small note above footer, centered with same width as everything else */}
-        <LayoutGrid className="mt-16">
-          <div className="md:col-span-3 text-[11px] text-neutral-500">
-            Built with Next.js, Tailwind, and a lot of experiments in AI-powered
-            tooling.
-          </div>
-        </LayoutGrid>
+        {/* Spacer so the fixed BottomBar can be revealed + stay clickable */}
+        <div className="h-[140px] pointer-events-none" />
       </main>
     </>
   );

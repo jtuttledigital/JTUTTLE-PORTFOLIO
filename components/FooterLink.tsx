@@ -7,6 +7,8 @@ type FooterLinkProps = {
 };
 
 export function FooterLink({ href, label }: FooterLinkProps) {
+  const isExternal = href.startsWith("http") || href.startsWith("mailto:");
+
   return (
     <Link
       href={href}
@@ -17,6 +19,8 @@ export function FooterLink({ href, label }: FooterLinkProps) {
         text-neutral-300
         text-[11px]
       "
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noreferrer" : undefined}
     >
       <span className="relative inline-flex items-center">
         {/* highlight behind label on hover */}
@@ -39,7 +43,6 @@ export function FooterLink({ href, label }: FooterLinkProps) {
         <span
           className="
             relative
-            z-10
             underline
             underline-offset-2
             decoration-neutral-600

@@ -52,32 +52,31 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
     <>
       {/* Fixed close button above everything, doesn’t scroll */}
       <button
-        type="button"
-        onClick={onClose}
-        aria-label="Close project"
-        className="
-          fixed
-          top-6
-          right-[15px]
-          z-50
-          flex
-          h-10
-          w-10
-          items-center
-          justify-center
-          rounded-full
-          border
-          border-neutral-700
-          bg-black/80
-          text-neutral-200
-          hover:border-accent
-          hover:text-accent
-          transition-colors
-        "
-      >
-        ×
-      </button>
-
+  type="button"
+  onClick={onClose}
+  aria-label="Close project"
+  className="
+    fixed
+    top-6
+    right-6
+    z-50
+    inline-flex
+    h-10
+    w-10
+    items-center
+    justify-center
+    rounded-full
+    border
+    border-neutral-700
+    bg-black/80
+    text-neutral-200
+    hover:border-accent
+    hover:text-accent
+    transition-colors
+  "
+>
+  <Image src="/x.svg" alt="" width={16} height={16} />
+</button>
       {/* Dim background under header/footer (header is z-50 so it stays visible) */}
       <div
         className="fixed inset-0 z-20 bg-black/70 backdrop-blur-sm"

@@ -2,11 +2,15 @@
 import Image from "next/image";
 import { LayoutGrid } from "./LayoutGrid";
 
-export function Header() {
+type HeaderProps = {
+  projectOpen?: boolean;
+  onCloseProject?: () => void;
+};
+
+export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
   return (
-    <header className="w-full sticky top-0 z-50 bg-[#0D0D0E]/95 backdrop-blur supports-[backdrop-filter]:bg-[#0D0D0E]/75">
-      {/* Same grid as main content & footer */}
-      <LayoutGrid className="items-center py-6 text-sm border-b border-neutral-800">
+    <header className="sticky top-0 z-50 w-full bg-ink/95 backdrop-blur supports-[backdrop-filter]:bg-ink/75">
+      <LayoutGrid className="items-center h-20 text-sm border-b border-neutral-800">
         {/* Col 1: Logo */}
         <div className="flex items-center">
           <Image
@@ -19,12 +23,37 @@ export function Header() {
         </div>
 
         {/* Col 2: Role */}
-        <div className="text-neutral-300 text-[13px]">
+        <div className="text-neutral-300 text-sm">
           Interaction / Product Designer
         </div>
 
-        {/* Col 3: Location — lines up with DESCRIPTION + 3rd tile + footer col 3 */}
-        <div className="text-neutral-300 text-[13px]">Seattle, WA</div>
+        {/* Col 3: Location + Close */}
+        <div className="flex items-center justify-between gap-4">
+          <div className="text-neutral-300 text-sm">Seattle, WA</div>
+
+          {projectOpen ? (
+            <button
+              type="button"
+              onClick={onCloseProject}
+              className="inline-flex h-10 w-10 items-center justify-center rounded text-white hover:text-accent hover:bg-white/5 transition-colors"
+              aria-label="Close project"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                className="h-4 w-4"
+                aria-hidden="true"
+              >
+                <path
+                  d="M6.225 4.811a1 1 0 0 1 1.414 0L12 9.172l4.361-4.361a1 1 0 1 1 1.414 1.414L13.414 10.586l4.361 4.361a1 1 0 0 1-1.414 1.414L12 12l-4.361 4.361a1 1 0 0 1-1.414-1.414l4.361-4.361-4.361-4.361a1 1 0 0 1 0-1.414Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+          ) : (
+            <div className="h-10 w-10" aria-hidden="true" />
+          )}
+        </div>
       </LayoutGrid>
     </header>
   );

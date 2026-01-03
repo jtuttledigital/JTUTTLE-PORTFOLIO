@@ -5,7 +5,7 @@ import { BottomBar } from "@/components/BottomBar";
 
 export const metadata: Metadata = {
   title: "J. Tuttle Digital",
-  description: "Interaction / Product Designer – portfolio",
+  description: "Product Designer – portfolio",
 };
 
 export default function RootLayout({
@@ -16,13 +16,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-[#0B0B0C] text-neutral-100 antialiased">
-        <div className="relative min-h-screen">
-          {/* No bottom padding here – page.tsx handles spacing */}
-          <main className="relative">
-            {children}
-          </main>
+        {/* pb matches BottomBar height so it reveals naturally at page end */}
+        <div className="relative min-h-screen pb-[10rem]">
+          {/* content sits above the footer */}
+          <div className="relative z-10">{children}</div>
 
-          {/* Fixed footer behind content */}
+          {/* footer is fixed and “behind” content */}
           <BottomBar />
         </div>
       </body>

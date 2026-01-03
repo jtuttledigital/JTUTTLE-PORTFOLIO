@@ -25,9 +25,7 @@ export default function HomePage() {
         onCloseProject={() => setActiveSlug(null)}
       />
 
-      {/* Content background + top padding; bottom space handled by spacer */}
       <main className="pt-5 bg-[#0D0D0E]">
-        {/* If a project is open, render the expanded view (in-flow, below header) */}
         {activeProject ? (
           <ProjectExpanded
             project={activeProject}
@@ -35,10 +33,10 @@ export default function HomePage() {
           />
         ) : (
           <>
-            {/* ABOUT / TEAM / DESCRIPTION on the shared 3-column grid */}
-            <LayoutGrid className="mb-10 text-sm gap-y-10">
-              {/* ABOUT — column 1 */}
-              <div>
+            {/* ABOUT / TEAM / DESCRIPTION (6-col section grid) */}
+            <LayoutGrid mdCols={6} className="mb-10 text-sm gap-y-10">
+              {/* ABOUT — cols 1–3 */}
+              <div className="md:col-span-3">
                 <h2 className="mb-3 text-[10px] font-mono tracking-[0.25em] text-neutral-500">
                   ABOUT
                 </h2>
@@ -55,59 +53,36 @@ export default function HomePage() {
                 </p>
               </div>
 
-              {/* TEAM — column 2 */}
-              <div>
+              {/* TEAM — col 4 */}
+              <div className="md:col-span-1">
                 <h2 className="mb-3 text-[10px] font-mono tracking-[0.25em] text-neutral-500">
                   TEAM
                 </h2>
-                <ul className="space-y-2 text-neutral-300">
-                  <li>
-                    <div>J. Tuttle Digital</div>
-                    <div className="text-neutral-500 text-[11px]">
-                      Interaction / Product Designer, 2024 – Present
-                    </div>
-                  </li>
-                  <li>
-                    <div>Alto Moving</div>
-                    <div className="text-neutral-500 text-[11px]">
-                      Founder / Product &amp; Operations, 2017 – Present
-                    </div>
-                  </li>
-                  <li>
-                    <div>Microsoft (contract)</div>
-                    <div className="text-neutral-500 text-[11px]">
-                      Digital Production Artist, Media &amp; Bing
-                    </div>
-                  </li>
-                  <li>
-                    <div>Agencies (Virgen, Morse Best, etc.)</div>
-                    <div className="text-neutral-500 text-[11px]">
-                      Designer / Jr. Art Director
-                    </div>
-                  </li>
+
+                <ul className="space-y-6 text-neutral-300">
+                  <li>J. Tuttle Digital</li>
+                  <li>Alto Moving</li>
+                  <li>Microsoft (contract)</li>
+                  <li>Agencies (Virgen, Morse Best, etc.)</li>
                 </ul>
               </div>
 
-              {/* DESCRIPTION — column 3 */}
-              <div>
+              {/* DESCRIPTION — cols 5–6 */}
+              <div className="md:col-span-2">
                 <h2 className="mb-3 text-[10px] font-mono tracking-[0.25em] text-neutral-500">
                   DESCRIPTION
                 </h2>
-                <p className="text-neutral-300 leading-relaxed">
-                  I&apos;m currently focused on{" "}
-                  <span className="text-neutral-100">
-                    AI-assisted brand systems, product surfaces for everyday
-                    tools,
-                  </span>{" "}
-                  and content workflows that help small teams show up consistently
-                  without burning out. I like building the connective tissue
-                  between ideas, prototypes, and the unglamorous details that
-                  make products feel reliable.
-                </p>
+
+                <ul className="space-y-6 text-neutral-300">
+                  <li>Interaction / Product Designer, 2024 – Present</li>
+                  <li>Founder / Product &amp; Operations, 2017 – Present</li>
+                  <li>Digital Production Artist, Media &amp; Bing</li>
+                  <li>Designer / Jr. Art Director</li>
+                </ul>
               </div>
             </LayoutGrid>
 
-            {/* Tiles */}
+            {/* Tiles (keep your 3-col tile grid behavior as-is) */}
             <LayoutGrid className="gap-y-6">
               <div className="md:col-span-3">
                 <ProjectGrid onSelect={(slug) => setActiveSlug(slug)} />
@@ -115,9 +90,6 @@ export default function HomePage() {
             </LayoutGrid>
           </>
         )}
-
-        {/* Spacer so the fixed BottomBar can be revealed + stay clickable */}
-        <div className="h-[140px] pointer-events-none" />
       </main>
     </>
   );

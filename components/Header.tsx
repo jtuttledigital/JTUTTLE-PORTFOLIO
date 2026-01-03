@@ -9,10 +9,10 @@ type HeaderProps = {
 
 export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-50 w-full bg-ink/95 backdrop-blur supports-[backdrop-filter]:bg-ink/75">
-      <LayoutGrid className="items-center h-20 text-sm border-b border-neutral-800">
-        {/* Col 1: Logo */}
-        <div className="flex items-center">
+    <header className="sticky top-0 z-50 w-full bg-[#0B0B0C] backdrop-blur-sm border-b border-neutral-800">
+      <LayoutGrid mdCols={6} className="items-center h-20 text-sm">
+        {/* Cols 1–3: Logo */}
+        <div className="flex items-center md:col-span-3">
           <Image
             src="/logo-jtuttledigital.svg"
             width={145}
@@ -22,15 +22,18 @@ export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
           />
         </div>
 
-        {/* Col 2: Role */}
-        <div className="text-neutral-300 text-sm">
-          Interaction / Product Designer
+        {/* Col 4: Role (aligns with TEAM column) */}
+        <div className="hidden md:block md:col-span-1 text-neutral-300">
+          Product Designer
         </div>
 
-        {/* Col 3: Location + Close */}
-        <div className="flex items-center justify-between gap-4">
-          <div className="text-neutral-300 text-sm">Seattle, WA</div>
+        {/* Col 5: Location (aligns with DESCRIPTION column start) */}
+        <div className="hidden md:block md:col-span-1 text-neutral-300">
+          Seattle, WA
+        </div>
 
+        {/* Col 6: Close */}
+        <div className="md:col-span-1 flex items-center justify-end">
           {projectOpen ? (
             <button
               type="button"

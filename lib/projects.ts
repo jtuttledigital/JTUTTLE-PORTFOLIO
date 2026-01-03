@@ -1,31 +1,72 @@
 // lib/projects.ts
+// Source of truth for all project tiles + expanded (ProjectExpanded) content.
 
-export type ProjectLinks = Partial<{
-  demo: string;
-  live: string;
-  website: string;
-  repo: string;
-  github: string;
-  caseStudy: string;
-}>;
+export type ProjectLinks = {
+  demo?: string;
+  repo?: string;
+  caseStudy?: string;
+};
+
+export type ProjectFact = {
+  label: string;
+  value: string;
+};
+
+export type ProjectMedia = {
+  /** Path under /public (recommended) */
+  src: string;
+  alt: string;
+  /** Small monospace caption that sits directly under the media */
+  caption?: string;
+  /** Layout hint for the media grid in ProjectExpanded */
+  span?: "full" | "half";
+  /** Only affects height (width always fills its column) */
+  aspect?: "landscape" | "portrait";
+};
 
 export type Project = {
   slug: string;
+  category: string;
+  title: string;
+  subtitle: string;
+  tileImage: string;
 
-  // Tile (collapsed)
-  category: string;   // small mono label
-  title: string;      // big title
-  subtitle: string;   // one-liner
-  tileImage: string;  // used by ProjectGrid tile
+  /** Full-width hero image under the sticky header */
+  heroImage?: string;
 
-  // Expanded (below-header “project view”)
-  heroImage?: string; // ProjectExpanded checks heroImage first
-  hero?: string;      // fallback
-  coverImage?: string;// fallback
+  /** Intro paragraph shown at top of the right stream */
+  description: string;
 
-  description: string;         // left sticky rail
-  supportingImages?: string[]; // right scrolling stream
-  links?: ProjectLinks;        // buttons/CTAs
+  /** Primary CTAs (rendered in left rail) */
+  links?: ProjectLinks;
+
+  /**
+   * Optional “at a glance” facts, typically 4 items (Role / Team / Duration / Tools).
+   * Rendered in the right stream as a 2→4 column grid.
+   */
+  facts?: ProjectFact[];
+
+  /**
+   * Media stack for the right stream.
+   * - Use span="full" when you want the image to fill columns 2+3 together.
+   * - Use aspect="portrait" when you want a taller card (same width, more height).
+   */
+  supportingMedia?: ProjectMedia[];
+
+  /**
+   * Deprecated (kept for backwards compatibility).
+   * If provided, ProjectExpanded will treat these as half-width landscape images.
+   */
+  supportingImages?: string[];
+
+  /**
+   * Optional right-stream CTAs (rendered as 2-up buttons inside columns 2+3).
+   * Useful when you want CTAs to appear after facts or near specific media.
+   */
+  rightCtas?: { label: string; href: string }[];
+
+  /** Optional closing text block (sources, reflection, next steps). */
+  conclusion?: string;
 };
 
 export const projects: Project[] = [
@@ -37,7 +78,7 @@ export const projects: Project[] = [
     tileImage: "/projects/brand-designer/tile.jpg",
 
     // Expanded hero (full-width image under header)
-    heroImage: "/projects/brand-designer/hero.jpg",
+    heroImage: "/projects/brand-designer/hero.png",
 
     description:
       "AI-assisted brand system generator that outputs palettes, typography, logos, and exportable brand boards (tokens, CSS vars, Tailwind snippets, PDFs). Built to move from prompt → usable system fast.",
@@ -47,11 +88,44 @@ export const projects: Project[] = [
       demo: "https://brand-designer-demo.example.com",
     },
 
-    supportingImages: [
-      "/projects/brand-designer/shot-01.jpg",
-      "/projects/brand-designer/shot-02.jpg",
-      "/projects/brand-designer/shot-03.jpg",
+    facts: [
+      { label: "ROLE", value: "Designer / Builder" },
+      { label: "TEAM", value: "Solo" },
+      { label: "DURATION", value: "2024–Present" },
+      { label: "TOOLS", value: "Next.js, Tailwind, AI APIs" },
     ],
+
+    rightCtas: [
+      { label: "Main website", href: "https://brand-designer-demo.example.com" },
+      { label: "GitHub repo", href: "https://github.com/jtuttledigital/brand-designer" },
+    ],
+
+    supportingMedia: [
+      {
+        src: "/projects/brand-designer/shot-01.jpg",
+        alt: "Brand Designer — overview screen",
+        caption: "System overview: palette + type + export targets.",
+        span: "full",
+        aspect: "landscape",
+      },
+      {
+        src: "/projects/brand-designer/shot-02.jpg",
+        alt: "Brand Designer — token export",
+        caption: "Tokens + snippets: CSS vars, Tailwind config, JSON.",
+        span: "full",
+        aspect: "landscape",
+      },
+      {
+        src: "/projects/brand-designer/shot-03.jpg",
+        alt: "Brand Designer — board preview",
+        caption: "Board preview: compact, shippable, client-friendly.",
+        span: "full",
+        aspect: "portrait",
+      },
+    ],
+
+    conclusion:
+      "Next: tighten onboarding, add a few opinionated presets, and ship a clean ‘export pack’ that plugs into a design system repo. I’m also exploring a lightweight ‘brand audit’ mode for existing products.",
   },
 
   {
@@ -62,32 +136,11 @@ export const projects: Project[] = [
     tileImage: "/projects/media-acquisitions/tile.jpg",
     heroImage: "/projects/media-acquisitions/hero.jpg",
     description:
-      "A concept project exploring layout systems, editorial type, and visual compositing. Emphasis on structure, pacing, and interaction-ready composition.",
+      "A concept project exploring layout systems, editorial type, and visual composition. Built as a fast study in hierarchy, rhythm, and information density.",
     links: {
-      caseStudy: "https://jtuttledigital.com/projects/media-acquisitions",
+      demo: "https://example.com",
+      repo: "https://github.com/jtuttledigital",
     },
-    supportingImages: [
-      "/projects/media-acquisitions/shot-01.jpg",
-      "/projects/media-acquisitions/shot-02.jpg",
-    ],
-  },
-
-  {
-    slug: "jtuttle-portfolio",
-    category: "ENGINEERING + DESIGN",
-    title: "J. Tuttle Portfolio",
-    subtitle: "Next.js build with a minimal interaction system",
-    tileImage: "/projects/jtuttle-portfolio/tile.jpg",
-    heroImage: "/projects/jtuttle-portfolio/hero.jpg",
-    description:
-      "A minimal portfolio system designed for speed, clarity, and maintainability. Structured as reusable components, shared grid primitives, and token-driven styling.",
-    links: {
-      repo: "https://github.com/jtuttledigital/JTUTTLE-PORTFOLIO",
-      live: "https://jtuttledigital.com",
-    },
-    supportingImages: [
-      "/projects/jtuttle-portfolio/shot-01.jpg",
-      "/projects/jtuttle-portfolio/shot-02.jpg",
-    ],
+    // Add facts/supportingMedia when ready.
   },
 ];

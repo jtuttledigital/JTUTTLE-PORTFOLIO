@@ -2,221 +2,244 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import type { Project, ProjectMedia, ProjectFact } from "@/lib/projects";
 import { LayoutGrid } from "./LayoutGrid";
 
 type ProjectExpandedProps = {
-  project: any | null;
-  onClose: () => void;
+  project: Project;
+  onClose?: () => void;
+  onBack?: () => void; // optional legacy support
 };
 
-function firstLink(project: any, keys: string[]) {
-  for (const k of keys) {
-    const v = project?.[k];
-    if (typeof v === "string" && v.trim()) return v.trim();
-  }
-  return null;
+function AspectClass(media: Pick<ProjectMedia, "span" | "aspect">) {
+  // Width is controlled by the grid. Aspect controls height only.
+  if (media.span === "full") return "aspect-[16/9]";
+  if (media.aspect === "portrait") return "aspect-[4/5]";
+  return "aspect-[16/10]";
 }
 
-export function ProjectExpanded({ project, onClose }: ProjectExpandedProps) {
-  if (!project) return null;
+function MediaCard({ media }: { media: ProjectMedia }) {
+  return (
+    <figure
+      className={[
+        "overflow-hidden border border-neutral-800 bg-black",
+        media.span === "full" ? "md:col-span-2" : "md:col-span-1",
+      ].join(" ")}
+    >
+      <div className={["relative", AspectClass(media)].join(" ")}>
+        <Image
+          src={media.src}
+          alt={media.alt}
+          fill
+          className="object-cover"
+          sizes={
+            media.span === "full"
+              ? "(min-width: 1024px) 66vw, 100vw"
+              : "(min-width: 1024px) 33vw, 100vw"
+          }
+        />
+        {/* Dev-friendly label overlay (keeps layout legible while images are placeholders). */}
+        <div className="pointer-events-none absolute left-3 top-3 rounded bg-black/60 px-2 py-1 text-[11px] font-mono text-neutral-200">
+          {media.caption ?? media.alt}
+        </div>
+      </div>
 
-  const heroSrc =
-    project.heroImage ??
-    project.hero ??
-    project.coverImage ??
-    project.tileImage ??
-    null;
+      {media.caption ? (
+        <figcaption className="px-4 py-3 text-[11px] font-mono text-neutral-400">
+          {media.caption}
+        </figcaption>
+      ) : null}
+    </figure>
+  );
+}
 
-  const demoUrl =
-    project.links?.demo ??
-    project.links?.live ??
-    project.links?.website ??
-    firstLink(project, ["demoUrl", "liveUrl", "websiteUrl"]);
+function FactsGrid({ facts }: { facts: ProjectFact[] }) {
+  return (
+    <div className="grid gap-4 md:grid-cols-4">
+      {facts.map((f) => (
+        <div key={f.label} className="min-w-0">
+          <div className="text-[10px] font-mono tracking-[0.25em] text-neutral-500">
+            {f.label}
+          </div>
+          <div className="mt-1 text-[13px] text-neutral-200">{f.value}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
-  const repoUrl =
-    project.links?.repo ??
-    project.links?.github ??
-    firstLink(project, ["repoUrl", "githubUrl"]);
+export function ProjectExpanded({ project, onClose, onBack }: ProjectExpandedProps) {
+  const handleClose = onClose ?? onBack;
 
-  const caseStudyUrl =
-    project.links?.caseStudy ?? firstLink(project, ["caseStudyUrl"]);
+  // (optional but helpful)
+  if (!handleClose) {
+    throw new Error("ProjectExpanded requires onClose (preferred) or onBack.");
+  }  // Back-compat: if a project still uses supportingImages, treat them as half-width landscape media.
+  const fallbackMedia: ProjectMedia[] = (project.supportingImages ?? []).map(
+    (src, idx) => ({
+      src,
+      alt: `${project.title} image ${idx + 1}`,
+      span: "half",
+      aspect: "landscape",
+    })
+  );
+
+  const mediaStack =
+    project.supportingMedia && project.supportingMedia.length > 0
+      ? project.supportingMedia
+      : fallbackMedia;
 
   return (
-    <section className="bg-[#0D0D0E]">
-      {/* HERO (full-bleed, scrolls normally) */}
-      {heroSrc ? (
-        <div className="w-full border-b border-neutral-800">
-          <div className="relative w-full h-[min(60vh,560px)] bg-black">
-            <Image
-              src={heroSrc}
-              alt={project.title ?? "Project"}
-              fill
-              className="object-cover"
-              sizes="100vw"
-              priority
-            />
-          </div>
-        </div>
-      ) : null}
-
-      {/* CONTENT (3-col grid; left sticky, right scrolls) */}
-      <div className="py-10">
-        <LayoutGrid className="gap-y-10">
-          {/* LEFT RAIL (sticky) */}
-          <aside className="md:col-span-1">
-            <div className="sticky top-[96px] self-start">
-              <div className="space-y-5">
-                {/* Category */}
-                {project.category ? (
-                  <div className="text-[10px] font-mono tracking-[0.25em] text-neutral-500 uppercase">
-                    {project.category}
-                  </div>
-                ) : null}
-
-                {/* Title */}
-                <h1 className="text-xl md:text-2xl font-semibold text-neutral-100 leading-tight">
-                  {project.title ?? "Project"}
-                </h1>
-
-                {/* Subtitle / short blurb */}
-                {project.subtitle ? (
-                  <p className="text-sm text-neutral-400 leading-relaxed">
-                    {project.subtitle}
-                  </p>
-                ) : null}
-
-                {/* Meta rows (optional) */}
-                <div className="grid gap-3 text-sm">
-                  {project.role ? (
-                    <div>
-                      <div className="text-[10px] font-mono tracking-[0.25em] text-neutral-500 uppercase">
-                        Role
-                      </div>
-                      <div className="text-neutral-200">{project.role}</div>
-                    </div>
-                  ) : null}
-
-                  {project.tools ? (
-                    <div>
-                      <div className="text-[10px] font-mono tracking-[0.25em] text-neutral-500 uppercase">
-                        Tools
-                      </div>
-                      <div className="text-neutral-200">{project.tools}</div>
-                    </div>
-                  ) : null}
-
-                  {project.year ? (
-                    <div>
-                      <div className="text-[10px] font-mono tracking-[0.25em] text-neutral-500 uppercase">
-                        Year
-                      </div>
-                      <div className="text-neutral-200">{project.year}</div>
-                    </div>
-                  ) : null}
-                </div>
-
-                {/* Actions */}
-                <div className="grid gap-3">
-                  {demoUrl ? (
-                    <a
-                      href={demoUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center justify-between rounded-md border border-neutral-800 bg-[#111111] px-4 py-3 text-sm text-neutral-200 hover:border-accent/70 hover:text-accent transition-colors"
-                    >
-                      <span>Live demo</span>
-                      <span aria-hidden>→</span>
-                    </a>
-                  ) : null}
-
-                  {repoUrl ? (
-                    <a
-                      href={repoUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center justify-between rounded-md border border-neutral-800 bg-[#111111] px-4 py-3 text-sm text-neutral-200 hover:border-accent/70 hover:text-accent transition-colors"
-                    >
-                      <span>GitHub repo</span>
-                      <span aria-hidden>→</span>
-                    </a>
-                  ) : null}
-
-                  {caseStudyUrl ? (
-                    <a
-                      href={caseStudyUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center justify-between rounded-md border border-neutral-800 bg-[#111111] px-4 py-3 text-sm text-neutral-200 hover:border-accent/70 hover:text-accent transition-colors"
-                    >
-                      <span>Case study</span>
-                      <span aria-hidden>→</span>
-                    </a>
-                  ) : null}
-
-                  {/* Optional "Back" link (secondary; header X is primary) */}
-                  <button
-                    type="button"
-                    onClick={onClose}
-                    className="text-left text-sm text-neutral-400 hover:text-accent transition-colors"
-                  >
-                    ← Back to projects
-                  </button>
-                </div>
-              </div>
-            </div>
-          </aside>
-
-          {/* RIGHT STREAM (spans cols 2–3) */}
-          <div className="md:col-span-2">
-            <div className="space-y-12">
-              {/* Long description (optional) */}
-              {project.description ? (
-                <section className="prose prose-invert max-w-none prose-p:text-neutral-300">
-                  <p>{project.description}</p>
-                </section>
-              ) : null}
-
-              {/* Example nested grid for supporting media (optional) */}
-              {Array.isArray(project.supportingImages) &&
-              project.supportingImages.length ? (
-                <section className="grid gap-6 md:grid-cols-2">
-                  {project.supportingImages.map((src: string, i: number) => (
-                    <div
-                      key={`${src}-${i}`}
-                      className="relative w-full h-[320px] bg-black border border-neutral-800 overflow-hidden rounded-lg"
-                    >
-                      <Image
-                        src={src}
-                        alt={`${project.title ?? "Project"} image ${i + 1}`}
-                        fill
-                        className="object-cover"
-                        sizes="(min-width: 1024px) 50vw, 100vw"
-                      />
-                    </div>
-                  ))}
-                </section>
-              ) : null}
-
-              {/* Placeholder section if no content is wired yet */}
-              {!project.description &&
-              (!Array.isArray(project.supportingImages) ||
-                !project.supportingImages.length) ? (
-                <section className="border border-neutral-800 bg-[#111111] rounded-lg p-6">
-                  <div className="text-[10px] font-mono tracking-[0.25em] text-neutral-500 uppercase mb-3">
-                    Project details
-                  </div>
-                  <p className="text-sm text-neutral-300 leading-relaxed">
-                    Wire details into <code className="text-neutral-200">lib/projects</code>{" "}
-                    (description, supportingImages, links) and this panel will
-                    render them. The layout is locked: left rail stays sticky,
-                    right stream scrolls and can contain nested grids.
-                  </p>
-                </section>
-              ) : null}
-            </div>
-          </div>
-        </LayoutGrid>
+    <main className="bg-[#0D0D0E]">
+      {/* Hero: full-width under sticky header */}
+      {project.heroImage ? (
+  <LayoutGrid className="pt-5">
+    <div className="md:col-span-3">
+      <div className="relative w-full bg-black border border-neutral-800 overflow-hidden">
+        <Image
+          src={project.heroImage}
+          alt={project.title}
+          width={3000}
+          height={1688}
+          priority
+          className="w-full h-auto"
+          sizes="(min-width: 768px) 66vw, 100vw"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-black/10" />
       </div>
-    </section>
+    </div>
+  </LayoutGrid>
+) : null}
+
+      {/* Shared 3-column grid */}
+      <LayoutGrid className="gap-y-10 py-10 text-sm">
+        {/* Left rail (col 1) */}
+        <aside className="md:sticky md:top-[88px] self-start">
+          <div className="mb-2 text-[10px] font-mono tracking-[0.25em] text-neutral-500">
+            {project.category}
+          </div>
+          <h1 className="text-3xl font-semibold tracking-tight text-neutral-100">
+            {project.title}
+          </h1>
+          <p className="mt-2 text-neutral-400">{project.subtitle}</p>
+
+          {/* Primary CTAs (left rail) */}
+          {project.links ? (
+            <div className="mt-8 space-y-3">
+              {project.links.demo ? (
+                <Link
+                  href={project.links.demo}
+                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#111111] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
+                >
+                  <span>Live demo</span>
+                  <span
+                    aria-hidden
+                    className="text-neutral-400 group-hover:text-accent transition-colors"
+                  >
+                    →
+                  </span>
+                </Link>
+              ) : null}
+
+              {project.links.repo ? (
+                <Link
+                  href={project.links.repo}
+                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#111111] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
+                >
+                  <span>GitHub repo</span>
+                  <span
+                    aria-hidden
+                    className="text-neutral-400 group-hover:text-accent transition-colors"
+                  >
+                    →
+                  </span>
+                </Link>
+              ) : null}
+
+              {project.links.caseStudy ? (
+                <Link
+                  href={project.links.caseStudy}
+                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#111111] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
+                >
+                  <span>Case study</span>
+                  <span
+                    aria-hidden
+                    className="text-neutral-400 group-hover:text-accent transition-colors"
+                  >
+                    →
+                  </span>
+                </Link>
+              ) : null}
+            </div>
+          ) : null}
+
+          <button
+            type="button"
+            onClick={handleClose}
+            className="mt-8 text-[13px] text-neutral-400 hover:text-accent transition-colors"
+          >
+            ← Back to projects
+          </button>
+        </aside>
+
+        {/* Right stream (cols 2 + 3) */}
+        <section className="md:col-span-2 min-w-0">
+          {/* 1) Full-width intro copy */}
+          <p className="text-neutral-200 leading-relaxed">{project.description}</p>
+
+          {/* 2) 4-up facts grid (Role/Team/Duration/Tools) */}
+          {project.facts && project.facts.length > 0 ? (
+            <div className="mt-8">
+              <FactsGrid facts={project.facts} />
+            </div>
+          ) : null}
+
+          {/* 5) Right-stream CTAs (2-up) */}
+          {project.rightCtas && project.rightCtas.length > 0 ? (
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
+              {project.rightCtas.slice(0, 2).map((cta) => (
+                <Link
+                  key={cta.href}
+                  href={cta.href}
+                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#111111] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
+                >
+                  <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
+                    {cta.label}
+                  </span>
+                  <span
+                    aria-hidden
+                    className="text-neutral-400 group-hover:text-accent transition-colors"
+                  >
+                    →
+                  </span>
+                </Link>
+              ))}
+            </div>
+          ) : null}
+
+          {/* 3/4) Media stack: full-width + portrait + 2-up, etc. */}
+          {mediaStack.length > 0 ? (
+            <div className="mt-8 grid gap-6 md:grid-cols-2">
+              {mediaStack.map((m) => (
+                <MediaCard key={`${m.src}-${m.alt}`} media={m} />
+              ))}
+            </div>
+          ) : null}
+
+          {/* 6) Conclusion / sources block */}
+          {project.conclusion ? (
+            <div className="mt-10 border-t border-neutral-800 pt-6">
+              <div className="text-[10px] font-mono tracking-[0.25em] text-neutral-500">
+                NOTES
+              </div>
+              <p className="mt-3 text-neutral-300 leading-relaxed">
+                {project.conclusion}
+              </p>
+            </div>
+          ) : null}
+        </section>
+      </LayoutGrid>
+    </main>
   );
 }

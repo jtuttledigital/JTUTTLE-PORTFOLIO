@@ -31,8 +31,13 @@ export type Project = {
   subtitle: string;
   tileImage: string;
 
-  /** Full-width hero image under the sticky header */
-  heroImage?: string;
+  // Optional media sources
+  heroImage?: string; // <-- THIS fixes your current error
+  tileVideoWebm?: string;
+  tileVideoMp4?: string;
+  heroVideoWebm?: string;
+  heroVideoMp4?: string;
+  heroMaxWidth?: "md" | "lg" | "xl" | "none";
 
   /** Intro paragraph shown at top of the right stream */
   description: string;
@@ -55,7 +60,7 @@ export type Project = {
 
   /**
    * Deprecated (kept for backwards compatibility).
-   * If provided, ProjectExpanded will treat these as half-width landscape images.
+   * If provided, ProjectExpanded will treat these as half-width landscape media.
    */
   supportingImages?: string[];
 
@@ -118,26 +123,37 @@ export const projects: Project[] = [
   },
 
   {
-    slug: "media-acquisitions",
+    slug: "alto-moving",
     category: "PRODUCT DESIGN",
-    title: "Media Acquisitions",
-    subtitle: "Photo composite and design concept",
-    tileImage: "/projects/media-acquisitions/alto-tile.png",
-    heroImage: "/projects/media-acquisitions/alto-tile.png",
+    title: "Alto Moving",
+    subtitle: "Site design and development.",
+    tileImage: "/projects/alto/alto-tile.png",
+    heroImage: "/projects/alto/alto-tile.png",
     description:
-      "A concept project exploring layout systems, editorial type, and visual composition. Built as a fast study in hierarchy, rhythm, and information density.",
+      "A production website and brand system built for a real operating business. The project focuses on scalable layout systems, clear messaging, and conversion-driven UX to support local SEO, lead flow, and ongoing iteration as the business grows.",
     links: {
-      demo: "https://example.com",
-      repo: "https://github.com/jtuttledigital",
+      demo: "https://altomoving.com",
     },
     // Add facts/supportingMedia when ready.
+
+    facts: [
+      { label: "ROLE", value: "Designer / Builder" },
+      { label: "TEAM", value: "Solo" },
+      { label: "DURATION", value: "2020–Present" },
+      { label: "TOOLS", value: "Figma / Webflow" },
+    ],
+
+    conclusion:
+  "Built as a living system rather than a static site, the project has expanded to include a custom estimate application used to qualify leads and generate pricing. The work reflects an ongoing balance between design quality, operational constraints, and real customer behavior.",
+
+
   },
 
   {
-  slug: "bing-homepage-loops",
-  category: "MICROSOFT / MEDIA ACQ",
-  title: "Bing Homepage Video Loops",
-  subtitle: "Seamless HTML5 homepage loop production",
+  slug: "bing",
+  category: "PRODUCT DESIGN",
+  title: "Bing",
+  subtitle: "Motion and interactive media experiments",
   tileImage: "/projects/bing/tile.jpg",
 
   tileVideoWebm: "/projects/bing/northern-lights-loop.webm",
@@ -148,6 +164,12 @@ export const projects: Project[] = [
 
   heroImage: "/projects/bing/tile.jpg", // optional fallback poster
 
+  description:
+    "Concept and production work exploring motion, compositing, and interactive media systems for Bing.",
+
+  links: {
+    // ...
+  },
   // rest...
 }
 

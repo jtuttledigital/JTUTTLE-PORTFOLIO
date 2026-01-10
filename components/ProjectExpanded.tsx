@@ -39,10 +39,6 @@ function MediaCard({ media }: { media: ProjectMedia }) {
               : "(min-width: 1024px) 33vw, 100vw"
           }
         />
-        {/* Dev-friendly label overlay (keeps layout legible while images are placeholders). */}
-        <div className="pointer-events-none absolute left-3 top-3 rounded bg-black/60 px-2 py-1 text-[11px] font-mono text-neutral-200">
-          {media.caption ?? media.alt}
-        </div>
       </div>
 
       {media.caption ? (

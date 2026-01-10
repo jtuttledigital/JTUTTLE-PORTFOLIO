@@ -24,12 +24,12 @@ export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
         </div>
 
         {/* Col 4: Role (aligns with TEAM column) */}
-        <div className="hidden md:block md:col-span-1 text-neutral-300">
+        <div className="hidden md:block md:col-span-1 font-semibold text-neutral-300">
           Product Designer
         </div>
 
         {/* Col 5: Location (aligns with DESCRIPTION column start) */}
-        <div className="hidden md:block md:col-span-1 text-neutral-300">
+        <div className="hidden md:block md:col-span-1 font-semibold text-neutral-300">
           Seattle, WA
         </div>
 

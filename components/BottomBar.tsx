@@ -3,9 +3,9 @@ import { LayoutGrid } from "@/components/LayoutGrid";
 
 export function BottomBar() {
   return (
-    <footer className="fixed inset-x-0 bottom-0 z-0 h-[10rem] border-t border-neutral-800 bg-[#0B0B0C]">
+    <footer className="fixed inset-x-0 bottom-0 z-0 border-t border-neutral-800 bg-[#1c1c1c] footer-dot-grid">
       {/* dot-grid background */}
-      <div className="absolute inset-0 opacity-80 [background-image:radial-gradient(rgba(255,255,255,0.10)_1px,transparent_1px)] [background-size:18px_18px]" />
+      <div className="absolute inset-0 opacity-80 [background-size:18px_18px]" />
 
       <LayoutGrid mdCols={6} className="relative z-10 h-full items-start py-6 text-sm">
         {/* COLS 1–3 */}
@@ -16,7 +16,7 @@ export function BottomBar() {
 
           <div className="mt-3 space-y-2 text-neutral-400">
             <div>Last updated 2025-12-04</div>
-            <div>Built with Next.js.</div>
+            <div>Built with Next.js</div>
           </div>
         </div>
 

@@ -25,7 +25,8 @@ export default function HomePage() {
         onCloseProject={() => setActiveSlug(null)}
       />
 
-      <main className="pt-5 bg-[#0D0D0E]">
+      <main className="pt-5 relative z-10">
+        <div className="bg-[#111111] pb-10">
         {activeProject ? (
           <ProjectExpanded
             project={activeProject}
@@ -90,6 +91,7 @@ export default function HomePage() {
             </LayoutGrid>
           </>
         )}
+        </div>
       </main>
     </>
   );

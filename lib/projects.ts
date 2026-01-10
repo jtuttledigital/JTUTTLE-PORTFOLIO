@@ -59,12 +59,6 @@ export type Project = {
    */
   supportingImages?: string[];
 
-  /**
-   * Optional right-stream CTAs (rendered as 2-up buttons inside columns 2+3).
-   * Useful when you want CTAs to appear after facts or near specific media.
-   */
-  rightCtas?: { label: string; href: string }[];
-
   /** Optional closing text block (sources, reflection, next steps). */
   conclusion?: string;
 };
@@ -75,7 +69,7 @@ export const projects: Project[] = [
     category: "DIGITAL TOOLMAKING",
     title: "Brand Designer",
     subtitle: "AI-assisted brand systems",
-    tileImage: "/projects/brand-designer/tile.jpg",
+    tileImage: "/projects/brand-designer/BD_2400x1350.png",
 
     // Expanded hero (full-width image under header)
     heroImage: "/projects/brand-designer/hero.png",
@@ -84,9 +78,9 @@ export const projects: Project[] = [
       "AI-assisted brand system generator that outputs palettes, typography, logos, and exportable brand boards (tokens, CSS vars, Tailwind snippets, PDFs). Built to move from prompt → usable system fast.",
 
     links: {
-      repo: "https://github.com/jtuttledigital/brand-designer",
-      demo: "https://brand-designer-demo.example.com",
-    },
+  demo: "https://brand-designer-demo.example.com",
+  repo: "https://github.com/jtuttledigital/brand-designer",
+},
 
     facts: [
       { label: "ROLE", value: "Designer / Builder" },
@@ -95,21 +89,16 @@ export const projects: Project[] = [
       { label: "TOOLS", value: "Next.js, Tailwind, AI APIs" },
     ],
 
-    rightCtas: [
-      { label: "Main website", href: "https://brand-designer-demo.example.com" },
-      { label: "GitHub repo", href: "https://github.com/jtuttledigital/brand-designer" },
-    ],
-
     supportingMedia: [
       {
-        src: "/projects/brand-designer/shot-01.jpg",
+        src: "/projects/brand-designer/brand-designer-tile.png",
         alt: "Brand Designer — overview screen",
         caption: "System overview: palette + type + export targets.",
         span: "full",
         aspect: "landscape",
       },
       {
-        src: "/projects/brand-designer/shot-02.jpg",
+        src: "/projects/brand-designer/brand-designer-hero.png",
         alt: "Brand Designer — token export",
         caption: "Tokens + snippets: CSS vars, Tailwind config, JSON.",
         span: "full",
@@ -133,8 +122,8 @@ export const projects: Project[] = [
     category: "PRODUCT DESIGN",
     title: "Media Acquisitions",
     subtitle: "Photo composite and design concept",
-    tileImage: "/projects/media-acquisitions/tile.jpg",
-    heroImage: "/projects/media-acquisitions/hero.jpg",
+    tileImage: "/projects/media-acquisitions/alto-tile.png",
+    heroImage: "/projects/media-acquisitions/alto-tile.png",
     description:
       "A concept project exploring layout systems, editorial type, and visual composition. Built as a fast study in hierarchy, rhythm, and information density.",
     links: {
@@ -143,4 +132,25 @@ export const projects: Project[] = [
     },
     // Add facts/supportingMedia when ready.
   },
+
+  {
+  slug: "bing-homepage-loops",
+  category: "MICROSOFT / MEDIA ACQ",
+  title: "Bing Homepage Video Loops",
+  subtitle: "Seamless HTML5 homepage loop production",
+  tileImage: "/projects/bing/tile.jpg",
+
+  tileVideoWebm: "/projects/bing/northern-lights-loop.webm",
+  tileVideoMp4: "/projects/bing/northern-lights-loop.mp4",
+
+  heroVideoWebm: "/projects/bing/northern-lights-loop.webm",
+  heroVideoMp4: "/projects/bing/northern-lights-loop.mp4",
+
+  heroImage: "/projects/bing/tile.jpg", // optional fallback poster
+
+  // rest...
+}
+
+
+  
 ];

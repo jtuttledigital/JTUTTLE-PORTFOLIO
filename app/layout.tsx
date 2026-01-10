@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-[#0B0B0C] text-neutral-100 antialiased">
+      <body className="bg-ink text-neutral-100 antialiased">
         {/* pb matches BottomBar height so it reveals naturally at page end */}
         <div className="relative min-h-screen pb-[10rem]">
           {/* content sits above the footer */}

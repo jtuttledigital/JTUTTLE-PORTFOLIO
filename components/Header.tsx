@@ -9,8 +9,9 @@ type HeaderProps = {
 
 export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#0B0B0C] backdrop-blur-sm border-b border-neutral-800">
-      <LayoutGrid mdCols={6} className="items-center h-20 text-sm">
+    <header className="sticky top-0 z-50 w-full bg-[#111111] backdrop-blur-sm">
+      
+      <LayoutGrid mdCols={6} className="items-center h-20 text-sm border-b border-neutral-800">
         {/* Cols 1–3: Logo */}
         <div className="flex items-center md:col-span-3">
           <Image

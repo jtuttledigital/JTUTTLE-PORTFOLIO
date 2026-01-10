@@ -70,12 +70,10 @@ function FactsGrid({ facts }: { facts: ProjectFact[] }) {
 }
 
 export function ProjectExpanded({ project, onClose, onBack }: ProjectExpandedProps) {
-  const handleClose = onClose ?? onBack;
+  const handleClose = onClose ?? onBack ?? (() => {});
 
-  // (optional but helpful)
-  if (!handleClose) {
-    throw new Error("ProjectExpanded requires onClose (preferred) or onBack.");
-  }  // Back-compat: if a project still uses supportingImages, treat them as half-width landscape media.
+  // Back-compat: if a project still uses supportingImages, treat them as half-width landscape media.
+
   const fallbackMedia: ProjectMedia[] = (project.supportingImages ?? []).map(
     (src, idx) => ({
       src,
@@ -91,12 +89,35 @@ export function ProjectExpanded({ project, onClose, onBack }: ProjectExpandedPro
       : fallbackMedia;
 
   return (
-    <main className="bg-[#0D0D0E]">
-      {/* Hero: full-width under sticky header */}
-      {project.heroImage ? (
+    <main className="bg-[#111111]">
+      {/* Hero: prefers video, falls back to image */}
+{(project.heroVideoWebm || project.heroVideoMp4) ? (
   <LayoutGrid className="pt-5">
     <div className="md:col-span-3">
-      <div className="relative w-full bg-black border border-neutral-800 overflow-hidden">
+      <div className="relative w-full bg-black">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          className="w-full h-auto"
+          poster={project.heroImage}
+        >
+          {project.heroVideoWebm ? (
+            <source src={project.heroVideoWebm} type="video/webm" />
+          ) : null}
+          {project.heroVideoMp4 ? (
+            <source src={project.heroVideoMp4} type="video/mp4" />
+          ) : null}
+        </video>
+      </div>
+    </div>
+  </LayoutGrid>
+) : project.heroImage ? (
+  <LayoutGrid className="pt-5">
+    <div className="md:col-span-3">
+      <div className="relative w-full bg-black">
         <Image
           src={project.heroImage}
           alt={project.title}
@@ -104,9 +125,8 @@ export function ProjectExpanded({ project, onClose, onBack }: ProjectExpandedPro
           height={1688}
           priority
           className="w-full h-auto"
-          sizes="(min-width: 768px) 66vw, 100vw"
+          sizes="100vw"
         />
-        <div className="pointer-events-none absolute inset-0 bg-black/10" />
       </div>
     </div>
   </LayoutGrid>
@@ -125,54 +145,66 @@ export function ProjectExpanded({ project, onClose, onBack }: ProjectExpandedPro
           <p className="mt-2 text-neutral-400">{project.subtitle}</p>
 
           {/* Primary CTAs (left rail) */}
-          {project.links ? (
-            <div className="mt-8 space-y-3">
-              {project.links.demo ? (
-                <Link
-                  href={project.links.demo}
-                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#111111] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
-                >
-                  <span>Live demo</span>
-                  <span
-                    aria-hidden
-                    className="text-neutral-400 group-hover:text-accent transition-colors"
-                  >
-                    →
-                  </span>
-                </Link>
-              ) : null}
+{project.links ? (
+  <div className="mt-6 flex flex-col gap-3">
+    {project.links.demo && (
+      <Link
+        href={project.links.demo}
+        target="_blank"
+        rel="noreferrer"
+        className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#1c1c1c] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
+      >
+        <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
+          Live demo
+        </span>
+        <span
+          aria-hidden
+          className="text-neutral-400 group-hover:text-accent transition-colors"
+        >
+          →
+        </span>
+      </Link>
+    )}
 
-              {project.links.repo ? (
-                <Link
-                  href={project.links.repo}
-                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#111111] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
-                >
-                  <span>GitHub repo</span>
-                  <span
-                    aria-hidden
-                    className="text-neutral-400 group-hover:text-accent transition-colors"
-                  >
-                    →
-                  </span>
-                </Link>
-              ) : null}
+    {project.links.repo && (
+      <Link
+        href={project.links.repo}
+        target="_blank"
+        rel="noreferrer"
+        className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#1c1c1c] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
+      >
+        <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
+          GitHub repo
+        </span>
+        <span
+          aria-hidden
+          className="text-neutral-400 group-hover:text-accent transition-colors"
+        >
+          →
+        </span>
+      </Link>
+    )}
 
-              {project.links.caseStudy ? (
-                <Link
-                  href={project.links.caseStudy}
-                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#111111] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
-                >
-                  <span>Case study</span>
-                  <span
-                    aria-hidden
-                    className="text-neutral-400 group-hover:text-accent transition-colors"
-                  >
-                    →
-                  </span>
-                </Link>
-              ) : null}
-            </div>
-          ) : null}
+    {project.links.caseStudy && (
+      <Link
+        href={project.links.caseStudy}
+        target="_blank"
+        rel="noreferrer"
+        className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#1c1c1c] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
+      >
+        <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
+          Case study
+        </span>
+        <span
+          aria-hidden
+          className="text-neutral-400 group-hover:text-accent transition-colors"
+        >
+          →
+        </span>
+      </Link>
+    )}
+  </div>
+) : null}
 
           <button
             type="button"
@@ -192,29 +224,6 @@ export function ProjectExpanded({ project, onClose, onBack }: ProjectExpandedPro
           {project.facts && project.facts.length > 0 ? (
             <div className="mt-8">
               <FactsGrid facts={project.facts} />
-            </div>
-          ) : null}
-
-          {/* 5) Right-stream CTAs (2-up) */}
-          {project.rightCtas && project.rightCtas.length > 0 ? (
-            <div className="mt-6 grid gap-4 md:grid-cols-2">
-              {project.rightCtas.slice(0, 2).map((cta) => (
-                <Link
-                  key={cta.href}
-                  href={cta.href}
-                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#111111] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
-                >
-                  <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
-                    {cta.label}
-                  </span>
-                  <span
-                    aria-hidden
-                    className="text-neutral-400 group-hover:text-accent transition-colors"
-                  >
-                    →
-                  </span>
-                </Link>
-              ))}
             </div>
           ) : null}
 

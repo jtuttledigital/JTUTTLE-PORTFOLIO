@@ -7,10 +7,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        ink: "#0B0B0C",
+        ink: "#111111",
         paper: "#FAFAFA",
         mute: "#8a8f98",
-        accent: "#58e877", // ← your hex green
+        accent: "#58e877", 
       },
       fontFamily: {
         sans: ["Inter", "ui-sans-serif", "system-ui"],

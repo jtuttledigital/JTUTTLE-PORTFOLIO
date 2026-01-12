@@ -1,5 +1,20 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------
+   ACCENT TOKENS (PRIMARY SOURCE OF TRUTH)
+   ------------------------------------------------------------------
+   These CSS variables define the canonical accent color for the site.
+
+   - The `.link` class and future design-system styles use these vars.
+   - Tailwind's `colors.accent` is transitional and must be kept in sync
+     if used by legacy components.
+
+   Preferred usage:
+     - Text links → `.link`
+     - New components → CSS variables
+     - Avoid new `text-accent` usage where possible
+------------------------------------------------------------------- */
+
 :root {
   color-scheme: dark;
   --bottombar-height: 140px; /* match BottomBar actual height */
@@ -8,7 +23,88 @@
 body {
   background-color: #111111;
   color: #f5f5f5;
+
+   /* Accent tokens (current Seahawks-ish green; swap later to purple here only) */
+  --accent: #00a86b;
+  --accent-hover: #00c97d;
+  --accent-bg: rgba(0, 168, 107, 0.24); /* ~ “50% muted” feel on dark UI */
+  --accent-underline: rgba(0, 168, 107, 0.9);
 }
+
+@layer components {
+  .link {
+    position: relative;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25rem;
+
+    color: inherit;
+    text-decoration: none;
+
+    padding: 0.1rem 0.35rem;
+    border-radius: 0.5rem;
+
+    transition:
+      color 160ms ease,
+      background-color 160ms ease;
+  }
+
+  /* DOTTED UNDERLINE (now ::before) */
+  .link::before {
+    content: "";
+    position: absolute;
+    left: 0.35rem;
+    right: 0.9rem; /* shortened on right to respect arrow */
+    bottom: 0.08rem;
+    height: 1px;
+
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--accent-underline) 0 1px,
+      transparent 1px 4px
+    );
+
+    opacity: 0.9;
+    pointer-events: none;
+    transition: opacity 160ms ease;
+  }
+
+  /* ARROW (now ::after, appears on the right) */
+  .link::after {
+    content: "↗";
+    color: var(--accent);
+    font-size: 0.75em;
+    line-height: 1;
+
+    transform: translateY(-0.08em);
+    transition: transform 160ms ease;
+  }
+
+  /* Hover / focus states */
+  .link:hover,
+  .link:focus-visible {
+    color: var(--accent);
+    background-color: var(--accent-bg);
+  }
+
+  .link:hover::before,
+  .link:focus-visible::before {
+    opacity: 1;
+  }
+
+  /* Arrow lift on interaction */
+  .link:hover::after,
+  .link:focus-visible::after {
+    transform: translateY(-0.16em);
+  }
+
+  /* Focus ring */
+  .link:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
 
 /* Dotted underline helper */
 .footer-link-underline {
@@ -20,9 +116,9 @@ body {
 .footer-dot-grid {
   background-image: radial-gradient(
     circle at 1px 1px,
-    rgba(255, 255, 255, 0.08) 0,
-    rgba(255, 255, 255, 0.08) 1px,
+    rgba(255, 255, 255, 0.06) 0,
+    rgba(255, 255, 255, 0.06) 1px,
     transparent 1px
   );
-  background-size: 12px 12px;
+  background-size: 8px 8px;
 }

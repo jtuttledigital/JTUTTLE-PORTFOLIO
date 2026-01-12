@@ -1,5 +1,7 @@
 // components/BottomBar.tsx
 import { LayoutGrid } from "@/components/LayoutGrid";
+import { AppLink } from "@/components/AppLink";
+import Image from "next/image";
 
 export function BottomBar() {
   return (
@@ -10,9 +12,17 @@ export function BottomBar() {
       <LayoutGrid mdCols={6} className="relative z-10 h-full items-start py-6 text-sm">
         {/* COLS 1–3 */}
         <div className="md:col-span-3">
-          <div className="inline-flex items-center rounded-full border border-neutral-700 px-3 py-1 text-[11px] font-mono text-neutral-200">
-            v1.0.0
-          </div>
+          <div className="inline-flex items-center">
+  <Image
+    src="/jtd_favicon.svg"
+    alt="J. Tuttle Digital"
+    width={28}
+    height={28}
+    className="opacity-90"
+    priority
+  />
+</div>
+
 
           <div className="mt-3 space-y-2 text-neutral-400">
             <div>Last updated 2025-12-04</div>
@@ -23,28 +33,39 @@ export function BottomBar() {
         {/* COL 4 */}
         <div className="mt-6 md:mt-0 md:col-start-4 md:col-span-1">
           <nav className="flex flex-col gap-2">
-            <a className="w-fit text-neutral-300 hover:text-neutral-100 underline-offset-4 hover:underline" href="#">
+            <AppLink className="link w-fit" href="/audio">
               Audio
-            </a>
-            <a className="w-fit text-neutral-300 hover:text-neutral-100 underline-offset-4 hover:underline" href="#">
+            </AppLink>
+
+            <AppLink className="link w-fit" href="https://www.linkedin.com/in/your-handle">
               LinkedIn
-            </a>
-            <a className="w-fit text-neutral-300 hover:text-neutral-100 underline-offset-4 hover:underline" href="#">
+            </AppLink>
+
+            <AppLink className="link w-fit" href="https://github.com/your-handle">
               GitHub
-            </a>
-            <a className="w-fit text-neutral-300 hover:text-neutral-100 underline-offset-4 hover:underline" href="#">
+            </AppLink>
+
+            <AppLink className="link w-fit" href="https://x.com/your-handle">
               X
-            </a>
+            </AppLink>
           </nav>
         </div>
 
         {/* COLS 5–6 */}
         <div className="mt-6 md:mt-0 md:col-start-5 md:col-span-2">
-          <div className="font-mono text-[11px] leading-relaxed text-neutral-400">
-            <div>$ run creativity --pair-mode</div>
-            <div className="text-neutral-300">john@jtuttledigital.com</div>
-          </div>
-        </div>
+  <div>
+    <div className="font-mono text-[11px] leading-relaxed text-neutral-400 pl-[0.35rem]">
+      $ run creativity --pair-mode
+    </div>
+
+    <div className="mt-1 font-sans text-neutral-100">
+      <AppLink className="link" href="mailto:john@jtuttledigital.com">
+        john@jtuttledigital.com
+      </AppLink>
+    </div>
+  </div>
+</div>
+
       </LayoutGrid>
     </footer>
   );

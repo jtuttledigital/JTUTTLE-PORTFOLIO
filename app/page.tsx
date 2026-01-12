@@ -41,17 +41,20 @@ export default function HomePage() {
                 <h2 className="mb-3 text-[10px] font-mono tracking-[0.25em] text-neutral-500">
                   ABOUT
                 </h2>
-                <p className="text-neutral-300 leading-relaxed">
-                  I design tools, interfaces, and systems that sit at the
-                  intersection of{" "}
-                  <span className="text-neutral-100">
-                    product design, interaction, and AI
-                  </span>
-                  . I&apos;ve moved between agencies, tech, and running my own
-                  business—from Microsoft contracts and ad work to building Alto
-                  Moving into a profitable local brand. I like work that connects
-                  strategy, craft, and shipping real things.
-                </p>
+                    <p className="text-neutral-300 leading-relaxed">
+                      I design tools, interfaces, and systems that connect{" "}
+                      <span className="text-neutral-100">
+                        strategy, interaction, and execution
+                      </span>
+                      . My background spans agency work, large tech, and business ownership—from
+                      high-pressure brand and campaign work to building and running a profitable
+                      local company. Today, I focus on{" "}
+                      <span className="text-neutral-100">
+                        product design and AI-enabled systems
+                      </span>
+                      , with an emphasis on clarity, craft, and shipping things that work in the
+                      real world.
+                    </p>
               </div>
 
               {/* TEAM — col 4 */}

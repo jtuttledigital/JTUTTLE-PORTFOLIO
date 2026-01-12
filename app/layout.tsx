@@ -6,6 +6,9 @@ import { BottomBar } from "@/components/BottomBar";
 export const metadata: Metadata = {
   title: "J. Tuttle Digital",
   description: "Product Designer – portfolio",
+  icons: {
+    icon: "/jtd_favicon.svg",
+  },
 };
 
 export default function RootLayout({

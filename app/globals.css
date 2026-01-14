@@ -17,7 +17,7 @@
 
 :root {
   color-scheme: dark;
-  --bottombar-height: 140px; /* match BottomBar actual height */
+--bottombar-height: 140px; /* match BottomBar actual height */
 }
 
 body {

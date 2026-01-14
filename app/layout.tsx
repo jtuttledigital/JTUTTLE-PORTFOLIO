@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-ink text-neutral-100 antialiased">
         {/* pb matches BottomBar height so it reveals naturally at page end */}
-        <div className="relative min-h-screen pb-[10rem]">
+        <div className="relative min-h-screen pb-[22rem] md:pb-[10rem]">
           {/* content sits above the footer */}
           <div className="relative z-10">{children}</div>
 

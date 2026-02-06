@@ -1,288 +1,206 @@
-coding_style_guide:
-  title: "Design & Development Style Guide — Figma × Next.js (Tailwind + App Router)"
-  project: "jtuttledigital-portfolio"
+project:
+  name: jtuttle-portfolio
+  owner: John Tuttle
+  stack:
+    framework: Next.js (App Router)
+    language: TypeScript
+    styling: Tailwind CSS
+    assets: SVG (inline preferred)
+    images: next/image
 
-  purpose: >
-    Unified design + development standards for building, documenting, and maintaining
-    a modern portfolio system using Figma, Next.js, TailwindCSS, and the App Router.
-    Structured with YAML anchors and references for maintainability.
+philosophy:
+  intent: >
+    Minimal, editorial, interaction-focused portfolio inspired by
+    Joseph Zhang–style layouts. Content-forward, calm, precise.
+  priorities:
+    - layout consistency over novelty
+    - readable spacing over density
+    - predictable scroll behavior
+    - AI-safe architecture (low ambiguity)
 
-  # --------------------------------------------------------------------------
-  # TOKENS
-  # --------------------------------------------------------------------------
-  tokens: &tokens
-    spacing_scale: &spacing_scale
-      - 0
-      - 4
-      - 8
-      - 12
-      - 16
-      - 20
-      - 24
-      - 32
-      - 40
-      - 48
-      - 56
-      - 64
-      - 80
+units:
+  base: rem
+  conversion:
+    1rem: 16px
+  mental_grid:
+    - 4px
+    - 8px
+  guidance:
+    - avoid arbitrary px values
+    - prefer Tailwind spacing scale
+    - custom values only when structurally required
 
-    typography: &typography
-      fonts:
-        sans: "Inter"
-        mono: "JetBrains Mono"
-      font_sizes:
-        - 12
-        - 14
-        - 16
-        - 18
-        - 20
-        - 24
-        - 32
-        - 40
-        - 48
-        - 56
-      line_heights:
-        body: 1.5
-        display: "1.1–1.2"
-        mono: 1.3
+spacing:
+  global_horizontal_padding: 0.9375rem # 15px
+  column_gap: 0.9375rem # 15px
+  section_vertical_rhythm:
+    small: 1rem
+    medium: 1.5rem
+    large: 2.5rem
 
-    figma_grid_desktop: &grid_desktop
-      columns: 12
-      margin: 80
-      gutter: 32
+grid:
+  system: LayoutGrid
+  columns:
+    count: 3
+    template: repeat(3, minmax(0, 1fr))
+  rules:
+    - LayoutGrid is the only outer layout container
+    - no ad-hoc grids for page-level layout
+    - nesting allowed only inside columns
 
-    figma_grid_mobile: &grid_mobile
-      columns: 4
-      margin: 24
-      gutter: 16
+responsive:
+  breakpoints:
+    mobile:
+      columns: 1
+    tablet:
+      columns: 2
+    desktop:
+      columns: 3
+  invariants:
+    - horizontal padding remains 15px at all sizes
+    - column gaps remain 15px
 
-    figma_components: &components
-      - Header
-      - BottomBar
-      - ProjectCard
-      - TerminalPanel
-      - OverlayMenu
+header:
+  behavior:
+    position: sticky
+    top: 0
+    z_index: 50
+    always_visible: true
+  content:
+    left: logo
+    center: role
+    right:
+      - location
+      - close button (when project expanded)
+  rules:
+    - header never scrolls away
+    - content scrolls beneath header
+    - no overlays above header
 
-  # --------------------------------------------------------------------------
-  # DESIGN FOUNDATIONS
-  # --------------------------------------------------------------------------
-  design_foundations:
-    frame_sizes:
-      desktop_primary:
-        size: "1440 × 1024 px"
-        notes: "Primary frame, industry standard"
-      desktop_alt:
-        size: "1728 × 1117 px"
-        notes: "MacBook Pro 16” viewport"
-      mobile:
-        size: "393 × 852 px"
-        notes: "iPhone 16 Pro CSS viewport"
+footer:
+  component: BottomBar
+  behavior:
+    position: fixed
+    bottom: 0
+    z_index: 30
+  reveal_strategy:
+    spacer_height: 8.75rem # 140px
+    spacer_location: end of <main>
+  rules:
+    - footer is never part of scroll flow
+    - footer appears as content scrolls past end
 
-    grids:
-      desktop: *grid_desktop
-      mobile: *grid_mobile
+projects:
+  index_view: ProjectGrid
+  expanded_view: ProjectExpanded
+  modal_usage: false
 
-    spacing_system:
-      scale: *spacing_scale
-      rule: "All spacing must align to 8px increments."
+project_grid:
+  columns: 3
+  gap: 0.9375rem
+  tile:
+    clickable: true
+    hover:
+      - subtle border highlight
+      - no layout shift
+    content:
+      minimal:
+        - category
+        - title
+        - short subtitle
 
-    typography: *typography
+project_expanded:
+  layout:
+    type: two-stream
+    left_column:
+      behavior: sticky
+      top_offset: header height
+      content:
+        - project title
+        - short description
+        - role
+        - tools
+        - links
+    right_column:
+      behavior: scroll
+      content:
+        - images
+        - captions
+        - detail sections
+        - nested grids allowed
+  rules:
+    - left column never scrolls offscreen
+    - right column owns vertical narrative
+    - no modal backdrop
+    - feels like normal page content
 
-    figma_file_structure:
-      pages:
-        - "00 🟣 Cover"
-        - "01 🧱 Foundations"
-        - "02 🧩 Components"
-        - "03 🧭 Layouts"
-        - "04 📦 Assets"
-      components: *components
+scroll_behavior:
+  body_scroll: enabled
+  scroll_lock: false
+  project_expanded:
+    scrolls_with_page: true
 
-    naming_conventions:
-      components_pascal_case: *components
-      semantic_layer_names:
-        - nav-links
-        - button-primary
-        - text-title
-        - text-body
-      avoid:
-        - Rectangle 57
-        - Group 1234
+z_index:
+  header: 50
+  project_expanded_content: 20
+  footer: 30
+  background: 0
 
-    auto_layout_rules:
-      required: true
-      avoid:
-        - manual_nudging
-        - fractional_pixels
-        - negative_spacing
+typography:
+  fonts:
+    sans: Inter
+    mono: JetBrains Mono
+  scale:
+    body: 0.875rem
+    small: 0.75rem
+    heading: 1rem
+  rules:
+    - no arbitrary font sizes
+    - prefer Tailwind defaults
+    - headings understated, not oversized
 
-    design_tokens:
-      reference: "*tokens"
-      details:
-        maps_to: "Tailwind theme configuration"
+colors:
+  ink: "#0B0B0C"
+  paper: "#FAFAFA"
+  mute: "#8A8F98"
+  accent: "#58E877"
+  usage:
+    accent:
+      - hover states
+      - focus states
+      - call-to-action emphasis
+    rules:
+      - accent is never used as body text color
+      - accent appears sparingly
 
-    file_hygiene:
-      avoid:
-        fractional_pixels: true
-        inline_css: true
-        duplicated_components: true
-      enforce:
-        - semantic_naming
-        - design_tokens
-        - clean_structure
+svg:
+  rules:
+    - use inline SVG for icons requiring color control
+    - use fill="currentColor" or stroke="currentColor"
+    - never hard-code fill colors in SVGs
+    - next/image is not used for icons
 
-  # --------------------------------------------------------------------------
-  # DEVELOPMENT STANDARDS
-  # --------------------------------------------------------------------------
-  development_standards:
-    no_inline_styles:
-      avoid_example: 'style={{ marginTop: "23px" }}'
-      use_instead: 'className="mt-6"'
-      note: "Tailwind classes compile to utility tokens, not inline CSS."
+files_of_interest:
+  layout:
+    - components/LayoutGrid.tsx
+    - components/Header.tsx
+    - components/BottomBar.tsx
+  projects:
+    - components/ProjectGrid.tsx
+    - components/ProjectExpanded.tsx
+    - lib/projects.ts
+  styling:
+    - tailwind.config.js
+    - globals.css
 
-    style_locations:
-      tailwind_config:
-        purpose: "Design tokens live in tailwind.config.js"
-      globals_css:
-        purpose: "Resets, base rules, global typography"
-      component_files:
-        purpose: "Use Tailwind utilities; no inline CSS"
-        example_button: |
-          export function Button({ children }) {
-            return (
-              <button
-                className="px-4 py-2 rounded-full bg-ink text-paper inline-flex items-center text-sm font-medium hover:bg-neutral-900 transition"
-              >
-                {children}
-              </button>
-            );
-          }
-
-    javascript_structure:
-      react_components: "UI rendering + internal state"
-      hooks_directory: "/hooks for shared logic"
-      hooks_example: |
-        export function useToggle(initial = false) {
-          const [isOn, setIsOn] = useState(initial);
-          const toggle = () => setIsOn(x => !x);
-          return { isOn, toggle };
-        }
-      lib_directory: "/lib for utilities and helpers"
-      avoid:
-        - script_tags
-        - direct_dom_manipulation
-
-    folder_structure:
-      app:
-        - layout.tsx
-        - page.tsx
-        - projects/page.tsx
-      components:
-        <<: *components
-      hooks:
-        - useToggle.ts
-        - useScrollLock.ts
-      lib:
-        - analytics.ts
-        - constants.ts
-      styles:
-        - globals.css
-        - fonts.css
-      public:
-        - jtd-nav/
-        - icons/
-        - og/
-      config_files:
-        - tailwind.config.js
-
-    component_standards:
-      rules:
-        - use_semantic_html
-        - use_tailwind_tokens
-        - enforce_reusability
-        - provide_variants: ["hover", "active", "disabled"]
-        - avoid_repeated_class_strings
-        - isolate_logic_in_hooks
-
-    figma_to_code_mapping:
-      tokens: "Figma → Tailwind config"
-      auto_layout: "Figma Auto Layout → Flexbox/Grid"
-      components: "Figma → React components"
-      layouts: "Frame breakpoints → Tailwind responsive classes"
-      spacing: "Figma spacing → Tailwind mt-/gap- utilities"
-
-  # --------------------------------------------------------------------------
-  # PRINCIPLES
-  # --------------------------------------------------------------------------
-  guiding_principles:
-    - "Consistency over improvisation."
-    - "Components over duplication."
-    - "Design tokens everywhere."
-    - "Auto-layout everywhere."
-    - "Semantic naming across Figma and React."
-    - "No inline styles."
-    - "Think like an engineer, design like a designer."
-
-  purpose:
-    description: >
-      This YAML serves as the unified system for jtuttledigital-portfolio:
-      - Figma documentation
-      - Next.js development guidelines
-      - Component library rules
-      - Recruiter/hiring manager evaluation
-      - Scalable long-term architecture
-  # --------------------------------------------------------------------------
-  # HEADER LAYOUT SPECIFICATION
-  # --------------------------------------------------------------------------
-  header_layout_spec:
-  description: >
-    The header uses a three-cell structure aligned to the 12-column grid.
-    Each cell uses asymmetric padding so that its text edges align precisely
-    with both the column gutters and the inner padding of project tiles.
-    This ensures consistent edge alignment across header text, tiles, and layout sections.
-
-  grid_alignment:
-    type: "12-column"
-    margin: 24px
-    gutter: 24px
-    rationale: >
-      Using asymmetric padding within header cells allows the header content to
-      snap exactly to the same internal spacing used by project tiles and section blocks.
-
-  cell_padding:
-    left_cell:
-      padding_left: 24px
-      padding_right: 12px
-      purpose: "Aligns left header text block to outer margin and internal tile padding."
-    center_cell:
-      padding_left: 12px
-      padding_right: 12px
-      purpose: "Keeps center text balanced and aligned to internal gutters on both sides."
-    right_cell:
-      padding_left: 12px
-      padding_right: 24px
-      purpose: "Aligns right header text block to outer margin and tile inner padding."
-
-  proportional_layout:
-    ratio: "3 : 1 : 2"
-    column_span:
-      left_block: 6
-      center_block: 2
-      right_block: 4
-    rationale: >
-      The 3-1-2 proportional layout defines visual hierarchy while preserving
-      mathematical balance across the 12-column system. This ratio scales
-      cleanly across responsive breakpoints.
-
-  alignment_rules:
-    left_block: "Left-aligned to column boundaries"
-    center_block: "Center-aligned with fixed-width bounding frame"
-    right_block: "Right-aligned to column boundaries"
-
-  design_intent: >
-    The header should feel minimal, grid-driven, and typographically clean,
-    with all edges visually locking to the same internal rhythm used in tile layouts.
-    This creates a unified visual system across the portfolio.
-    
-
-  maintained_by: "John Tuttle – J. Tuttle Digital"
-  repository: "jtuttledigital-portfolio"
+ai_guardrails:
+  do_not_modify_without_permission:
+    - LayoutGrid structure
+    - column count
+    - 15px padding system
+    - header/footer behavior
+    - ProjectExpanded scroll logic
+  ai_behavior:
+    - ask before changing layout
+    - confirm scope (local vs global)
+    - default to consistency over novelty

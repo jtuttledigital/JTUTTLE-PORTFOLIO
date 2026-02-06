@@ -1,53 +1,72 @@
 // components/BottomBar.tsx
-import { FooterLink } from "./FooterLink";
+import { LayoutGrid } from "@/components/LayoutGrid";
+import { AppLink } from "@/components/AppLink";
+import Image from "next/image";
 
 export function BottomBar() {
   return (
-    <footer className="fixed inset-x-0 bottom-0 border-t border-neutral-800 bg-[#111113] footer-dot-grid">
-      <div
-        className="
-          max-w-6xl
-          mx-auto
-          px-[15px]
-          py-4
-          md:py-6
-          text-[11px]
-          text-neutral-400
-          grid
-          gap-10
-          md:grid-cols-[minmax(0,2.15fr)_minmax(0,1.2fr)_minmax(0,1fr)]
-        "
-      >
-        {/* Column 1: version + timestamp, top-left aligned */}
-        <div className="flex flex-col items-start gap-2">
-          <span className="inline-flex items-center rounded-full border border-accent/70 px-2 py-0.5 font-mono text-[9px] tracking-wide text-accent bg-[#111113]/80">
-            v1.0.0
-          </span>
-          <span>Last updated 2025-12-04</span>
-          <span>Built with Next.js.</span>
-        </div>
+    <footer className="fixed inset-x-0 bottom-0 z-0 border-t border-neutral-800 bg-[#1c1c1c] footer-dot-grid">
+      {/* dot-grid background */}
+      <div className="absolute inset-0 opacity-80 [background-size:18px_18px]" />
 
-        {/* Column 2: stacked links, left aligned */}
-        <div className="flex flex-col items-start space-y-2">
-          <FooterLink href="https://soundcloud.com/jtuttledigital" label="Audio" />
-          <FooterLink href="https://www.linkedin.com/in/jtuttledigital" label="LinkedIn" />
-          <FooterLink href="https://github.com/jtuttledigital" label="GitHub" />
-          <FooterLink href="https://x.com/jtuttledigital" label="X" />
-        </div>
+      <LayoutGrid mdCols={6} className="relative z-10 h-full items-start py-6 text-sm">
+        {/* COLS 1–3 */}
+        <div className="md:col-span-3">
+          <div className="inline-flex items-center">
+  <Image
+    src="/jtd_favicon.svg"
+    alt="J. Tuttle Digital"
+    width={28}
+    height={28}
+    className="opacity-90"
+    priority
+  />
+</div>
 
-        {/* Column 3: terminal-style contact, top-left aligned */}
-        <div className="flex flex-col items-start text-neutral-300 leading-tight">
-          <div className="font-mono text-[10px] text-neutral-500">
-            $ run creativity --pair-mode
+
+          <div className="mt-3 space-y-2 text-neutral-400">
+            <div>Last updated 2025-12-04</div>
+            <div>Built with Next.js</div>
           </div>
-          <a
-            href="mailto:john@jtuttledigital.com"
-            className="hover:text-accent transition-colors"
-          >
-            john@jtuttledigital.com
-          </a>
         </div>
-      </div>
+
+        {/* COL 4 */}
+        <div className="mt-6 md:mt-0 md:col-start-4 md:col-span-1">
+          <nav className="flex flex-col gap-2">
+            <AppLink className="link w-fit" href="/audio">
+              Audio
+            </AppLink>
+
+            <AppLink className="link w-fit" href="https://www.linkedin.com/in/your-handle">
+              LinkedIn
+            </AppLink>
+
+            <AppLink className="link w-fit" href="https://github.com/your-handle">
+              GitHub
+            </AppLink>
+
+            <AppLink className="link w-fit" href="https://x.com/your-handle">
+              X
+            </AppLink>
+          </nav>
+        </div>
+
+        {/* COLS 5–6 */}
+        <div className="mt-6 md:mt-0 md:col-start-5 md:col-span-2">
+  <div>
+    <div className="font-mono text-[11px] leading-relaxed text-neutral-400 pl-[0.35rem]">
+      $ run creativity --pair-mode
+    </div>
+
+    <div className="mt-1 font-sans text-neutral-100">
+      <AppLink className="link" href="mailto:john@jtuttledigital.com">
+        john@jtuttledigital.com
+      </AppLink>
+    </div>
+  </div>
+</div>
+
+      </LayoutGrid>
     </footer>
   );
 }

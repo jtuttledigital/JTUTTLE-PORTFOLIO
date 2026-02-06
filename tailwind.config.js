@@ -1,3 +1,5 @@
+// tailwind.config.js
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -7,10 +9,24 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        ink: "#0B0B0C",
+        ink: "#111111",
         paper: "#FAFAFA",
         mute: "#8a8f98",
-        accent: "#58e877", // ← your hex green
+
+        /**
+         * ACCENT (TRANSITIONAL)
+         * --------------------
+         * Keep in sync with CSS variables in globals.css:
+         *   --accent
+         *   --accent-bg
+         *   --accent-underline
+         *
+         * New text links should use the `.link` class (CSS variables),
+         * not `text-accent`.
+         *
+         * This exists only for legacy / transitional components.
+         */
+        accent: "#58e877",
       },
       fontFamily: {
         sans: ["Inter", "ui-sans-serif", "system-ui"],

@@ -1,6 +1,6 @@
 // components/Header.tsx
-import Image from "next/image";
 import { LayoutGrid } from "./LayoutGrid";
+import { LogoMark } from "./LogoMark";
 
 type HeaderProps = {
   projectOpen?: boolean;
@@ -10,26 +10,31 @@ type HeaderProps = {
 export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
   return (
     <header className="sticky top-0 z-50 w-full bg-[#111111] backdrop-blur-sm">
-      {/* MOBILE: single-row header (no wrap) */}
+      {/* MOBILE */}
       <div className="md:hidden h-20 border-b border-neutral-800 px-5">
         <div className="h-full flex items-center gap-4 min-w-0">
-          {/* Logo */}
-          <div className="flex items-center shrink-0">
-            <Image
-              src="/logo-jtuttledigital.svg"
-              width={145}
-              height={32}
-              alt="J. Tuttle Digital"
-              priority
-            />
+          {/* Logo (link) + Name (static) */}
+          <div className="flex items-center gap-3 shrink-0">
+            <a
+              href="/"
+              aria-label="Home"
+              className="inline-flex items-center text-neutral-100 transition-colors hover:[color:var(--accent)] focus-visible:[color:var(--accent)] focus-visible:outline-none"
+            >
+              <LogoMark className="h-6 w-6 text-current" />
+            </a>
+
+
+            <span className="text-sm font-semibold text-neutral-200 tracking-tight">
+              John Tuttle
+            </span>
           </div>
 
-          {/* Role (stays on same row) */}
+          {/* Role */}
           <div className="text-sm font-semibold text-neutral-300 whitespace-nowrap">
             Product Designer
           </div>
 
-          {/* Spacer */}
+          {/* Spacer / Close */}
           <div className="ml-auto flex items-center">
             {projectOpen ? (
               <button
@@ -64,20 +69,25 @@ export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
         </div>
       </div>
 
-      {/* DESKTOP: your original aligned grid */}
+      {/* DESKTOP */}
       <LayoutGrid
         mdCols={6}
         className="hidden md:grid items-center h-20 text-sm border-b border-neutral-800"
       >
-        {/* Cols 1–3: Logo */}
-        <div className="flex h-full items-center md:col-span-3">
-          <Image
-            src="/logo-jtuttledigital.svg"
-            width={145}
-            height={32}
-            alt="J. Tuttle Digital"
-            priority
-          />
+        {/* Cols 1–3: Logo (link) + Name (static) */}
+        <div className="md:col-span-3 flex h-full items-center gap-3">
+          <a
+            href="/"
+            aria-label="Home"
+            className="inline-flex items-center text-neutral-100 transition-colors hover:[color:var(--accent)] focus-visible:[color:var(--accent)] focus-visible:outline-none"
+          >
+            <LogoMark className="h-6 w-6 text-current" />
+          </a>
+
+
+          <span className="text-sm font-semibold text-neutral-200 tracking-tight">
+            John Tuttle
+          </span>
         </div>
 
         {/* Col 4: Role */}
@@ -85,7 +95,7 @@ export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
           Product Designer
         </div>
 
-        {/* Col 5: Location (desktop only) */}
+        {/* Col 5: Location */}
         <div className="md:col-span-1 flex h-full items-center font-semibold text-neutral-300">
           Seattle, WA
         </div>

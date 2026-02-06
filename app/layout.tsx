@@ -3,11 +3,69 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { BottomBar } from "@/components/BottomBar";
 
+const siteUrl = "https://johntuttle.cv";
+
 export const metadata: Metadata = {
-  title: "J. Tuttle Digital",
-  description: "Product Designer – portfolio",
+  metadataBase: new URL(siteUrl),
+
+  title: {
+    default: "John Tuttle — Product Designer",
+    template: "%s — John Tuttle",
+  },
+  description:
+    "Product Designer building systems, interfaces, and AI-assisted tools. Seattle, WA.",
+
+  applicationName: "John Tuttle",
+  authors: [{ name: "John Tuttle" }],
+  creator: "John Tuttle",
+
   icons: {
-    icon: "/jtd_favicon.svg",
+    // ✅ Keep J_only.svg as favicon
+    icon: [{ url: "/J_only.svg", type: "image/svg+xml" }],
+
+    // ✅ Newly added
+    apple: [{ url: "/apple-touch-icon.png" }],
+  },
+
+  openGraph: {
+    type: "website",
+    url: siteUrl,
+    title: "John Tuttle — Product Designer",
+    description:
+      "Product Designer building systems, interfaces, and AI-assisted tools. Seattle, WA.",
+    siteName: "John Tuttle",
+
+    // ✅ Newly added
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "John Tuttle — Product Designer",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "John Tuttle — Product Designer",
+    description:
+      "Product Designer building systems, interfaces, and AI-assisted tools. Seattle, WA.",
+
+    // ✅ Newly added
+    images: ["/og.png"],
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 

@@ -20,6 +20,8 @@ function AspectClass(media: Pick<ProjectMedia, "span" | "aspect">) {
 }
 
 function MediaCard({ media }: { media: ProjectMedia }) {
+  const isPortrait = media.aspect === "portrait";
+
   return (
     <figure
       className={[
@@ -27,19 +29,38 @@ function MediaCard({ media }: { media: ProjectMedia }) {
         media.span === "full" ? "md:col-span-2" : "md:col-span-1",
       ].join(" ")}
     >
-      <div className={["relative", AspectClass(media)].join(" ")}>
-        <Image
-          src={media.src}
-          alt={media.alt}
-          fill
-          className="object-cover"
-          sizes={
-            media.span === "full"
-              ? "(min-width: 1024px) 66vw, 100vw"
-              : "(min-width: 1024px) 33vw, 100vw"
-          }
-        />
-      </div>
+      {isPortrait ? (
+        // Portrait: let the image define height (no aspect-box, no crop)
+        <div className="bg-black">
+          <Image
+            src={media.src}
+            alt={media.alt}
+            width={1200}
+            height={1500} // 4:5 portrait placeholder ratio
+            className="w-full h-auto object-contain"
+            sizes={
+              media.span === "full"
+                ? "(min-width: 1024px) 66vw, 100vw"
+                : "(min-width: 1024px) 33vw, 100vw"
+            }
+          />
+        </div>
+      ) : (
+        // Landscape (and default): keep consistent cards w/ cover crop
+        <div className={["relative", AspectClass(media)].join(" ")}>
+          <Image
+            src={media.src}
+            alt={media.alt}
+            fill
+            className="object-cover"
+            sizes={
+              media.span === "full"
+                ? "(min-width: 1024px) 66vw, 100vw"
+                : "(min-width: 1024px) 33vw, 100vw"
+            }
+          />
+        </div>
+      )}
 
       {media.caption ? (
         <figcaption className="px-4 py-3 text-[11px] font-mono text-neutral-400">
@@ -66,7 +87,7 @@ function FactsGrid({ facts }: { facts: ProjectFact[] }) {
 }
 
 export function ProjectExpanded({ project, onClose, onBack }: ProjectExpandedProps) {
-  const handleClose = onClose ?? onBack ?? (() => {});
+  const handleClose = onClose ?? onBack ?? (() => { });
 
   // Back-compat: if a project still uses supportingImages, treat them as half-width landscape media.
 
@@ -87,46 +108,46 @@ export function ProjectExpanded({ project, onClose, onBack }: ProjectExpandedPro
   return (
     <main className="bg-[#111111]">
       {/* Hero: prefers video, falls back to image */}
-{(project.heroVideoWebm || project.heroVideoMp4) ? (
-  <LayoutGrid className="pt-5">
-    <div className="md:col-span-3">
-      <div className="relative w-full bg-black">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-          className="w-full h-auto"
-          poster={project.heroImage}
-        >
-          {project.heroVideoWebm ? (
-            <source src={project.heroVideoWebm} type="video/webm" />
-          ) : null}
-          {project.heroVideoMp4 ? (
-            <source src={project.heroVideoMp4} type="video/mp4" />
-          ) : null}
-        </video>
-      </div>
-    </div>
-  </LayoutGrid>
-) : project.heroImage ? (
-  <LayoutGrid className="pt-5">
-    <div className="md:col-span-3">
-      <div className="relative w-full bg-black">
-        <Image
-          src={project.heroImage}
-          alt={project.title}
-          width={3000}
-          height={1688}
-          priority
-          className="w-full h-auto"
-          sizes="100vw"
-        />
-      </div>
-    </div>
-  </LayoutGrid>
-) : null}
+      {(project.heroVideoWebm || project.heroVideoMp4) ? (
+        <LayoutGrid className="pt-5">
+          <div className="md:col-span-3">
+            <div className="relative w-full bg-black">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                className="w-full h-auto"
+                poster={project.heroImage}
+              >
+                {project.heroVideoWebm ? (
+                  <source src={project.heroVideoWebm} type="video/webm" />
+                ) : null}
+                {project.heroVideoMp4 ? (
+                  <source src={project.heroVideoMp4} type="video/mp4" />
+                ) : null}
+              </video>
+            </div>
+          </div>
+        </LayoutGrid>
+      ) : project.heroImage ? (
+        <LayoutGrid className="pt-5">
+          <div className="md:col-span-3">
+            <div className="relative w-full bg-black">
+              <Image
+                src={project.heroImage}
+                alt={project.title}
+                width={3000}
+                height={1688}
+                priority
+                className="w-full h-auto"
+                sizes="100vw"
+              />
+            </div>
+          </div>
+        </LayoutGrid>
+      ) : null}
 
       {/* Shared 3-column grid */}
       <LayoutGrid className="gap-y-10 py-10 text-sm">
@@ -141,66 +162,66 @@ export function ProjectExpanded({ project, onClose, onBack }: ProjectExpandedPro
           <p className="mt-2 text-neutral-400">{project.subtitle}</p>
 
           {/* Primary CTAs (left rail) */}
-{project.links ? (
-  <div className="mt-6 flex flex-col gap-3">
-    {project.links.demo && (
-      <Link
-        href={project.links.demo}
-        target="_blank"
-        rel="noreferrer"
-        className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#1c1c1c] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
-      >
-        <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
-          Live demo
-        </span>
-        <span
-          aria-hidden
-          className="text-neutral-400 group-hover:text-accent transition-colors"
-        >
-          →
-        </span>
-      </Link>
-    )}
+          {project.links ? (
+            <div className="mt-6 flex flex-col gap-3">
+              {project.links.demo && (
+                <Link
+                  href={project.links.demo}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#1c1c1c] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
+                >
+                  <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
+                    Live demo
+                  </span>
+                  <span
+                    aria-hidden
+                    className="text-neutral-400 group-hover:text-accent transition-colors"
+                  >
+                    →
+                  </span>
+                </Link>
+              )}
 
-    {project.links.repo && (
-      <Link
-        href={project.links.repo}
-        target="_blank"
-        rel="noreferrer"
-        className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#1c1c1c] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
-      >
-        <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
-          GitHub repo
-        </span>
-        <span
-          aria-hidden
-          className="text-neutral-400 group-hover:text-accent transition-colors"
-        >
-          →
-        </span>
-      </Link>
-    )}
+              {project.links.repo && (
+                <Link
+                  href={project.links.repo}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#1c1c1c] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
+                >
+                  <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
+                    GitHub repo
+                  </span>
+                  <span
+                    aria-hidden
+                    className="text-neutral-400 group-hover:text-accent transition-colors"
+                  >
+                    →
+                  </span>
+                </Link>
+              )}
 
-    {project.links.caseStudy && (
-      <Link
-        href={project.links.caseStudy}
-        target="_blank"
-        rel="noreferrer"
-        className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#1c1c1c] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
-      >
-        <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
-          Case study
-        </span>
-        <span
-          aria-hidden
-          className="text-neutral-400 group-hover:text-accent transition-colors"
-        >
-          →
-        </span>
-      </Link>
-    )}
-  </div>
-) : null}
+              {project.links.caseStudy && (
+                <Link
+                  href={project.links.caseStudy}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#1c1c1c] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
+                >
+                  <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
+                    Case study
+                  </span>
+                  <span
+                    aria-hidden
+                    className="text-neutral-400 group-hover:text-accent transition-colors"
+                  >
+                    →
+                  </span>
+                </Link>
+              )}
+            </div>
+          ) : null}
 
           <button
             type="button"
@@ -213,8 +234,15 @@ export function ProjectExpanded({ project, onClose, onBack }: ProjectExpandedPro
 
         {/* Right stream (cols 2 + 3) */}
         <section className="md:col-span-2 min-w-0">
-          {/* 1) Full-width intro copy */}
-          <p className="text-neutral-200 leading-relaxed">{project.description}</p>
+          {/* DESCRIPTION */}
+          <div className="mb-10">
+            <div className="text-[10px] font-mono tracking-[0.25em] text-neutral-500">
+              DESCRIPTION
+            </div>
+            <p className="mt-4 text-neutral-200 leading-relaxed max-w-[70ch]">
+              {project.description}
+            </p>
+          </div>
 
           {/* 2) 4-up facts grid (Role/Team/Duration/Tools) */}
           {project.facts && project.facts.length > 0 ? (
@@ -235,12 +263,49 @@ export function ProjectExpanded({ project, onClose, onBack }: ProjectExpandedPro
           {/* 6) Conclusion / sources block */}
           {project.conclusion ? (
             <div className="mt-10 border-t border-neutral-800 pt-6">
-              <div className="text-[10px] font-mono tracking-[0.25em] text-neutral-500">
-                NOTES
+
+              <div className="mt-4 space-y-4 text-neutral-300 leading-relaxed">
+                {project.conclusion.split("\n").map((line, idx) => {
+                  const t = line.trim();
+                  if (!t) return null;
+
+                  // Section divider
+                  if (t === "—" || t === "---") {
+                    return <hr key={idx} className="border-neutral-800" />;
+                  }
+
+                  // ALL CAPS heading lines (e.g., "OVERVIEW", "KEY DECISIONS")
+                  const isHeading = /^[A-Z0-9 /&-]{3,}$/.test(t) && t.length <= 32;
+
+                  if (isHeading) {
+                    return (
+                      <h4
+                        key={idx}
+                        className="text-[10px] font-mono tracking-[0.25em] text-neutral-500"
+                      >
+                        {t}
+                      </h4>
+                    );
+                  }
+
+                  // Bullet lines starting with "•"
+                  if (t.startsWith("•")) {
+                    return (
+                      <ul key={idx} className="list-disc pl-5">
+                        <li className="text-neutral-300">{t.slice(1).trim()}</li>
+                      </ul>
+                    );
+                  }
+
+                  // Default paragraph
+                  return (
+                    <p key={idx} className="text-neutral-300">
+                      {t}
+                    </p>
+                  );
+                })}
               </div>
-              <p className="mt-3 text-neutral-300 leading-relaxed">
-                {project.conclusion}
-              </p>
+
             </div>
           ) : null}
         </section>

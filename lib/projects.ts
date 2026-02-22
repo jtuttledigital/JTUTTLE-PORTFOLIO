@@ -83,7 +83,7 @@ export const projects: Project[] = [
       "AI-assisted brand system generator that outputs palettes, typography, logos, and exportable brand boards (tokens, CSS vars, Tailwind snippets, PDFs). Built to move from prompt → usable system fast.",
 
     links: {
-      demo: "https://brand-designer-demo.example.com",
+      demo: "https://brand-designer-three.vercel.app",
       repo: "https://github.com/jtuttledigital/brand-designer",
     },
 
@@ -98,14 +98,16 @@ export const projects: Project[] = [
       {
         src: "/projects/brand-designer/type_2400x1350.png",
         alt: "Brand Designer — typography screen",
-        caption: "Curated type sets with preview, lock states, and iterative suggestions.",
+        caption:
+          "Curated type sets with preview, lock states, and iterative suggestions.",
         span: "full",
         aspect: "landscape",
       },
       {
         src: "/projects/brand-designer/palette_2400x1350.png",
         alt: "Brand Designer — palette screen",
-        caption: "Four-color core palette with optional support color and lockable shuffles.",
+        caption:
+          "Four-color core palette with optional support color and lockable shuffles.",
         span: "full",
         aspect: "landscape",
       },
@@ -123,7 +125,7 @@ export const projects: Project[] = [
         span: "full",
         aspect: "portrait",
       },
-      
+
       {
         src: "/projects/brand-designer/zip_2400x1350.png",
         alt: "Brand Designer — token export",
@@ -131,7 +133,6 @@ export const projects: Project[] = [
         span: "full",
         aspect: "landscape",
       },
-      
     ],
 
     conclusion: `
@@ -180,46 +181,184 @@ This project is less about generating brands — and more about designing the sy
 
   {
     slug: "alto-moving",
-    category: "PRODUCT DESIGN",
+    category: "PRODUCT ECOSYSTEM",
     title: "Alto Moving",
-    subtitle: "Site design and development.",
+    subtitle: "Brand, website, estimator, automation",
     tileImage: "/projects/alto/alto-tile.png",
+
+    // Expanded hero
     heroImage: "/projects/alto/alto-tile.png",
+
     description:
-      "A production website and brand system built for a real operating business. The project focuses on scalable layout systems, clear messaging, and conversion-driven UX to support local SEO, lead flow, and ongoing iteration as the business grows.",
+      "Built the brand identity and digital product ecosystem for a local moving startup — spanning visual identity, a conversion-focused website, an interactive cost estimator, and lightweight automation systems.",
+
+    // NOTE: caseStudy = website, demo = estimator (keeps existing CTA rendering unchanged)
     links: {
-      demo: "https://altomoving.com",
+      caseStudy: "https://www.altomoving.com",
+      demo: "https://alto-estimator.vercel.app",
     },
+
     facts: [
-      { label: "ROLE", value: "Designer / Builder" },
+      { label: "ROLE", value: "Product Designer / Visual Designer / Front-End" },
       { label: "TEAM", value: "Solo" },
-      { label: "DURATION", value: "2020–Present" },
-      { label: "TOOLS", value: "Figma / Webflow" },
+      { label: "DURATION", value: "2020–2025" },
+      { label: "TOOLS", value: "Figma, Webflow, JS, Automation" },
     ],
-    conclusion:
-      "Built as a living system rather than a static site, the project expanded to include a custom estimate application used to qualify leads and generate pricing. The work reflects an ongoing balance between design quality, operational constraints, and real customer behavior.",
+
+    supportingMedia: [
+      {
+        src: "/projects/alto/logo-mark_2400x1350.png",
+        alt: "Alto Moving — logo mark and favicon variants",
+        caption:
+          "Market-attuned identity optimized for legibility across trucks, hats, decals, and mobile.",
+        span: "full",
+        aspect: "landscape",
+      },
+      {
+        src: "/projects/alto/home_2400x1350.png",
+        alt: "Alto Moving — homepage",
+        caption: "Conversion-focused homepage structured around clarity and trust.",
+        span: "full",
+        aspect: "landscape",
+      },
+      {
+        src: "/projects/alto/mobile_1500x2000.png",
+        alt: "Alto Moving — mobile layouts",
+        caption: "Mobile-first layout and service hierarchy for fast decision-making.",
+        span: "full",
+        aspect: "portrait",
+      },
+      {
+        src: "/projects/alto/estimator-input_2400x1350.png",
+        alt: "Alto Estimator — input flow",
+        caption:
+          "Interactive estimator designed to reduce quoting friction and qualify leads.",
+        span: "full",
+        aspect: "landscape",
+      },
+      {
+        src: "/projects/alto/estimator-result_2400x1350.png",
+        alt: "Alto Estimator — results screen",
+        caption:
+          "Results and next steps: pricing expectations before contact to improve lead quality.",
+        span: "full",
+        aspect: "landscape",
+      },
+      {
+        src: "/projects/alto/pipeline_2400x1350.png",
+        alt: "Alto Moving — content automation pipeline",
+        caption: "Modular pipeline: idea → script → voice → video → review → schedule.",
+        span: "full",
+        aspect: "landscape",
+      },
+    ],
+
+    conclusion: `
+BRAND SYSTEM
+Designed a market-attuned identity optimized for clarity, legibility, and small-scale reproduction across trucks, hats, decals, and mobile screens. The identity acted as a credibility multiplier, helping the business feel more established than its size and driving strong internal adoption.
+
+—
+
+WEBSITE
+Designed and built a conversion-focused marketing site structured around service clarity and fast decision-making. Emphasis on mobile-first layout, clean hierarchy, and practical trust signals.
+
+—
+
+ESTIMATOR APP
+Designed an interactive cost estimator to qualify leads and set pricing expectations before contact. Reduced back-and-forth quoting, improved lead quality, and supported modular pricing logic.
+
+—
+
+AUTOMATION
+Built a lightweight content automation pipeline using AI tools with a human review step to support ongoing brand presence:
+Idea → Script → Voice → Video → Review → Schedule
+
+—
+
+OUTCOME
+• Reached profitability  
+• Generated consistent inbound leads  
+• Reduced manual operational overhead  
+
+—
+
+WHAT THIS DEMONSTRATES
+• End-to-end product ownership  
+• Market-driven visual design  
+• UI/UX + front-end implementation  
+• Systems thinking
+`.trim(),
   },
 
   {
     slug: "bing",
-    category: "PRODUCT DESIGN",
-    title: "Bing",
-    subtitle: "Motion and interactive media experiments",
-    tileImage: "/projects/bing/tile.jpg",
+  category: "PRODUCT SYSTEMS",
+  title: "Bing",
+  subtitle: "Homepage motion system (DIS / Microsoft)",
+  tileImage: "/projects/bing/tile.jpg",
 
-    tileVideoWebm: "/projects/bing/northern-lights-loop.webm",
-    tileVideoMp4: "/projects/bing/northern-lights-loop.mp4",
+  tileVideoWebm: "/projects/bing/northern-lights-loop.webm",
+  tileVideoMp4: "/projects/bing/northern-lights-loop.mp4",
 
-    heroVideoWebm: "/projects/bing/northern-lights-loop.webm",
-    heroVideoMp4: "/projects/bing/northern-lights-loop.mp4",
+  heroVideoWebm: "/projects/bing/northern-lights-loop.webm",
+  heroVideoMp4: "/projects/bing/northern-lights-loop.mp4",
 
-    heroImage: "/projects/bing/tile.jpg",
+  heroImage: "/projects/bing/tile.jpg",
 
-    description:
-      "Concept and production work exploring motion, compositing, and interactive media systems for Bing.",
+  heroMaxWidth: "md",
 
-    links: {
-      // intentionally omitted
-    },
+  description:
+    "Prototyped a seamless looping video approach for Bing’s homepage at Microsoft (DIS), establishing a repeatable workflow that balanced premium visual quality with strict web performance constraints.",
+
+  facts: [
+    { label: "ROLE", value: "Visual / Motion Designer" },
+    { label: "TEAM", value: "Media Acquisitions Digital Studio (DIS)" },
+    { label: "DURATION", value: "Early HTML5 era (approx. 2009–2010)" },
+    { label: "TOOLS", value: "After Effects, Photoshop" },
+  ],
+
+  // supportingMedia: [
+  //   {
+  //     src: "/projects/bing/tile.jpg",
+  //     alt: "Bing — still frame from looping homepage video",
+  //     caption:
+  //       "Representative homepage loop (Northern Lights). Additional examples will be added as archives are recovered.",
+  //     span: "full",
+  //     aspect: "landscape",
+  //   },
+  // ],
+
+  conclusion: `
+OVERVIEW
+At Microsoft’s Media Acquisitions Digital Studio (DIS), I prototyped and productionized a seamless looping-video approach for Bing’s homepage. The objective was to introduce motion without visible start/stop seams while keeping assets small enough for reliable web delivery.
+
+—
+
+PROBLEM
+Bing wanted homepage motion that could be produced repeatedly (across many daily visuals) with consistent quality and predictable performance. Standard video playback created obvious loop seams and inconsistent results.
+
+—
+
+APPROACH
+• Chose loop-friendly footage and edit points to hide repetition  
+• Used crossfade / blend techniques to return clips into themselves  
+• Built After Effects templates + export presets to standardize output  
+• Defined delivery specs to keep playback smooth and file sizes controlled  
+
+—
+
+OUTCOME
+• The prototype validated the approach and enabled broader adoption  
+• DIS became a primary production partner for Bing homepage motion loops  
+• Templates and export specs were reused as internal reference standards  
+• Example work was featured in a Microsoft company-wide presentation  
+
+—
+
+WHAT THIS DEMONSTRATES
+• Systems thinking applied to motion design  
+• Shipping under performance and platform constraints  
+• Repeatable production workflows (templates, specs, standards)
+`.trim(),
   },
 ];

@@ -33,19 +33,19 @@ export function BottomBar() {
         {/* COL 4 */}
         <div className="mt-6 md:mt-0 md:col-start-4 md:col-span-1">
           <nav className="flex flex-col gap-2">
-            <AppLink className="link w-fit" href="/audio">
+            <AppLink className="link w-fit" href="https://soundcloud.com/jtuttledigital">
               Audio
             </AppLink>
 
-            <AppLink className="link w-fit" href="https://www.linkedin.com/in/your-handle">
+            <AppLink className="link w-fit" href="https://www.linkedin.com/in/jtuttledigital">
               LinkedIn
             </AppLink>
 
-            <AppLink className="link w-fit" href="https://github.com/your-handle">
+            <AppLink className="link w-fit" href="https://github.com/jtuttledigital">
               GitHub
             </AppLink>
 
-            <AppLink className="link w-fit" href="https://x.com/your-handle">
+            <AppLink className="link w-fit" href="https://x.com/jtuttledigital">
               X
             </AppLink>
           </nav>
@@ -59,8 +59,8 @@ export function BottomBar() {
     </div>
 
     <div className="mt-1 font-sans text-neutral-100">
-      <AppLink className="link" href="mailto:john@jtuttledigital.com">
-        john@jtuttledigital.com
+      <AppLink className="link" href="mailto:jtuttledigital@gmail.com">
+        jtuttledigital@gmail.com
       </AppLink>
     </div>
   </div>

@@ -12,16 +12,7 @@ type ProjectExpandedProps = {
   onBack?: () => void; // optional legacy support
 };
 
-function AspectClass(media: Pick<ProjectMedia, "span" | "aspect">) {
-  // Width is controlled by the grid. Aspect controls height only.
-  if (media.span === "full") return "aspect-[16/9]";
-  if (media.aspect === "portrait") return "aspect-[4/5]";
-  return "aspect-[16/10]";
-}
-
 function MediaCard({ media }: { media: ProjectMedia }) {
-  const isPortrait = media.aspect === "portrait";
-
   return (
     <figure
       className={[
@@ -29,38 +20,21 @@ function MediaCard({ media }: { media: ProjectMedia }) {
         media.span === "full" ? "md:col-span-2" : "md:col-span-1",
       ].join(" ")}
     >
-      {isPortrait ? (
-        // Portrait: let the image define height (no aspect-box, no crop)
-        <div className="bg-black">
-          <Image
-            src={media.src}
-            alt={media.alt}
-            width={1200}
-            height={1500} // 4:5 portrait placeholder ratio
-            className="w-full h-auto object-contain"
-            sizes={
-              media.span === "full"
-                ? "(min-width: 1024px) 66vw, 100vw"
-                : "(min-width: 1024px) 33vw, 100vw"
-            }
-          />
-        </div>
-      ) : (
-        // Landscape (and default): keep consistent cards w/ cover crop
-        <div className={["relative", AspectClass(media)].join(" ")}>
-          <Image
-            src={media.src}
-            alt={media.alt}
-            fill
-            className="object-cover"
-            sizes={
-              media.span === "full"
-                ? "(min-width: 1024px) 66vw, 100vw"
-                : "(min-width: 1024px) 33vw, 100vw"
-            }
-          />
-        </div>
-      )}
+      {/* Always let the image define height (no aspect-box, no crop) */}
+      <div className="bg-black">
+        <Image
+          src={media.src}
+          alt={media.alt}
+          width={1600}
+          height={1000}
+          className="w-full h-auto object-contain"
+          sizes={
+            media.span === "full"
+              ? "(min-width: 1024px) 66vw, 100vw"
+              : "(min-width: 1024px) 33vw, 100vw"
+          }
+        />
+      </div>
 
       {media.caption ? (
         <figcaption className="px-4 py-3 text-[11px] font-mono text-neutral-400">
@@ -86,11 +60,30 @@ function FactsGrid({ facts }: { facts: ProjectFact[] }) {
   );
 }
 
-export function ProjectExpanded({ project, onClose, onBack }: ProjectExpandedProps) {
-  const handleClose = onClose ?? onBack ?? (() => { });
+function heroWidthClass(maxWidth: Project["heroMaxWidth"]) {
+  // "md" is your 960px cap target for the Bing loop export
+  switch (maxWidth) {
+    case "md":
+      return "max-w-[960px]";
+    case "lg":
+      return "max-w-[1120px]";
+    case "xl":
+      return "max-w-[1280px]";
+    case "none":
+      return "max-w-none";
+    default:
+      return "max-w-none";
+  }
+}
 
-  // Back-compat: if a project still uses supportingImages, treat them as half-width landscape media.
+export function ProjectExpanded({
+  project,
+  onClose,
+  onBack,
+}: ProjectExpandedProps) {
+  const handleClose = onClose ?? onBack ?? (() => {});
 
+  // Back-compat: if a project still uses supportingImages, treat them as half-width media.
   const fallbackMedia: ProjectMedia[] = (project.supportingImages ?? []).map(
     (src, idx) => ({
       src,
@@ -105,45 +98,52 @@ export function ProjectExpanded({ project, onClose, onBack }: ProjectExpandedPro
       ? project.supportingMedia
       : fallbackMedia;
 
+  const heroClass = heroWidthClass(project.heroMaxWidth);
+
   return (
     <main className="bg-[#111111]">
       {/* Hero: prefers video, falls back to image */}
-      {(project.heroVideoWebm || project.heroVideoMp4) ? (
+      {project.heroVideoWebm || project.heroVideoMp4 ? (
         <LayoutGrid className="pt-5">
           <div className="md:col-span-3">
-            <div className="relative w-full bg-black">
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="metadata"
-                className="w-full h-auto"
-                poster={project.heroImage}
-              >
-                {project.heroVideoWebm ? (
-                  <source src={project.heroVideoWebm} type="video/webm" />
-                ) : null}
-                {project.heroVideoMp4 ? (
-                  <source src={project.heroVideoMp4} type="video/mp4" />
-                ) : null}
-              </video>
+            {/* IMPORTANT: cap width + center so we never upscale the asset */}
+            <div className={["w-full", heroClass, "mx-auto"].join(" ")}>
+              <div className="relative w-full bg-black">
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                  className="block w-full h-auto"
+                  poster={project.heroImage}
+                >
+                  {project.heroVideoWebm ? (
+                    <source src={project.heroVideoWebm} type="video/webm" />
+                  ) : null}
+                  {project.heroVideoMp4 ? (
+                    <source src={project.heroVideoMp4} type="video/mp4" />
+                  ) : null}
+                </video>
+              </div>
             </div>
           </div>
         </LayoutGrid>
       ) : project.heroImage ? (
         <LayoutGrid className="pt-5">
           <div className="md:col-span-3">
-            <div className="relative w-full bg-black">
-              <Image
-                src={project.heroImage}
-                alt={project.title}
-                width={3000}
-                height={1688}
-                priority
-                className="w-full h-auto"
-                sizes="100vw"
-              />
+            <div className={["w-full", heroClass, "mx-auto"].join(" ")}>
+              <div className="relative w-full bg-black">
+                <Image
+                  src={project.heroImage}
+                  alt={project.title}
+                  width={3000}
+                  height={1688}
+                  priority
+                  className="w-full h-auto"
+                  sizes="100vw"
+                />
+              </div>
             </div>
           </div>
         </LayoutGrid>
@@ -244,14 +244,14 @@ export function ProjectExpanded({ project, onClose, onBack }: ProjectExpandedPro
             </p>
           </div>
 
-          {/* 2) 4-up facts grid (Role/Team/Duration/Tools) */}
+          {/* Facts grid */}
           {project.facts && project.facts.length > 0 ? (
             <div className="mt-8">
               <FactsGrid facts={project.facts} />
             </div>
           ) : null}
 
-          {/* 3/4) Media stack: full-width + portrait + 2-up, etc. */}
+          {/* Media stack */}
           {mediaStack.length > 0 ? (
             <div className="mt-8 grid gap-6 md:grid-cols-2">
               {mediaStack.map((m) => (
@@ -260,23 +260,19 @@ export function ProjectExpanded({ project, onClose, onBack }: ProjectExpandedPro
             </div>
           ) : null}
 
-          {/* 6) Conclusion / sources block */}
+          {/* Conclusion / sources block */}
           {project.conclusion ? (
             <div className="mt-10 border-t border-neutral-800 pt-6">
-
               <div className="mt-4 space-y-4 text-neutral-300 leading-relaxed">
                 {project.conclusion.split("\n").map((line, idx) => {
                   const t = line.trim();
                   if (!t) return null;
 
-                  // Section divider
                   if (t === "—" || t === "---") {
                     return <hr key={idx} className="border-neutral-800" />;
                   }
 
-                  // ALL CAPS heading lines (e.g., "OVERVIEW", "KEY DECISIONS")
                   const isHeading = /^[A-Z0-9 /&-]{3,}$/.test(t) && t.length <= 32;
-
                   if (isHeading) {
                     return (
                       <h4
@@ -288,7 +284,6 @@ export function ProjectExpanded({ project, onClose, onBack }: ProjectExpandedPro
                     );
                   }
 
-                  // Bullet lines starting with "•"
                   if (t.startsWith("•")) {
                     return (
                       <ul key={idx} className="list-disc pl-5">
@@ -297,7 +292,6 @@ export function ProjectExpanded({ project, onClose, onBack }: ProjectExpandedPro
                     );
                   }
 
-                  // Default paragraph
                   return (
                     <p key={idx} className="text-neutral-300">
                       {t}
@@ -305,7 +299,6 @@ export function ProjectExpanded({ project, onClose, onBack }: ProjectExpandedPro
                   );
                 })}
               </div>
-
             </div>
           ) : null}
         </section>

@@ -1,37 +1,47 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------
-   ACCENT TOKENS (PRIMARY SOURCE OF TRUTH)
+   DESIGN TOKENS (PRIMARY SOURCE OF TRUTH)
    ------------------------------------------------------------------
-   These CSS variables define the canonical accent color for the site.
+   Foundation tokens aligned to Obsidian Craft direction.
 
-   - The `.link` class and future design-system styles use these vars.
-   - Tailwind's `colors.accent` is transitional and must be kept in sync
-     if used by legacy components.
+   - Tailwind color aliases should stay in sync with these CSS variables.
+   - Accent is intentionally sparse and should be used on metadata,
+     emphasis, and interaction cues only.
 
    Preferred usage:
      - Text links → `.link`
-     - New components → CSS variables
-     - Avoid new `text-accent` usage where possible
+     - Surfaces/text defaults → token variables
+     - Metadata labels → `.meta-kicker`
 ------------------------------------------------------------------- */
 
 :root {
   color-scheme: dark;
---bottombar-height: 140px; /* match BottomBar actual height */
+  --bottombar-height: 140px; /* match BottomBar actual height */
+
+  --bg-900: #0e0e0e;
+  --bg-800: #131313;
+  --bg-700: #1c1b1b;
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1a1;
+
+  --accent: #adff2f;
+  --accent-hover: #c6ff69;
+  --accent-soft: #bde76a;
+  --accent-bg: rgba(173, 255, 47, 0.14);
+  --accent-underline: rgba(173, 255, 47, 0.9);
 }
 
 body {
-  background-color: #111111;
-  color: #f5f5f5;
-
-   /* Accent tokens (current Seahawks-ish green; swap later to purple here only) */
-  --accent: #00a86b;
-  --accent-hover: #00c97d;
-  --accent-bg: rgba(0, 168, 107, 0.24); /* ~ “50% muted” feel on dark UI */
-  --accent-underline: rgba(0, 168, 107, 0.9);
+  background-color: var(--bg-900);
+  color: var(--text-primary);
 }
 
 @layer components {
+  .meta-kicker {
+    color: var(--accent-soft);
+  }
+
   .link {
     position: relative;
     display: inline-flex;

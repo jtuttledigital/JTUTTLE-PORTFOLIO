@@ -37,7 +37,7 @@ function MediaCard({ media }: { media: ProjectMedia }) {
       </div>
 
       {media.caption ? (
-        <figcaption className="px-4 py-3 text-[11px] font-mono text-neutral-400">
+        <figcaption className="px-4 py-3 text-[11px] leading-relaxed font-mono text-neutral-400">
           {media.caption}
         </figcaption>
       ) : null}
@@ -50,10 +50,10 @@ function FactsGrid({ facts }: { facts: ProjectFact[] }) {
     <div className="grid gap-4 md:grid-cols-4">
       {facts.map((f) => (
         <div key={f.label} className="min-w-0">
-          <div className="text-[10px] font-mono tracking-[0.25em] text-neutral-500">
+          <div className="text-[10px] font-mono tracking-[0.25em] meta-kicker">
             {f.label}
           </div>
-          <div className="mt-1 text-[13px] text-neutral-200">{f.value}</div>
+          <div className="mt-1.5 text-[13px] leading-relaxed text-neutral-100">{f.value}</div>
         </div>
       ))}
     </div>
@@ -101,7 +101,7 @@ export function ProjectExpanded({
   const heroClass = heroWidthClass(project.heroMaxWidth);
 
   return (
-    <main className="bg-[#111111]">
+    <main className="bg-ink">
       {/* Hero: prefers video, falls back to image */}
       {project.heroVideoWebm || project.heroVideoMp4 ? (
         <LayoutGrid className="pt-5">
@@ -150,16 +150,16 @@ export function ProjectExpanded({
       ) : null}
 
       {/* Shared 3-column grid */}
-      <LayoutGrid className="gap-y-10 py-10 text-sm">
+      <LayoutGrid className="gap-y-12 py-12 text-sm">
         {/* Left rail (col 1) */}
         <aside className="md:sticky md:top-[88px] self-start">
-          <div className="mb-2 text-[10px] font-mono tracking-[0.25em] text-neutral-500">
+          <div className="mb-2 text-[10px] font-mono tracking-[0.25em] meta-kicker">
             {project.category}
           </div>
-          <h1 className="text-3xl font-semibold tracking-tight text-neutral-100">
+          <h1 className="text-3xl md:text-[2.15rem] leading-tight font-semibold tracking-tight text-neutral-100">
             {project.title}
           </h1>
-          <p className="mt-2 text-neutral-400">{project.subtitle}</p>
+          <p className="mt-3 text-[15px] leading-relaxed text-neutral-300">{project.subtitle}</p>
 
           {/* Primary CTAs (left rail) */}
           {project.links ? (
@@ -169,14 +169,14 @@ export function ProjectExpanded({
                   href={project.links.demo}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#1c1c1c] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
+                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-elevate px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
                 >
                   <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
                     Live demo
                   </span>
                   <span
                     aria-hidden
-                    className="text-neutral-400 group-hover:text-accent transition-colors"
+                    className="text-neutral-500 group-hover:text-accent transition-colors"
                   >
                     →
                   </span>
@@ -188,14 +188,14 @@ export function ProjectExpanded({
                   href={project.links.repo}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#1c1c1c] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
+                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-elevate px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
                 >
                   <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
                     GitHub repo
                   </span>
                   <span
                     aria-hidden
-                    className="text-neutral-400 group-hover:text-accent transition-colors"
+                    className="text-neutral-500 group-hover:text-accent transition-colors"
                   >
                     →
                   </span>
@@ -207,14 +207,14 @@ export function ProjectExpanded({
                   href={project.links.caseStudy}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#1c1c1c] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
+                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-elevate px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
                 >
                   <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
                     Case study
                   </span>
                   <span
                     aria-hidden
-                    className="text-neutral-400 group-hover:text-accent transition-colors"
+                    className="text-neutral-500 group-hover:text-accent transition-colors"
                   >
                     →
                   </span>
@@ -226,7 +226,7 @@ export function ProjectExpanded({
           <button
             type="button"
             onClick={handleClose}
-            className="mt-8 text-[13px] text-neutral-400 hover:text-accent transition-colors"
+            className="mt-9 text-[13px] tracking-[0.06em] uppercase text-neutral-400 hover:text-accent transition-colors"
           >
             ← Back to projects
           </button>
@@ -236,10 +236,10 @@ export function ProjectExpanded({
         <section className="md:col-span-2 min-w-0">
           {/* DESCRIPTION */}
           <div className="mb-10">
-            <div className="text-[10px] font-mono tracking-[0.25em] text-neutral-500">
+            <div className="text-[10px] font-mono tracking-[0.25em] meta-kicker">
               DESCRIPTION
             </div>
-            <p className="mt-4 text-neutral-200 leading-relaxed max-w-[70ch]">
+            <p className="mt-5 text-[15px] leading-7 text-neutral-200 max-w-[70ch]">
               {project.description}
             </p>
           </div>
@@ -263,7 +263,7 @@ export function ProjectExpanded({
           {/* Conclusion / sources block */}
           {project.conclusion ? (
             <div className="mt-10 border-t border-neutral-800 pt-6">
-              <div className="mt-4 space-y-4 text-neutral-300 leading-relaxed">
+              <div className="mt-5 space-y-5 text-[15px] leading-7 text-neutral-300">
                 {project.conclusion.split("\n").map((line, idx) => {
                   const t = line.trim();
                   if (!t) return null;
@@ -277,7 +277,7 @@ export function ProjectExpanded({
                     return (
                       <h4
                         key={idx}
-                        className="text-[10px] font-mono tracking-[0.25em] text-neutral-500"
+                        className="text-[10px] font-mono tracking-[0.25em] meta-kicker"
                       >
                         {t}
                       </h4>

@@ -14,7 +14,7 @@ export function ProjectGrid({ onSelect }: ProjectGridProps) {
       {projects.map((project: any) => (
         <article
           key={project.slug}
-          className="group bg-[#111111] border border-neutral-800/80 hover:border-accent/70 transition-colors overflow-hidden flex flex-col cursor-pointer"
+          className="group bg-panel border border-neutral-800/80 hover:border-accent/70 transition-colors overflow-hidden flex flex-col cursor-pointer"
           onClick={() => onSelect(project.slug)}
         >
           <div className="relative aspect-[16/10] bg-black overflow-hidden">
@@ -47,24 +47,24 @@ export function ProjectGrid({ onSelect }: ProjectGridProps) {
   )}
 
   {/* hover veil stays */}
-  <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30" />
+  <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/20" />
 </div>
 
           {/* Text */}
-          <div className="flex-1 px-6 py-5 flex flex-col justify-between">
+          <div className="flex-1 px-6 py-6 flex flex-col justify-between">
             <div>
-              <div className="mb-2 text-[10px] font-mono tracking-[0.25em] text-neutral-500 uppercase">
+              <div className="mb-3 text-[10px] font-mono tracking-[0.25em] meta-kicker uppercase">
                 {project.category}
               </div>
-              <h3 className="text-sm font-medium text-neutral-100">
+              <h3 className="text-[16px] leading-tight font-semibold text-neutral-100">
                 {project.title}
               </h3>
-              <p className="mt-1 text-[11px] text-neutral-400">
+              <p className="mt-2 text-[13px] leading-relaxed text-neutral-300">
                 {project.subtitle}
               </p>
             </div>
 
-            <div className="mt-6 text-[11px] text-neutral-300 group-hover:text-accent inline-flex items-center gap-1">
+            <div className="mt-7 text-[11px] tracking-[0.08em] uppercase text-neutral-400 group-hover:text-accent inline-flex items-center gap-1">
               View project <span aria-hidden>→</span>
             </div>
           </div>

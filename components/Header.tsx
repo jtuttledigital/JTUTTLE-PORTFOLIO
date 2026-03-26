@@ -9,7 +9,7 @@ type HeaderProps = {
 
 export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#111111] backdrop-blur-sm">
+    <header className="sticky top-0 z-50 w-full bg-ink backdrop-blur-sm">
       {/* MOBILE */}
       <div className="md:hidden h-20 border-b border-neutral-800 px-5">
         <div className="h-full flex items-center gap-4 min-w-0">

@@ -1,9 +1,15 @@
 // app/layout.tsx
 import "./globals.css";
 import type { Metadata } from "next";
+import { Space_Grotesk } from "next/font/google";
 import { BottomBar } from "@/components/BottomBar";
 
 const siteUrl = "https://johntuttle.cv";
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -75,8 +81,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-ink text-neutral-100 antialiased">
+    <html lang="en" className={spaceGrotesk.variable}>
+      <body className="bg-ink text-neutral-100 antialiased font-sans">
         {/* pb matches BottomBar height so it reveals naturally at page end */}
         <div className="relative min-h-screen pb-[22rem] md:pb-[10rem]">
           {/* content sits above the footer */}

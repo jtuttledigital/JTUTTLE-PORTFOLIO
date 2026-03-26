@@ -240,3 +240,49 @@ Displayed as small accent-tagged items
   - `npm run build` completes successfully.
 - Result:
   Phase 2 complete and stable. Stopped after Phase 2.
+
+### Phase 3 — Layout Chrome and Component Cohesion Pass
+- Date: 2026-03-25
+- Objective:
+  Improve header/footer chrome and unify section/card surface behavior so the interface feels more cohesive and intentional without structural rewrites.
+- Files changed:
+  - app/page.tsx
+  - components/Header.tsx
+  - components/ProjectGrid.tsx
+  - components/ProjectExpanded.tsx
+  - components/BottomBar.tsx
+- Summary of changes:
+  - Header/nav chrome polish:
+    - Switched header shell to panel-like sticky chrome (`bg-panel/90`, stronger blur, consistent bottom border).
+    - Harmonized role/location labels into compact metadata styling.
+    - Added subtle border treatment to close controls for more consistent chrome behavior.
+  - Section container consistency:
+    - Converted ABOUT and TEAM/DESCRIPTION blocks into matching panel containers (shared radius/border/surface treatment).
+    - Tightened major section spacing rhythm between intro block and project grid.
+  - Project card consistency polish:
+    - Unified card shell treatment (rounded corners, consistent border opacity and panel surface).
+    - Added consistent media/text separation via card image rail divider.
+    - Increased inter-card rhythm slightly for cleaner scanability.
+  - Expanded project panel consistency:
+    - Applied matching rounded panel framing to media cards and consistent caption divider behavior.
+    - Slightly improved media stack spacing rhythm.
+  - Footer structure refinement:
+    - Added lightweight metadata labels (`STATUS`, `LINKS`, `CONTACT`) for column clarity.
+    - Reduced grid texture overlay opacity from `0.45` to `0.30` to keep content readability ahead of background effect.
+- Risks encountered:
+  - Build still requires running outside sandbox due Turbopack process binding permissions.
+- Deferred items:
+  - Hero-specific composition rewrite.
+  - Deep project-card interaction enhancements (hover/media behavior beyond basic polish).
+  - Navigation behavior changes (drawer/menu architecture).
+  - Motion-focused refinements.
+  - Full responsive spacing normalization pass.
+- Manual test checklist:
+  - Sticky header remains stable and readable on mobile + desktop.
+  - Intro section panels feel visually balanced and spacing rhythm is coherent.
+  - Project cards retain click behavior and present consistent border/surface treatment.
+  - Expanded project media cards preserve rendering while matching panel style.
+  - Footer labels/readability are improved and texture remains subtle.
+  - `npm run build` completes successfully.
+- Result:
+  Phase 3 complete and stable. Stopped after Phase 3.

@@ -9,9 +9,9 @@ type HeaderProps = {
 
 export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-50 w-full bg-ink backdrop-blur-sm">
+    <header className="sticky top-0 z-50 w-full border-b border-neutral-800/90 bg-panel/90 backdrop-blur-md">
       {/* MOBILE */}
-      <div className="md:hidden h-20 border-b border-neutral-800 px-5">
+      <div className="md:hidden h-20 px-5">
         <div className="h-full flex items-center gap-4 min-w-0">
           {/* Logo (link) + Name (static) */}
           <div className="flex items-center gap-3 shrink-0">
@@ -30,7 +30,7 @@ export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
           </div>
 
           {/* Role */}
-          <div className="text-sm font-semibold text-neutral-300 whitespace-nowrap">
+          <div className="font-mono text-[10px] tracking-[0.22em] text-neutral-400 whitespace-nowrap">
             Product Designer
           </div>
 
@@ -42,7 +42,7 @@ export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
                 onClick={onCloseProject}
                 aria-label="Close project"
                 className="
-                  inline-flex h-10 w-10 items-center justify-center rounded
+                  inline-flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-700/80
                   text-neutral-200
                   transition-colors
                   hover:[color:var(--accent)] hover:[background-color:var(--accent-bg)]
@@ -72,7 +72,7 @@ export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
       {/* DESKTOP */}
       <LayoutGrid
         mdCols={6}
-        className="hidden md:grid items-center h-20 text-sm border-b border-neutral-800"
+        className="hidden md:grid items-center h-20 text-sm"
       >
         {/* Cols 1–3: Logo (link) + Name (static) */}
         <div className="md:col-span-3 flex h-full items-center gap-3">
@@ -91,12 +91,12 @@ export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
         </div>
 
         {/* Col 4: Role */}
-        <div className="md:col-span-1 flex h-full items-center font-semibold text-neutral-300">
+        <div className="md:col-span-1 flex h-full items-center font-mono text-[10px] tracking-[0.2em] text-neutral-400 uppercase">
           Product Designer
         </div>
 
         {/* Col 5: Location */}
-        <div className="md:col-span-1 flex h-full items-center font-semibold text-neutral-300">
+        <div className="md:col-span-1 flex h-full items-center font-mono text-[10px] tracking-[0.2em] text-neutral-500 uppercase">
           Seattle, WA
         </div>
 
@@ -108,7 +108,7 @@ export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
               onClick={onCloseProject}
               aria-label="Close project"
               className="
-                inline-flex h-10 w-10 items-center justify-center rounded
+                inline-flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-700/80
                 text-neutral-200
                 transition-colors
                 hover:[color:var(--accent)] hover:[background-color:var(--accent-bg)]

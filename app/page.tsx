@@ -35,9 +35,9 @@ export default function HomePage() {
           ) : (
             <>
               {/* ABOUT / TEAM / DESCRIPTION (6-col section grid) */}
-              <LayoutGrid mdCols={6} className="mb-12 text-sm gap-y-12">
+              <LayoutGrid mdCols={6} className="mb-14 text-sm gap-y-12">
                 {/* ABOUT — cols 1–3 */}
-                <div className="md:col-span-3 md:pr-35">
+                <div className="md:col-span-3 rounded-xl border border-neutral-800/90 bg-panel/80 p-6 md:p-8 md:pr-12">
                   <div className="grid gap-y-5">
                     <h2 className="text-[10px] font-mono tracking-[0.25em] meta-kicker">
                       ABOUT
@@ -61,7 +61,7 @@ export default function HomePage() {
     mobile: 2 cols (TEAM | DESCRIPTION)
     md+:    3 cols (TEAM | DESCRIPTION spans 2)
 */}
-                <div className="md:col-span-3">
+                <div className="md:col-span-3 rounded-xl border border-neutral-800/90 bg-panel/80 p-6 md:p-8">
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-5">
                     {/* Headings */}
                     <div className="text-[10px] font-mono tracking-[0.25em] meta-kicker">
@@ -100,7 +100,7 @@ export default function HomePage() {
               </LayoutGrid>
 
               {/* Tiles (keep your 3-col tile grid behavior as-is) */}
-              <LayoutGrid className="gap-y-6">
+              <LayoutGrid className="gap-y-8">
                 <div className="md:col-span-3">
                   <ProjectGrid onSelect={(slug) => setActiveSlug(slug)} />
                 </div>

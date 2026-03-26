@@ -16,7 +16,7 @@ function MediaCard({ media }: { media: ProjectMedia }) {
   return (
     <figure
       className={[
-        "overflow-hidden border border-neutral-800 bg-black",
+        "overflow-hidden rounded-xl border border-neutral-800/90 bg-panel",
         media.span === "full" ? "md:col-span-2" : "md:col-span-1",
       ].join(" ")}
     >
@@ -37,7 +37,7 @@ function MediaCard({ media }: { media: ProjectMedia }) {
       </div>
 
       {media.caption ? (
-        <figcaption className="px-4 py-3 text-[11px] leading-relaxed font-mono text-neutral-400">
+        <figcaption className="border-t border-neutral-800/90 px-4 py-3 text-[11px] leading-relaxed font-mono text-neutral-400">
           {media.caption}
         </figcaption>
       ) : null}
@@ -253,7 +253,7 @@ export function ProjectExpanded({
 
           {/* Media stack */}
           {mediaStack.length > 0 ? (
-            <div className="mt-8 grid gap-6 md:grid-cols-2">
+            <div className="mt-8 grid gap-7 md:grid-cols-2">
               {mediaStack.map((m) => (
                 <MediaCard key={`${m.src}-${m.alt}`} media={m} />
               ))}

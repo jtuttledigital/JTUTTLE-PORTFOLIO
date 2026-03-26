@@ -10,14 +10,14 @@ type ProjectGridProps = {
 
 export function ProjectGrid({ onSelect }: ProjectGridProps) {
   return (
-    <div className="grid md:grid-cols-3 gap-4">
+    <div className="grid md:grid-cols-3 gap-5">
       {projects.map((project: any) => (
         <article
           key={project.slug}
-          className="group bg-panel border border-neutral-800/80 hover:border-accent/70 transition-colors overflow-hidden flex flex-col cursor-pointer"
+          className="group rounded-xl border border-neutral-800/90 bg-panel hover:border-accent/70 transition-colors overflow-hidden flex flex-col cursor-pointer"
           onClick={() => onSelect(project.slug)}
         >
-          <div className="relative aspect-[16/10] bg-black overflow-hidden">
+          <div className="relative aspect-[16/10] bg-black overflow-hidden border-b border-neutral-800/90">
   {project.tileVideoWebm || project.tileVideoMp4 ? (
     <video
       autoPlay
@@ -51,7 +51,7 @@ export function ProjectGrid({ onSelect }: ProjectGridProps) {
 </div>
 
           {/* Text */}
-          <div className="flex-1 px-6 py-6 flex flex-col justify-between">
+          <div className="flex-1 px-6 py-6 flex flex-col justify-between gap-6">
             <div>
               <div className="mb-3 text-[10px] font-mono tracking-[0.25em] meta-kicker uppercase">
                 {project.category}

@@ -5,13 +5,14 @@ import Image from "next/image";
 
 export function BottomBar() {
   return (
-    <footer className="fixed inset-x-0 bottom-0 z-0 border-t border-neutral-800 bg-panel footer-dot-grid">
+    <footer className="fixed inset-x-0 bottom-0 z-0 border-t border-neutral-800/90 bg-panel footer-dot-grid">
       {/* dot-grid background */}
-      <div className="absolute inset-0 opacity-45 [background-size:18px_18px]" />
+      <div className="absolute inset-0 opacity-30 [background-size:18px_18px]" />
 
       <LayoutGrid mdCols={6} className="relative z-10 h-full items-start py-6 text-sm">
         {/* COLS 1–3 */}
         <div className="md:col-span-3">
+          <div className="mb-3 text-[10px] font-mono tracking-[0.22em] meta-kicker">STATUS</div>
           <div className="inline-flex items-center">
   <Image
     src="/jtd_favicon.svg"
@@ -32,6 +33,7 @@ export function BottomBar() {
 
         {/* COL 4 */}
         <div className="mt-6 md:mt-0 md:col-start-4 md:col-span-1">
+          <div className="mb-3 text-[10px] font-mono tracking-[0.22em] meta-kicker">LINKS</div>
           <nav className="flex flex-col gap-2">
             <AppLink className="link w-fit" href="https://soundcloud.com/jtuttledigital">
               Audio
@@ -54,6 +56,7 @@ export function BottomBar() {
         {/* COLS 5–6 */}
         <div className="mt-6 md:mt-0 md:col-start-5 md:col-span-2">
   <div>
+    <div className="mb-3 text-[10px] font-mono tracking-[0.22em] meta-kicker">CONTACT</div>
     <div className="font-mono text-[11px] leading-relaxed text-neutral-400 pl-[0.35rem]">
       $ run creativity --pair-mode
     </div>

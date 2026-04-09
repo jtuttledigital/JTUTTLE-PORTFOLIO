@@ -1,6 +1,7 @@
 // components/Header.tsx
 import { LayoutGrid } from "./LayoutGrid";
 import { LogoMark } from "./LogoMark";
+import { RAIL_X_PADDING_CLASS } from "@/lib/layout";
 
 type HeaderProps = {
   projectOpen?: boolean;
@@ -8,10 +9,12 @@ type HeaderProps = {
 };
 
 export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
+  const logoPaddingClassName = RAIL_X_PADDING_CLASS;
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-neutral-800/90 bg-panel/90 backdrop-blur-md">
+    <header className="fixed inset-x-0 top-0 z-50 w-full border-b border-neutral-800/90 bg-[#131313]/90 backdrop-blur-md header-content-shadow">
       {/* MOBILE */}
-      <div className="md:hidden h-20 px-5">
+      <div className={`md:hidden h-20 ${logoPaddingClassName}`}>
         <div className="h-full flex items-center gap-4 min-w-0">
           {/* Logo (link) + Name (static) */}
           <div className="flex items-center gap-3 shrink-0">
@@ -72,6 +75,7 @@ export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
       {/* DESKTOP */}
       <LayoutGrid
         mdCols={6}
+        pxClassName={logoPaddingClassName}
         className="hidden md:grid items-center h-20 text-sm"
       >
         {/* Cols 1–3: Logo (link) + Name (static) */}

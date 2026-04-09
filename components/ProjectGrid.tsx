@@ -10,11 +10,11 @@ type ProjectGridProps = {
 
 export function ProjectGrid({ onSelect }: ProjectGridProps) {
   return (
-    <div className="grid md:grid-cols-3 gap-5">
+    <div className="grid md:grid-cols-3 gap-6">
       {projects.map((project: any) => (
         <article
           key={project.slug}
-          className="group rounded-xl border border-neutral-800/90 bg-panel hover:border-accent/70 transition-colors overflow-hidden flex flex-col cursor-pointer"
+          className="group rounded-xl border border-neutral-700/90 bg-panel/95 shadow-[0_8px_26px_rgba(0,0,0,0.28)] hover:border-neutral-500 hover:shadow-[0_12px_30px_rgba(0,0,0,0.32)] transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-[2px] overflow-hidden flex flex-col cursor-pointer"
           onClick={() => onSelect(project.slug)}
         >
           <div className="relative aspect-[16/10] bg-black overflow-hidden border-b border-neutral-800/90">
@@ -25,7 +25,7 @@ export function ProjectGrid({ onSelect }: ProjectGridProps) {
       muted
       playsInline
       preload="metadata"
-      className="absolute inset-0 h-full w-full object-contain"
+      className="absolute inset-0 h-full w-full object-contain transition-transform duration-200 ease-out group-hover:scale-[1.01]"
       poster={project.tileImage}
     >
       {project.tileVideoWebm ? (
@@ -40,32 +40,35 @@ export function ProjectGrid({ onSelect }: ProjectGridProps) {
       src={project.tileImage}
       alt={project.title}
       fill
-      className="object-cover"
+      className="object-cover transition-transform duration-200 ease-out group-hover:scale-[1.01]"
       sizes="(min-width: 1024px) 33vw, 100vw"
       priority={project.slug === "brand-designer"}
     />
   )}
 
-  {/* hover veil stays */}
-  <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/20" />
+  <div className="pointer-events-none absolute inset-0 bg-black/8 transition-opacity duration-200 ease-out group-hover:opacity-70" />
+  <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100 bg-[rgba(173,255,47,0.05)]" />
 </div>
 
           {/* Text */}
-          <div className="flex-1 px-6 py-6 flex flex-col justify-between gap-6">
+          <div className="flex-1 px-6 py-6 flex flex-col justify-between gap-5">
             <div>
-              <div className="mb-3 text-[10px] font-mono tracking-[0.25em] meta-kicker uppercase">
+              <div className="mb-3 text-[10px] font-mono tracking-[0.23em] text-neutral-500 uppercase">
                 {project.category}
               </div>
               <h3 className="text-[16px] leading-tight font-semibold text-neutral-100">
                 {project.title}
               </h3>
-              <p className="mt-2 text-[13px] leading-relaxed text-neutral-300">
+              <p className="mt-2 text-[13px] leading-relaxed text-neutral-300 min-h-[2.7rem]">
                 {project.subtitle}
               </p>
             </div>
 
-            <div className="mt-7 text-[11px] tracking-[0.08em] uppercase text-neutral-400 group-hover:text-accent inline-flex items-center gap-1">
-              View project <span aria-hidden>→</span>
+            <div className="cta-tertiary mt-6 inline-flex items-center gap-2 text-[11px] font-mono tracking-[0.14em] uppercase">
+              <span className="relative after:absolute after:left-0 after:-bottom-[2px] after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-neutral-300 after:transition-transform after:duration-200 after:ease-out group-hover:after:scale-x-100">
+                View project
+              </span>
+              <span aria-hidden className="transition-transform duration-200 ease-out group-hover:translate-x-[2px]">→</span>
             </div>
           </div>
         </article>

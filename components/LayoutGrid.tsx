@@ -8,10 +8,10 @@ type LayoutGridProps = {
   /** Number of columns at md+ breakpoint (default: 3) */
   mdCols?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
-  /** Max width of the centered container (default: 1440px) */
+  /** Max width of the container (default: unconstrained/full width) */
   maxWidthClassName?: string;
 
-  /** Horizontal padding (default: 15px like your gutters) */
+  /** Horizontal padding (default: compact responsive gutter) */
   pxClassName?: string;
 
   /** Horizontal gap between columns (default: 15px like your gutters) */
@@ -22,8 +22,8 @@ export function LayoutGrid({
   children,
   className = "",
   mdCols = 3,
-  maxWidthClassName = "max-w-[1440px]",
-  pxClassName = "px-[15px]",
+  maxWidthClassName = "max-w-none",
+  pxClassName = "px-0 md:px-2",
   gapXClassName = "gap-x-[15px]",
 }: LayoutGridProps) {
   const mdColsClass =
@@ -43,21 +43,19 @@ export function LayoutGrid({
     }[mdCols] ?? "md:grid-cols-3";
 
   return (
-    <div className="w-full flex justify-center">
-      <div
-        className={[
-          "w-full",
-          maxWidthClassName,
-          pxClassName,
-          "grid",
-          "grid-cols-1",
-          mdColsClass,
-          gapXClassName,
-          className,
-        ].join(" ")}
-      >
-        {children}
-      </div>
+    <div
+      className={[
+        "w-full",
+        maxWidthClassName,
+        pxClassName,
+        "grid",
+        "grid-cols-1",
+        mdColsClass,
+        gapXClassName,
+        className,
+      ].join(" ")}
+    >
+      {children}
     </div>
   );
 }

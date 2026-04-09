@@ -286,3 +286,157 @@ Displayed as small accent-tagged items
   - `npm run build` completes successfully.
 - Result:
   Phase 3 complete and stable. Stopped after Phase 3.
+
+### Phase 4 — Section and Project Presentation Refinement
+- Date: 2026-03-25
+- Objective:
+  Refine project presentation and section-level hierarchy so the portfolio reads as a cohesive, system-driven product while preserving existing architecture and behavior.
+- Files changed:
+  - app/page.tsx
+  - components/ProjectGrid.tsx
+  - components/BottomBar.tsx
+- Summary of changes:
+  - Project cards (highest-priority pass):
+    - Tightened card rhythm and spacing consistency (`gap-6` grid cadence + stable text block rhythm).
+    - Refined media treatment for consistency by applying grayscale/contrast normalization on card media.
+    - Added subtle static tonal veil to reduce image clash with panel/background and preserve legibility.
+    - Polished “View project” styling to align with system metadata language (mono, tighter tracking, restrained accent on hover).
+    - Kept card behavior and structure intact.
+  - Selected Work section:
+    - Added clear section framing with metadata kicker and heading above project grid.
+    - Improved section scanability and hierarchy without introducing new architecture.
+  - Experience section:
+    - Refactored hierarchy inside existing section container to clearly separate company, role, and supporting description.
+    - Reduced visual clutter by using whitespace-driven grouping rather than additional separators.
+  - About/Bio section:
+    - Slightly tightened line length for reading comfort.
+    - Refined emphasis text using stronger neutral weight rather than accent overuse.
+  - Footer/CTA:
+    - Reduced dot-grid competition further (`opacity: 0.22`) for readability.
+    - Clarified primary vs secondary hierarchy with stronger email emphasis and softer utility line treatment.
+    - Normalized footer link tone for consistency.
+- Risks encountered:
+  - Build remains dependent on running outside sandbox due Turbopack process binding permissions.
+- Deferred items:
+  - Deep project detail-page narrative choreography and media sequencing.
+  - Any motion-driven project card interactions.
+  - Hero rewrite or significant copy restructuring.
+  - Cross-page responsive micro-spacing pass.
+  - CTA content strategy changes.
+- Manual test checklist:
+  - Selected Work heading hierarchy appears correctly above cards.
+  - Card media tonal consistency is improved and does not overpower text.
+  - Card spacing and “View project” treatment are consistent across all projects.
+  - Experience entries are easier to scan (company → role → description).
+  - About paragraph remains readable with clearer emphasis hierarchy.
+  - Footer hierarchy reads clearly (primary contact vs secondary metadata/links).
+  - `npm run build` completes successfully.
+- Result:
+  Phase 4 complete and stable. Stopped after Phase 4.
+
+### Phase 5 — Noise Reduction and Visual Balance Pass
+- Date: 2026-03-25
+- Objective:
+  Reduce visual competition, enforce accent discipline, and improve compositional balance so the UI feels calmer and more premium without changing layout architecture.
+- Files changed:
+  - app/globals.css
+  - app/page.tsx
+  - components/ProjectGrid.tsx
+  - components/BottomBar.tsx
+- What was reduced or removed:
+  - Reduced global decorative grid intensity:
+    - Dot brightness lowered and density reduced in `.footer-dot-grid`.
+    - Footer overlay opacity reduced again and pattern scaled up to appear less active.
+  - Reduced accent frequency:
+    - `meta-kicker` shifted from lime accent tone to neutral supporting tone.
+    - Card labels and footer labels moved toward neutral hierarchy.
+    - Removed strong accent behavior from project card link hover in favor of neutral emphasis.
+  - Reduced footer noise:
+    - Removed the `$ run creativity --pair-mode` line.
+    - Simplified status/metadata presentation and kept grouping clearer.
+- Summary of changes:
+  - Background/grid:
+    - Decorative texture now behaves as atmospheric background rather than a competing visual layer.
+  - Card visual balance:
+    - Increased card separation from page background using subtle shadow and cleaner border/surface contrast.
+    - Refined internal card rhythm (`label → title → description → link`) for steadier scanability.
+    - Adjusted media toning and overlay stack to keep image dominant while avoiding clash.
+  - Selected Work / Experience / About:
+    - Preserved structure while tightening heading spacing and maintaining cleaner line-length emphasis.
+    - Experience hierarchy remains whitespace-driven and easier to parse.
+  - Footer/CTA:
+    - Simplified hierarchy and reduced decorative interference.
+    - Contact remains clear as the primary footer action.
+- Risks encountered:
+  - Build still requires running outside sandbox due Turbopack process binding permissions.
+- Manual test checklist:
+  - Background texture feels passive and non-competitive.
+  - Accent appears intentional and not overly frequent.
+  - Cards feel clearly layered above page background and remain easy to scan.
+  - Footer can be parsed quickly (links vs contact vs metadata).
+  - Text spacing feels even with no visibly floaty blocks.
+  - `npm run build` completes successfully.
+- Recommended final polish phase (Phase 6):
+  - Run a full-page compositional QA pass focused on micro-spacing consistency at breakpoints.
+  - Harmonize final interactive states (hover/focus contrast) for links and CTAs.
+  - Perform final accessibility contrast and keyboard-focus audit.
+  - Execute a last “subtraction pass” for any remaining non-essential visual treatments.
+- Result:
+  Phase 5 complete and stable. Stopped after Phase 5.
+
+### Phase 6 — Interaction and Hover Signature Pass
+- Date: 2026-03-25
+- Objective:
+  Add subtle, premium-feeling interaction feedback focused on project cards and links while keeping motion restrained and performance-safe.
+- Files changed:
+  - app/globals.css
+  - components/ProjectGrid.tsx
+- Interaction rules:
+  - Interactive motion uses tight durations (`180–200ms`) with `ease-out`.
+  - Only interactive elements respond (cards, links, and card CTA micro-elements).
+  - Motion remains subtle (small lift/shift, mild filter transitions, no glow-heavy effects).
+  - Accent appears as a restrained tint layer, not a dominant color state.
+- Hover behavior spec:
+  - Project cards:
+    - Default: muted media (`grayscale`, reduced saturation), calm neutral shell.
+    - Hover: slight card lift (`-2px`), modest border/shadow emphasis, media regains subtle color/contrast.
+    - Added very subtle lime-tinted overlay (`rgba(173,255,47,0.05)`).
+  - Card CTA (`View project`):
+    - Underline reveal on hover.
+    - Arrow shifts slightly to the right.
+    - Text color lifts from neutral-400 to neutral-200.
+  - Shared links (`.link`):
+    - Underline starts lower-opacity and resolves to full intent on hover/focus.
+    - Arrow micro-motion shifts right.
+    - Accent background is softened for less visual aggression.
+- Limitations:
+  - Interaction pass intentionally scoped to card + link systems only; no global animation rollout.
+  - Touch devices rely mostly on active/focus feedback rather than hover.
+  - Turbopack build still requires running outside sandbox permissions.
+- Result:
+  Phase 6 complete and stable. Stopped after Phase 6.
+
+### Phase 7 — Final Containment and Readability Polish Pass
+- Date: 2026-03-26
+- Objective:
+  Resolve background/content bleed-through and finalize readability polish without altering architecture or design direction.
+- Files changed:
+  - app/layout.tsx
+  - app/page.tsx
+  - components/BottomBar.tsx
+- What was corrected in background/content layering:
+  - Added a dedicated content-surface containment layer in `app/layout.tsx`:
+    - `absolute` background layer (`bg-ink`) sits above the fixed footer and below scrollable content.
+    - Layer is clipped above the footer zone (`bottom: var(--bottombar-height)`) to preserve footer visibility.
+  - Increased opacity of primary intro content panels (`bg-panel/95`) in `app/page.tsx` to reduce translucency bleed.
+  - Further softened footer pattern energy in `components/BottomBar.tsx`:
+    - More opaque footer surface (`bg-panel/95`).
+    - Lower pattern overlay opacity and slightly larger pattern spacing.
+- Additional polish:
+  - Preserved CTA hierarchy and interaction system from prior phases (no hover-dependent visibility introduced).
+  - Kept surface and border logic consistent with established system.
+- Any remaining known issues:
+  - `--bottombar-height` is fixed; if footer height changes significantly in future revisions, clipping value should be adjusted to keep containment exact.
+  - Turbopack build remains dependent on running outside sandbox permissions.
+- Result:
+  Phase 7 complete and stable. Stopped after Phase 7.

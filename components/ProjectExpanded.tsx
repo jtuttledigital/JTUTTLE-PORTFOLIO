@@ -60,20 +60,9 @@ function FactsGrid({ facts }: { facts: ProjectFact[] }) {
   );
 }
 
-function heroWidthClass(maxWidth: Project["heroMaxWidth"]) {
-  // "md" is your 960px cap target for the Bing loop export
-  switch (maxWidth) {
-    case "md":
-      return "max-w-[960px]";
-    case "lg":
-      return "max-w-[1120px]";
-    case "xl":
-      return "max-w-[1280px]";
-    case "none":
-      return "max-w-none";
-    default:
-      return "max-w-none";
-  }
+function heroWidthClass(_maxWidth: Project["heroMaxWidth"]) {
+  // Phase: full-canvas detail surface. Keep wrappers unconstrained.
+  return "max-w-none";
 }
 
 export function ProjectExpanded({
@@ -101,13 +90,12 @@ export function ProjectExpanded({
   const heroClass = heroWidthClass(project.heroMaxWidth);
 
   return (
-    <main className="bg-ink">
+    <main className="w-full">
       {/* Hero: prefers video, falls back to image */}
       {project.heroVideoWebm || project.heroVideoMp4 ? (
-        <LayoutGrid className="pt-5">
-          <div className="md:col-span-3">
-            {/* IMPORTANT: cap width + center so we never upscale the asset */}
-            <div className={["w-full", heroClass, "mx-auto"].join(" ")}>
+        <LayoutGrid mdCols={12} className="pt-5">
+          <div className="md:col-span-12">
+            <div className={["w-full", heroClass].join(" ")}>
               <div className="relative w-full bg-black">
                 <video
                   autoPlay
@@ -130,9 +118,9 @@ export function ProjectExpanded({
           </div>
         </LayoutGrid>
       ) : project.heroImage ? (
-        <LayoutGrid className="pt-5">
-          <div className="md:col-span-3">
-            <div className={["w-full", heroClass, "mx-auto"].join(" ")}>
+        <LayoutGrid mdCols={12} className="pt-5">
+          <div className="md:col-span-12">
+            <div className={["w-full", heroClass].join(" ")}>
               <div className="relative w-full bg-black">
                 <Image
                   src={project.heroImage}
@@ -150,9 +138,9 @@ export function ProjectExpanded({
       ) : null}
 
       {/* Shared 3-column grid */}
-      <LayoutGrid className="gap-y-12 py-12 text-sm">
+      <LayoutGrid mdCols={12} className="gap-y-12 py-12 text-sm">
         {/* Left rail (col 1) */}
-        <aside className="md:sticky md:top-[88px] self-start">
+        <aside className="md:col-span-3 md:sticky md:top-[88px] self-start">
           <div className="mb-2 text-[10px] font-mono tracking-[0.25em] meta-kicker">
             {project.category}
           </div>
@@ -169,14 +157,14 @@ export function ProjectExpanded({
                   href={project.links.demo}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-elevate px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
+                  className="cta cta-primary w-full"
                 >
-                  <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
+                  <span>
                     Live demo
                   </span>
                   <span
                     aria-hidden
-                    className="text-neutral-500 group-hover:text-accent transition-colors"
+                    className="text-neutral-900/80"
                   >
                     →
                   </span>
@@ -188,9 +176,9 @@ export function ProjectExpanded({
                   href={project.links.repo}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-elevate px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
+                  className="cta cta-secondary w-full"
                 >
-                  <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
+                  <span>
                     GitHub repo
                   </span>
                   <span
@@ -207,9 +195,9 @@ export function ProjectExpanded({
                   href={project.links.caseStudy}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-elevate px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
+                  className="cta cta-secondary w-full"
                 >
-                  <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
+                  <span>
                     Case study
                   </span>
                   <span
@@ -233,7 +221,7 @@ export function ProjectExpanded({
         </aside>
 
         {/* Right stream (cols 2 + 3) */}
-        <section className="md:col-span-2 min-w-0">
+        <section className="md:col-span-9 min-w-0">
           {/* DESCRIPTION */}
           <div className="mb-10">
             <div className="text-[10px] font-mono tracking-[0.25em] meta-kicker">

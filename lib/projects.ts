@@ -119,7 +119,7 @@ export const projects: Project[] = [
         aspect: "landscape",
       },
       {
-        src: "/projects/brand-designer/preview_1500x2000.png",
+        src: "/projects/brand-designer/preview.png",
         alt: "Brand Designer — board preview",
         caption: "Live brand board for quick review and handoff.",
         span: "full",

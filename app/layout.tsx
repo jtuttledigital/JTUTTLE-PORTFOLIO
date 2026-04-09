@@ -82,14 +82,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={spaceGrotesk.variable}>
-      <body className="bg-ink text-neutral-100 antialiased font-sans">
+      <body className="app-content-fill text-neutral-100 antialiased font-sans">
         {/* pb matches BottomBar height so it reveals naturally at page end */}
-        <div className="relative min-h-screen pb-[22rem] md:pb-[10rem]">
-          {/* content sits above the footer */}
-          <div className="relative z-10">{children}</div>
-
-          {/* footer is fixed and “behind” content */}
+        <div className="relative isolate min-h-screen app-content-fill pb-[22rem] md:pb-[14rem]">
+          {/* footer is fixed and behind content */}
           <BottomBar />
+
+          {/* content sits above the footer */}
+          <div className="relative z-20 w-full min-h-screen app-content-fill">{children}</div>
         </div>
       </body>
     </html>

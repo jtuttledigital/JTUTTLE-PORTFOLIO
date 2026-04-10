@@ -39,7 +39,7 @@ export default function HomePage() {
                 {/* ABOUT — cols 1–3 */}
                 <div className="md:col-span-3 rounded-xl bg-panel/95 py-6 md:py-8 md:pr-12">
                   <div className="grid gap-y-5">
-                    <h2 className="text-[10px] font-mono tracking-[0.25em] meta-kicker">
+                    <h2 className="text-[11px] font-mono tracking-[0.25em] meta-kicker">
                       ABOUT
                     </h2>
 
@@ -62,14 +62,14 @@ export default function HomePage() {
     md+:    3 cols (TEAM | DESCRIPTION spans 2)
 */}
                 <div className="md:col-span-3 rounded-xl bg-panel/95 py-6 md:py-8">
-                  <div className="mb-6 text-[10px] font-mono tracking-[0.25em] meta-kicker">
+                  <div className="mb-6 text-[11px] font-mono tracking-[0.25em] meta-kicker">
                     EXPERIENCE INDEX
                   </div>
 
                   <div className="grid gap-y-7">
                     <div className="grid gap-y-2">
-                      <div className="text-[10px] font-mono tracking-[0.2em] text-neutral-500 uppercase">Independent</div>
-                      <div className="text-[15px] leading-relaxed font-medium text-neutral-100">
+                      <div className="text-[11px] font-mono tracking-[0.2em] text-neutral-500 uppercase">Independent</div>
+                      <div className="text-[16px] leading-relaxed font-medium text-neutral-100">
                         Product Designer
                       </div>
                       <div className="text-[15px] leading-7 text-neutral-300">
@@ -78,8 +78,8 @@ export default function HomePage() {
                     </div>
 
                     <div className="grid gap-y-2">
-                      <div className="text-[10px] font-mono tracking-[0.2em] text-neutral-500 uppercase">Alto Moving</div>
-                      <div className="text-[15px] leading-relaxed font-medium text-neutral-100">
+                      <div className="text-[11px] font-mono tracking-[0.2em] text-neutral-500 uppercase">Alto Moving</div>
+                      <div className="text-[16px] leading-relaxed font-medium text-neutral-100">
                         Founder & Product Lead
                       </div>
                       <div className="text-[15px] leading-7 text-neutral-300">
@@ -88,8 +88,8 @@ export default function HomePage() {
                     </div>
 
                     <div className="grid gap-y-2">
-                      <div className="text-[10px] font-mono tracking-[0.2em] text-neutral-500 uppercase">Microsoft (Media Acquisitions Digital Studio)</div>
-                      <div className="text-[15px] leading-relaxed font-medium text-neutral-100">
+                      <div className="text-[11px] font-mono tracking-[0.2em] text-neutral-500 uppercase">Microsoft (Media Acquisitions Digital Studio)</div>
+                      <div className="text-[16px] leading-relaxed font-medium text-neutral-100">
                         Digital Production Artist
                       </div>
                       <div className="text-[15px] leading-7 text-neutral-300">
@@ -98,8 +98,8 @@ export default function HomePage() {
                     </div>
 
                     <div className="grid gap-y-2">
-                      <div className="text-[10px] font-mono tracking-[0.2em] text-neutral-500 uppercase">Agencies (Morse Best Innovations, Virgen)</div>
-                      <div className="text-[15px] leading-relaxed font-medium text-neutral-100">
+                      <div className="text-[11px] font-mono tracking-[0.2em] text-neutral-500 uppercase">Agencies (Morse Best Innovations, Virgen)</div>
+                      <div className="text-[16px] leading-relaxed font-medium text-neutral-100">
                         Designer
                       </div>
                       <div className="text-[15px] leading-7 text-neutral-300">
@@ -115,10 +115,10 @@ export default function HomePage() {
               <LayoutGrid className="gap-y-8">
                 <div className="md:col-span-3">
                   <div className="mb-6">
-                    <div className="text-[10px] font-mono tracking-[0.25em] meta-kicker">
+                    <div className="text-[11px] font-mono tracking-[0.25em] meta-kicker">
                       SELECTED WORK
                     </div>
-                    <h2 className="mt-2.5 text-[1.48rem] leading-tight tracking-tight font-semibold text-neutral-100">
+                    <h2 className="mt-2.5 text-[1.6rem] leading-tight tracking-tight font-semibold text-neutral-100">
                       Projects and Product Systems
                     </h2>
                   </div>

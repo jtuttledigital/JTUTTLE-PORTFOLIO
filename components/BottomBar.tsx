@@ -25,14 +25,14 @@ export function BottomBar() {
 
 
           <div className="mt-3 space-y-2 text-neutral-400">
-            <div className="text-[11px] tracking-[0.12em] text-neutral-500">Last updated 2025-12-04</div>
+            <div className="text-[12px] tracking-[0.12em] text-neutral-500">Last updated 2025-12-04</div>
             <div>Built with Next.js</div>
           </div>
         </div>
 
         {/* COL 4 */}
         <div className="mt-6 md:mt-0 md:col-start-4 md:col-span-1">
-          <div className="mb-3 text-[10px] font-mono tracking-[0.2em] text-neutral-500 uppercase">Links</div>
+          <div className="mb-3 text-[11px] font-mono tracking-[0.2em] text-neutral-500 uppercase">Links</div>
           <nav className="flex flex-col gap-2.5">
             <AppLink className="link w-fit text-neutral-300" href="https://soundcloud.com/jtuttledigital">
               Audio
@@ -55,7 +55,7 @@ export function BottomBar() {
         {/* COLS 5–6 */}
         <div className="mt-6 md:mt-0 md:col-start-5 md:col-span-2">
   <div>
-    <div className="mb-3 text-[10px] font-mono tracking-[0.2em] text-neutral-500 uppercase">Contact</div>
+    <div className="mb-3 text-[11px] font-mono tracking-[0.2em] text-neutral-500 uppercase">Contact</div>
 
     <div className="font-sans text-neutral-100">
       <AppLink className="link font-medium" href="mailto:jtuttledigital@gmail.com">

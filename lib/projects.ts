@@ -30,6 +30,10 @@ export type Project = {
   title: string;
   subtitle: string;
   tileImage: string;
+  /** If set, ProjectGrid renders this named component instead of tileImage/tileVideo */
+  tileComponent?: "LogoCube";
+  /** If set, ProjectExpanded renders this named component instead of heroImage/heroVideo */
+  heroComponent?: "LogoCube";
 
   // Optional media sources
   heroImage?: string;
@@ -70,6 +74,52 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "jt-cube",
+    category: "3D / INTERACTION",
+    title: "JT Cube",
+    subtitle: "Three.js brand mark — spatial identity in the browser",
+    tileImage: "/projects/brand-designer/zip_2400x1350.png",
+    tileComponent: "LogoCube",
+    heroComponent: "LogoCube",
+
+    description:
+      "An exploration of what a flat logo mark becomes when given dimension, lighting, and motion. Built with Three.js in a Next.js portfolio, covering 3D geometry, physically-based rendering, quaternion rotation, and per-face texture orientation.",
+
+    facts: [
+      { label: "ROLE", value: "Designer / Builder" },
+      { label: "TEAM", value: "Solo" },
+      { label: "DURATION", value: "2025" },
+      { label: "TOOLS", value: "Three.js, React, Next.js, Canvas API" },
+    ],
+
+    links: {
+      repo: "https://github.com/jtuttledigital/jt-cube",
+    },
+
+    conclusion: `
+THE BRIEF
+I wanted the logo mark to have weight and dimension instead of staying flat in the header. The goal was to make a simple geometric identity feel spatial and interactive while preserving brand readability.
+
+—
+
+ITERATION NOTES
+The first version used Canvas 2D with manual perspective math. It looked close in static frames but fell apart under motion. Migrating to Three.js solved geometry and lighting consistency immediately.
+
+—
+
+TECHNICAL DECISIONS
+• Per-face logo textures are pre-rotated so the icon never reads upside down.
+• Quaternion rotation keeps movement smooth and avoids gimbal lock.
+• A three-point light setup gives readable depth without over-stylizing the form.
+
+—
+
+OUTCOME
+The cube now works as a reusable brand interaction pattern in the portfolio: lightweight, legible, and consistent across tile and hero contexts.
+`.trim(),
+  },
+
+  {
     slug: "brand-designer",
     category: "DIGITAL TOOLMAKING",
     title: "Brand Designer",
@@ -104,7 +154,7 @@ export const projects: Project[] = [
         aspect: "landscape",
       },
       {
-        src: "/projects/brand-designer/palette_2400x1350.png",
+        src: "/projects/brand-designer/palette.png",
         alt: "Brand Designer — palette screen",
         caption:
           "Four-color core palette with optional support color and lockable shuffles.",

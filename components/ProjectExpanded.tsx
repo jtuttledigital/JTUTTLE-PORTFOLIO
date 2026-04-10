@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Project, ProjectMedia, ProjectFact } from "@/lib/projects";
 import { LayoutGrid } from "./LayoutGrid";
+import { LogoCube } from "./LogoCube";
 
 type ProjectExpandedProps = {
   project: Project;
@@ -37,7 +38,7 @@ function MediaCard({ media }: { media: ProjectMedia }) {
       </div>
 
       {media.caption ? (
-        <figcaption className="border-t border-neutral-800/90 px-4 py-3 text-[11px] leading-relaxed font-mono text-neutral-400">
+        <figcaption className="border-t border-neutral-800/90 px-4 py-3 text-[12px] leading-relaxed font-mono text-neutral-400">
           {media.caption}
         </figcaption>
       ) : null}
@@ -50,10 +51,10 @@ function FactsGrid({ facts }: { facts: ProjectFact[] }) {
     <div className="grid gap-4 md:grid-cols-4">
       {facts.map((f) => (
         <div key={f.label} className="min-w-0">
-          <div className="text-[10px] font-mono tracking-[0.25em] meta-kicker">
+          <div className="text-[11px] font-mono tracking-[0.25em] meta-kicker">
             {f.label}
           </div>
-          <div className="mt-1.5 text-[13px] leading-relaxed text-neutral-100">{f.value}</div>
+          <div className="mt-1.5 text-[14px] leading-relaxed text-neutral-100">{f.value}</div>
         </div>
       ))}
     </div>
@@ -91,8 +92,22 @@ export function ProjectExpanded({
 
   return (
     <main className="w-full">
-      {/* Hero: prefers video, falls back to image */}
-      {project.heroVideoWebm || project.heroVideoMp4 ? (
+      {/* Hero: prefers component, then video, then image */}
+      {project.heroComponent === "LogoCube" ? (
+        <LayoutGrid mdCols={12} className="pt-5">
+          <div className="md:col-span-12">
+            <div className={["w-full", heroClass].join(" ")}>
+              <div className="flex w-full min-h-[380px] md:min-h-[680px] items-center justify-center rounded-xl border border-neutral-800/90 bg-panel">
+                <LogoCube
+                  size={520}
+                  fitPadding={1.34}
+                  className="drop-shadow-[0_18px_38px_rgba(0,0,0,0.5)]"
+                />
+              </div>
+            </div>
+          </div>
+        </LayoutGrid>
+      ) : project.heroVideoWebm || project.heroVideoMp4 ? (
         <LayoutGrid mdCols={12} className="pt-5">
           <div className="md:col-span-12">
             <div className={["w-full", heroClass].join(" ")}>
@@ -141,10 +156,10 @@ export function ProjectExpanded({
       <LayoutGrid mdCols={12} className="gap-y-12 py-12 text-sm">
         {/* Left rail (col 1) */}
         <aside className="md:col-span-3 md:sticky md:top-[88px] self-start">
-          <div className="mb-2 text-[10px] font-mono tracking-[0.25em] meta-kicker">
+          <div className="mb-2 text-[11px] font-mono tracking-[0.25em] meta-kicker">
             {project.category}
           </div>
-          <h1 className="text-3xl md:text-[2.15rem] leading-tight font-semibold tracking-tight text-neutral-100">
+          <h1 className="text-[2rem] md:text-[2.3rem] leading-tight font-semibold tracking-tight text-neutral-100">
             {project.title}
           </h1>
           <p className="mt-3 text-[15px] leading-relaxed text-neutral-300">{project.subtitle}</p>
@@ -214,7 +229,7 @@ export function ProjectExpanded({
           <button
             type="button"
             onClick={handleClose}
-            className="mt-9 text-[13px] tracking-[0.06em] uppercase text-neutral-400 hover:text-accent transition-colors"
+            className="mt-9 text-[14px] tracking-[0.06em] uppercase text-neutral-400 hover:text-accent transition-colors"
           >
             ← Back to projects
           </button>
@@ -224,7 +239,7 @@ export function ProjectExpanded({
         <section className="md:col-span-9 min-w-0">
           {/* DESCRIPTION */}
           <div className="mb-10">
-            <div className="text-[10px] font-mono tracking-[0.25em] meta-kicker">
+            <div className="text-[11px] font-mono tracking-[0.25em] meta-kicker">
               DESCRIPTION
             </div>
             <p className="mt-5 text-[15px] leading-7 text-neutral-200 max-w-[70ch]">
@@ -265,7 +280,7 @@ export function ProjectExpanded({
                     return (
                       <h4
                         key={idx}
-                        className="text-[10px] font-mono tracking-[0.25em] meta-kicker"
+                        className="text-[11px] font-mono tracking-[0.25em] meta-kicker"
                       >
                         {t}
                       </h4>

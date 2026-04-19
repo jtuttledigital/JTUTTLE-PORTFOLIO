@@ -1,7 +1,7 @@
 // app/layout.tsx
 import "./globals.css";
 import type { Metadata } from "next";
-import { Lato } from "next/font/google";
+import { Lato, Space_Grotesk } from "next/font/google";
 import { BottomBar } from "@/components/BottomBar";
 
 const siteUrl = "https://johntuttle.cv";
@@ -9,6 +9,12 @@ const lato = Lato({
   weight: ["300", "400", "700", "900"],
   subsets: ["latin"],
   variable: "--font-sans",
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-arrow",
   display: "swap",
 });
 
@@ -82,7 +88,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={lato.variable}>
+    <html lang="en" className={`${lato.variable} ${spaceGrotesk.variable}`}>
       <body className="app-content-fill text-neutral-100 antialiased font-sans">
         {/* pb matches BottomBar height so it reveals naturally at page end */}
         <div className="relative isolate min-h-screen app-content-fill pb-[24rem] md:pb-[14rem]">

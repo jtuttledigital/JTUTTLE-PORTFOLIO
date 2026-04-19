@@ -33,11 +33,23 @@ export function AppLink({
   className = "link",
   ...rest
 }: AppLinkProps) {
+  const showArrow = className.split(/\s+/).includes("link");
+  const linkContent = (
+    <>
+      {children}
+      {showArrow ? (
+        <span aria-hidden className="link-arrow">
+          ↗
+        </span>
+      ) : null}
+    </>
+  );
+
   // Internal navigation → Next.js Link
   if (isInternalHref(href)) {
     return (
       <Link href={href} className={className} {...rest}>
-        {children}
+        {linkContent}
       </Link>
     );
   }
@@ -46,7 +58,7 @@ export function AppLink({
   if (isSpecialScheme(href)) {
     return (
       <a href={href} className={className} {...rest}>
-        {children}
+        {linkContent}
       </a>
     );
   }
@@ -61,7 +73,7 @@ export function AppLink({
         rel="noopener noreferrer"
         {...rest}
       >
-        {children}
+        {linkContent}
       </a>
     );
   }
@@ -69,7 +81,7 @@ export function AppLink({
   // Fallback (rare)
   return (
     <a href={href} className={className} {...rest}>
-      {children}
+      {linkContent}
     </a>
   );
 }

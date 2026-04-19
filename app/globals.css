@@ -146,12 +146,18 @@ body {
     transition: opacity 180ms ease-out;
   }
 
-  /* ARROW (now ::after, appears on the right) */
-  .link::after {
-    content: "↗";
+  .link .link-arrow {
     color: var(--accent);
     font-size: 0.75em;
     line-height: 1;
+    font-family:
+      var(--font-arrow),
+      "Space Grotesk",
+      "Segoe UI Symbol",
+      "Apple Symbols",
+      "Noto Sans Symbols 2",
+      "Arial Unicode MS",
+      sans-serif;
 
     transform: translateY(-0.05em) translateX(0);
     transition: transform 180ms ease-out;
@@ -170,8 +176,8 @@ body {
   }
 
   /* Arrow lift on interaction */
-  .link:hover::after,
-  .link:focus-visible::after {
+  .link:hover .link-arrow,
+  .link:focus-visible .link-arrow {
     transform: translateY(-0.05em) translateX(0.14em);
   }
 

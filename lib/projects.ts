@@ -171,6 +171,7 @@ GOALS
 
     // Expanded hero
     heroImage: "/projects/brand-designer/hero_3000.png",
+    heroMaxWidth: "none",
 
     description:
       "AI-assisted brand system generator that outputs palettes, typography, logos, and exportable brand boards (tokens, CSS vars, Tailwind snippets, PDFs). Built to move from prompt → usable system fast.",

@@ -30,6 +30,10 @@ export type Project = {
   title: string;
   subtitle: string;
   tileImage: string;
+  /** If set, ProjectGrid renders this named component instead of tileImage/tileVideo */
+  tileComponent?: "LogoCube";
+  /** If set, ProjectExpanded renders this named component instead of heroImage/heroVideo */
+  heroComponent?: "LogoCube";
 
   // Optional media sources
   heroImage?: string;
@@ -70,10 +74,99 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "jt-cube",
+    category: "3D / INTERACTION",
+    title: "3D Object Interface Study",
+    subtitle: "Exploring object-based UI, motion, and spatial interaction in the browser.",
+    tileImage: "/projects/brand-designer/zip_2400x1350.png",
+    tileComponent: "LogoCube",
+    heroComponent: "LogoCube",
+
+    description:
+      "This project explores how simple UI elements can be extended into three-dimensional space. Using Three.js within a Next.js environment, the system focuses on motion, lighting, and spatial behavior as core interaction primitives.\n\nRather than treating 3D as a visual layer, the goal was to explore how object-based interfaces could introduce new forms of interaction, presence, and feedback within modern web applications.",
+
+    facts: [
+      { label: "ROLE", value: "Product Design + Prototyping" },
+      { label: "TEAM", value: "Solo" },
+      { label: "DURATION", value: "2025" },
+      { label: "TOOLS", value: "Three.js, React, Next.js, Canvas API" },
+    ],
+
+    links: {
+      repo: "https://github.com/jtuttledigital/jt-cube",
+    },
+
+    conclusion: `
+THE BRIEF
+The goal was to explore how a simple geometric form could function as an interactive UI element when given depth, motion, and lighting. The focus was on maintaining clarity while introducing a sense of physicality and responsiveness.
+
+—
+
+ITERATION NOTES
+Early iterations explored basic geometry and motion behavior before refining lighting and rendering to improve clarity and depth. Moving to Three.js enabled more consistent spatial behavior and interaction control.
+
+—
+
+TECHNICAL DECISIONS
+• Use of physically-based rendering to create consistent lighting and material response
+• Real-time rotation and motion to explore continuous interaction states
+• Lightweight implementation within a React/Next.js environment
+
+—
+
+OUTCOME
+The cube now works as a reusable brand interaction pattern in the portfolio: lightweight, legible, and consistent across tile and hero contexts.
+`.trim(),
+  },
+
+  {
+    slug: "dot-grid",
+    category: "SPATIAL UI SYSTEM",
+    title: "3D Dot Grid Interface System",
+    subtitle:
+      "A spatial UI system exploring depth, motion, and hierarchy for AI interfaces.",
+    tileImage: "/projects/dot-grid/MAI-dots.mp4.png",
+
+    tileVideoMp4: "/projects/dot-grid/MAI-dots.mp4",
+    heroVideoMp4: "/projects/dot-grid/MAI-dots.mp4",
+    heroImage: "/projects/dot-grid/MAI-dots.mp4.png",
+
+    description:
+      "This project explores how a layered 3D dot grid can function as a product-facing interface system. Rather than treating motion as decoration, the system uses depth, perspective, and cursor-driven interaction to create hierarchy, responsiveness, and spatial clarity.\n\nThe goal was to test how subtle motion and layered structure can support modern AI interfaces - adding atmosphere and depth without introducing visual noise or distraction.",
+
+    facts: [
+      { label: "ROLE", value: "Product Design + Prototyping" },
+      { label: "TEAM", value: "Solo" },
+      { label: "DURATION", value: "2025" },
+      { label: "TOOLS", value: "Next.js, React, TypeScript, Framer Motion" },
+    ],
+
+    links: {
+      demo: "https://dot-grid-eight.vercel.app",
+      repo: "https://github.com/jtuttledigital/dot-grid",
+    },
+
+    conclusion: `
+INTERACTION MODEL
+Interaction is intentionally restrained. Dots respond to cursor movement as a subtle field, creating a sense of depth and motion that feels ambient rather than reactive.
+
+The system was applied to a concept redesign of Microsoft MAI Playground to explore how this visual language could support AI-focused interfaces.
+
+—
+
+GOALS
+• Create spatial depth without visual noise
+• Use motion as a structural layer, not decoration
+• Keep interactions subtle and product-friendly
+• Explore spatial UI as a foundation for AI interfaces
+`.trim(),
+  },
+
+  {
     slug: "brand-designer",
-    category: "DIGITAL TOOLMAKING",
+    category: "AI PRODUCT TOOL",
     title: "Brand Designer",
-    subtitle: "AI-assisted brand systems",
+    subtitle: "AI-assisted system for generating brand identity, assets, and design outputs.",
     tileImage: "/projects/brand-designer/zip_2400x1350.png",
 
     // Expanded hero
@@ -104,7 +197,7 @@ export const projects: Project[] = [
         aspect: "landscape",
       },
       {
-        src: "/projects/brand-designer/palette_2400x1350.png",
+        src: "/projects/brand-designer/palette.png",
         alt: "Brand Designer — palette screen",
         caption:
           "Four-color core palette with optional support color and lockable shuffles.",
@@ -119,7 +212,7 @@ export const projects: Project[] = [
         aspect: "landscape",
       },
       {
-        src: "/projects/brand-designer/preview_1500x2000.png",
+        src: "/projects/brand-designer/preview.png",
         alt: "Brand Designer — board preview",
         caption: "Live brand board for quick review and handoff.",
         span: "full",
@@ -181,9 +274,9 @@ This project is less about generating brands — and more about designing the sy
 
   {
     slug: "alto-moving",
-    category: "PRODUCT ECOSYSTEM",
+    category: "PRODUCT SYSTEM",
     title: "Alto Moving",
-    subtitle: "Brand, website, estimator, automation",
+    subtitle: "End-to-end product system including brand, website, estimation tools, and automation.",
     tileImage: "/projects/alto/alto-tile.png",
 
     // Expanded hero
@@ -293,8 +386,8 @@ WHAT THIS DEMONSTRATES
   {
     slug: "bing",
   category: "PRODUCT SYSTEMS",
-  title: "Bing",
-  subtitle: "Homepage motion system (DIS / Microsoft)",
+  title: "Bing Homepage Motion System",
+  subtitle: "Motion and media system supporting interactive homepage experiences at Microsoft.",
   tileImage: "/projects/bing/tile.jpg",
 
   tileVideoWebm: "/projects/bing/northern-lights-loop.webm",

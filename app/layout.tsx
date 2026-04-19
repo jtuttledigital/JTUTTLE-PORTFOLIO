@@ -1,9 +1,16 @@
 // app/layout.tsx
 import "./globals.css";
 import type { Metadata } from "next";
+import { Lato } from "next/font/google";
 import { BottomBar } from "@/components/BottomBar";
 
 const siteUrl = "https://johntuttle.cv";
+const lato = Lato({
+  weight: ["300", "400", "700", "900"],
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -75,15 +82,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-ink text-neutral-100 antialiased">
+    <html lang="en" className={lato.variable}>
+      <body className="app-content-fill text-neutral-100 antialiased font-sans">
         {/* pb matches BottomBar height so it reveals naturally at page end */}
-        <div className="relative min-h-screen pb-[22rem] md:pb-[10rem]">
-          {/* content sits above the footer */}
-          <div className="relative z-10">{children}</div>
-
-          {/* footer is fixed and “behind” content */}
+        <div className="relative isolate min-h-screen app-content-fill pb-[24rem] md:pb-[14rem]">
+          {/* footer is fixed and behind content */}
           <BottomBar />
+
+          {/* content sits above the footer */}
+          <div className="relative z-20 w-full min-h-screen app-content-fill">{children}</div>
         </div>
       </body>
     </html>

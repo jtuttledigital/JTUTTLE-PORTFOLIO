@@ -1,37 +1,113 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------
-   ACCENT TOKENS (PRIMARY SOURCE OF TRUTH)
+   DESIGN TOKENS (PRIMARY SOURCE OF TRUTH)
    ------------------------------------------------------------------
-   These CSS variables define the canonical accent color for the site.
+   Foundation tokens aligned to Obsidian Craft direction.
 
-   - The `.link` class and future design-system styles use these vars.
-   - Tailwind's `colors.accent` is transitional and must be kept in sync
-     if used by legacy components.
+   - Tailwind color aliases should stay in sync with these CSS variables.
+   - Accent is intentionally sparse and should be used on metadata,
+     emphasis, and interaction cues only.
 
    Preferred usage:
      - Text links → `.link`
-     - New components → CSS variables
-     - Avoid new `text-accent` usage where possible
+     - Surfaces/text defaults → token variables
+     - Metadata labels → `.meta-kicker`
 ------------------------------------------------------------------- */
 
 :root {
   color-scheme: dark;
---bottombar-height: 140px; /* match BottomBar actual height */
+  --bottombar-height: 140px; /* match BottomBar actual height */
+  --app-content-fill: #1f1f1f;
+
+  --bg-900: #0e0e0e;
+  --bg-800: #131313;
+  --bg-700: #1c1b1b;
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1a1;
+
+  --accent: #adff2f;
+  --accent-hover: #c6ff69;
+  --accent-soft: #bde76a;
+  --accent-bg: rgba(173, 255, 47, 0.14);
+  --accent-underline: rgba(173, 255, 47, 0.9);
 }
 
 body {
-  background-color: #111111;
-  color: #f5f5f5;
-
-   /* Accent tokens (current Seahawks-ish green; swap later to purple here only) */
-  --accent: #00a86b;
-  --accent-hover: #00c97d;
-  --accent-bg: rgba(0, 168, 107, 0.24); /* ~ “50% muted” feel on dark UI */
-  --accent-underline: rgba(0, 168, 107, 0.9);
+  background-color: var(--bg-900);
+  color: var(--text-primary);
 }
 
 @layer components {
+  .app-content-fill {
+    background-color: var(--app-content-fill);
+  }
+
+  .header-content-shadow {
+    box-shadow: 0 10px 24px #00000059;
+  }
+
+  .meta-kicker {
+    color: #8f8f8f;
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition:
+      transform 200ms ease-out,
+      color 200ms ease-out,
+      border-color 200ms ease-out,
+      background-color 200ms ease-out;
+  }
+
+  .cta-primary {
+    border: 1px solid var(--accent);
+    background-color: var(--accent);
+    color: #111111;
+  }
+
+  .cta-primary:hover,
+  .cta-primary:focus-visible {
+    background-color: var(--accent-hover);
+    transform: translateY(-1px);
+  }
+
+  .cta-secondary {
+    border: 1px solid #3f3f46;
+    background-color: #1c1b1b;
+    color: #e5e5e5;
+  }
+
+  .cta-secondary:hover,
+  .cta-secondary:focus-visible {
+    border-color: rgba(173, 255, 47, 0.6);
+    color: #f5f5f5;
+  }
+
+  .cta-tertiary {
+    color: #a3a3a3;
+    text-decoration: none;
+    transition:
+      color 200ms ease-out,
+      transform 200ms ease-out;
+  }
+
+  .cta-tertiary:hover,
+  .cta-tertiary:focus-visible {
+    color: #e5e5e5;
+  }
+
   .link {
     position: relative;
     display: inline-flex;
@@ -45,8 +121,9 @@ body {
     border-radius: 0.5rem;
 
     transition:
-      color 160ms ease,
-      background-color 160ms ease;
+      color 180ms ease-out,
+      background-color 180ms ease-out,
+      transform 180ms ease-out;
   }
 
   /* DOTTED UNDERLINE (now ::before) */
@@ -64,9 +141,9 @@ body {
       transparent 1px 4px
     );
 
-    opacity: 0.9;
+    opacity: 0.45;
     pointer-events: none;
-    transition: opacity 160ms ease;
+    transition: opacity 180ms ease-out;
   }
 
   /* ARROW (now ::after, appears on the right) */
@@ -76,15 +153,15 @@ body {
     font-size: 0.75em;
     line-height: 1;
 
-    transform: translateY(-0.08em);
-    transition: transform 160ms ease;
+    transform: translateY(-0.05em) translateX(0);
+    transition: transform 180ms ease-out;
   }
 
   /* Hover / focus states */
   .link:hover,
   .link:focus-visible {
     color: var(--accent);
-    background-color: var(--accent-bg);
+    background-color: rgba(173, 255, 47, 0.1);
   }
 
   .link:hover::before,
@@ -95,13 +172,55 @@ body {
   /* Arrow lift on interaction */
   .link:hover::after,
   .link:focus-visible::after {
-    transform: translateY(-0.16em);
+    transform: translateY(-0.05em) translateX(0.14em);
   }
 
   /* Focus ring */
   .link:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
+  }
+
+  /* Single source of truth for project media sizing behavior. */
+  .project-tile-card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition:
+      transform 200ms ease-out,
+      border-color 200ms ease-out,
+      box-shadow 200ms ease-out;
+  }
+
+  .project-tile-card:hover,
+  .project-tile-card:focus-within {
+    transform: translateY(-2px);
+    border-color: rgb(115 115 115 / 0.9);
+    box-shadow: 0 12px 30px rgb(0 0 0 / 0.32);
+  }
+
+  .project-tile-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .project-hero-media-wrap {
+    width: fit-content;
+    max-width: 100%;
+    margin-inline: auto;
+    background-color: #000;
+  }
+
+  .project-hero-media {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
   }
 }
 
@@ -116,9 +235,9 @@ body {
 .footer-dot-grid {
   background-image: radial-gradient(
     circle at 1px 1px,
-    rgba(255, 255, 255, 0.06) 0,
-    rgba(255, 255, 255, 0.06) 1px,
+    rgba(255, 255, 255, 0.07) 0,
+    rgba(255, 255, 255, 0.07) 1px,
     transparent 1px
   );
-  background-size: 8px 8px;
+  background-size: 12px 12px;
 }

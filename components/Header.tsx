@@ -1,6 +1,7 @@
 // components/Header.tsx
 import { LayoutGrid } from "./LayoutGrid";
-import { LogoMark } from "./LogoMark";
+import { LogoCube } from "./LogoCube";
+import { RAIL_X_PADDING_CLASS } from "@/lib/layout";
 
 type HeaderProps = {
   projectOpen?: boolean;
@@ -8,29 +9,27 @@ type HeaderProps = {
 };
 
 export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
+  const logoPaddingClassName = RAIL_X_PADDING_CLASS;
+
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#111111] backdrop-blur-sm">
+    <header className="fixed inset-x-0 top-0 z-50 w-full border-b border-neutral-800/90 bg-[#131313]/90 backdrop-blur-md header-content-shadow">
       {/* MOBILE */}
-      <div className="md:hidden h-20 border-b border-neutral-800 px-5">
+      <div className={`md:hidden h-20 ${logoPaddingClassName}`}>
         <div className="h-full flex items-center gap-4 min-w-0">
-          {/* Logo (link) + Name (static) */}
+          {/* Logo (pause/resume only) + Name (static) */}
           <div className="flex items-center gap-3 shrink-0">
-            <a
-              href="/"
-              aria-label="Home"
-              className="inline-flex items-center text-neutral-100 transition-colors hover:[color:var(--accent)] focus-visible:[color:var(--accent)] focus-visible:outline-none"
-            >
-              <LogoMark className="h-6 w-6 text-current" />
-            </a>
+            <div className="inline-flex items-center">
+              <LogoCube size={60} />
+            </div>
 
 
-            <span className="text-sm font-semibold text-neutral-200 tracking-tight">
+            <span className="text-base font-semibold text-neutral-200 tracking-tight">
               John Tuttle
             </span>
           </div>
 
           {/* Role */}
-          <div className="text-sm font-semibold text-neutral-300 whitespace-nowrap">
+          <div className="font-mono text-[11px] tracking-[0.22em] text-neutral-400 whitespace-nowrap">
             Product Designer
           </div>
 
@@ -42,10 +41,10 @@ export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
                 onClick={onCloseProject}
                 aria-label="Close project"
                 className="
-                  inline-flex h-10 w-10 items-center justify-center rounded
+                  inline-flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-700/80
                   text-neutral-200
                   transition-colors
-                  hover:[color:var(--accent)] hover:[background-color:var(--accent-bg)]
+                  hover:[color:var(--accent)] hover:[background-color:var(--accent-bg)] hover:[border-color:rgba(173,255,47,0.45)]
                   focus-visible:[color:var(--accent)] focus-visible:[background-color:var(--accent-bg)]
                   focus-visible:outline-none
                 "
@@ -72,31 +71,28 @@ export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
       {/* DESKTOP */}
       <LayoutGrid
         mdCols={6}
-        className="hidden md:grid items-center h-20 text-sm border-b border-neutral-800"
+        pxClassName={logoPaddingClassName}
+        className="hidden md:grid items-center h-20 text-sm"
       >
-        {/* Cols 1–3: Logo (link) + Name (static) */}
+        {/* Cols 1–3: Logo (pause/resume only) + Name (static) */}
         <div className="md:col-span-3 flex h-full items-center gap-3">
-          <a
-            href="/"
-            aria-label="Home"
-            className="inline-flex items-center text-neutral-100 transition-colors hover:[color:var(--accent)] focus-visible:[color:var(--accent)] focus-visible:outline-none"
-          >
-            <LogoMark className="h-6 w-6 text-current" />
-          </a>
+          <div className="inline-flex items-center">
+            <LogoCube size={60} />
+          </div>
 
 
-          <span className="text-sm font-semibold text-neutral-200 tracking-tight">
+          <span className="text-base font-semibold text-neutral-200 tracking-tight">
             John Tuttle
           </span>
         </div>
 
         {/* Col 4: Role */}
-        <div className="md:col-span-1 flex h-full items-center font-semibold text-neutral-300">
+        <div className="md:col-span-1 flex h-full items-center font-mono text-[11px] tracking-[0.2em] text-neutral-400 uppercase">
           Product Designer
         </div>
 
         {/* Col 5: Location */}
-        <div className="md:col-span-1 flex h-full items-center font-semibold text-neutral-300">
+        <div className="md:col-span-1 flex h-full items-center font-mono text-[11px] tracking-[0.2em] text-neutral-500 uppercase">
           Seattle, WA
         </div>
 
@@ -108,10 +104,10 @@ export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
               onClick={onCloseProject}
               aria-label="Close project"
               className="
-                inline-flex h-10 w-10 items-center justify-center rounded
+                inline-flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-700/80
                 text-neutral-200
                 transition-colors
-                hover:[color:var(--accent)] hover:[background-color:var(--accent-bg)]
+                hover:[color:var(--accent)] hover:[background-color:var(--accent-bg)] hover:[border-color:rgba(173,255,47,0.45)]
                 focus-visible:[color:var(--accent)] focus-visible:[background-color:var(--accent-bg)]
                 focus-visible:outline-none
               "

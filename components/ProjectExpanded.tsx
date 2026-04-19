@@ -4,7 +4,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Project, ProjectMedia, ProjectFact } from "@/lib/projects";
+import { RAIL_X_PADDING_CLASS } from "@/lib/layout";
 import { LayoutGrid } from "./LayoutGrid";
+import { LogoCube } from "./LogoCube";
 
 type ProjectExpandedProps = {
   project: Project;
@@ -16,7 +18,7 @@ function MediaCard({ media }: { media: ProjectMedia }) {
   return (
     <figure
       className={[
-        "overflow-hidden border border-neutral-800 bg-black",
+        "overflow-hidden rounded-xl border border-neutral-800/90 bg-panel",
         media.span === "full" ? "md:col-span-2" : "md:col-span-1",
       ].join(" ")}
     >
@@ -37,7 +39,7 @@ function MediaCard({ media }: { media: ProjectMedia }) {
       </div>
 
       {media.caption ? (
-        <figcaption className="px-4 py-3 text-[11px] font-mono text-neutral-400">
+        <figcaption className="border-t border-neutral-800/90 px-4 py-3 text-[12px] leading-relaxed font-mono text-neutral-400">
           {media.caption}
         </figcaption>
       ) : null}
@@ -50,10 +52,10 @@ function FactsGrid({ facts }: { facts: ProjectFact[] }) {
     <div className="grid gap-4 md:grid-cols-4">
       {facts.map((f) => (
         <div key={f.label} className="min-w-0">
-          <div className="text-[10px] font-mono tracking-[0.25em] text-neutral-500">
+          <div className="text-[11px] font-mono tracking-[0.25em] meta-kicker">
             {f.label}
           </div>
-          <div className="mt-1 text-[13px] text-neutral-200">{f.value}</div>
+          <div className="mt-1.5 text-[14px] leading-relaxed text-neutral-100">{f.value}</div>
         </div>
       ))}
     </div>
@@ -61,7 +63,6 @@ function FactsGrid({ facts }: { facts: ProjectFact[] }) {
 }
 
 function heroWidthClass(maxWidth: Project["heroMaxWidth"]) {
-  // "md" is your 960px cap target for the Bing loop export
   switch (maxWidth) {
     case "md":
       return "max-w-[960px]";
@@ -99,23 +100,37 @@ export function ProjectExpanded({
       : fallbackMedia;
 
   const heroClass = heroWidthClass(project.heroMaxWidth);
+  const centerHero = project.slug === "bing";
 
   return (
-    <main className="bg-[#111111]">
-      {/* Hero: prefers video, falls back to image */}
-      {project.heroVideoWebm || project.heroVideoMp4 ? (
-        <LayoutGrid className="pt-5">
-          <div className="md:col-span-3">
-            {/* IMPORTANT: cap width + center so we never upscale the asset */}
-            <div className={["w-full", heroClass, "mx-auto"].join(" ")}>
-              <div className="relative w-full bg-black">
+    <main className="w-full">
+      {/* Hero: prefers component, then video, then image */}
+      {project.heroComponent === "LogoCube" ? (
+        <LayoutGrid mdCols={12} pxClassName={RAIL_X_PADDING_CLASS} className="pt-5">
+          <div className="md:col-span-12">
+            <div className={["w-full", heroClass].join(" ")}>
+              <div className="flex w-full min-h-[380px] md:min-h-[680px] items-center justify-center rounded-xl border border-neutral-800/90 bg-panel">
+                <LogoCube
+                  size={650}
+                  fitPadding={1.18}
+                  className="drop-shadow-[0_18px_38px_rgba(0,0,0,0.5)]"
+                />
+              </div>
+            </div>
+          </div>
+        </LayoutGrid>
+      ) : project.heroVideoWebm || project.heroVideoMp4 ? (
+        <LayoutGrid mdCols={12} pxClassName={RAIL_X_PADDING_CLASS} className="pt-5">
+          <div className={["md:col-span-12", centerHero ? "flex justify-center" : ""].join(" ")}>
+            <div className={["project-hero-media-wrap", heroClass].join(" ")}>
+              <div className="relative">
                 <video
                   autoPlay
                   loop
                   muted
                   playsInline
                   preload="metadata"
-                  className="block w-full h-auto"
+                  className="project-hero-media"
                   poster={project.heroImage}
                 >
                   {project.heroVideoWebm ? (
@@ -130,17 +145,17 @@ export function ProjectExpanded({
           </div>
         </LayoutGrid>
       ) : project.heroImage ? (
-        <LayoutGrid className="pt-5">
-          <div className="md:col-span-3">
-            <div className={["w-full", heroClass, "mx-auto"].join(" ")}>
-              <div className="relative w-full bg-black">
+        <LayoutGrid mdCols={12} pxClassName={RAIL_X_PADDING_CLASS} className="pt-5">
+          <div className={["md:col-span-12", centerHero ? "flex justify-center" : ""].join(" ")}>
+            <div className={["project-hero-media-wrap", heroClass].join(" ")}>
+              <div className="relative">
                 <Image
                   src={project.heroImage}
                   alt={project.title}
                   width={3000}
                   height={1688}
                   priority
-                  className="w-full h-auto"
+                  className="project-hero-media"
                   sizes="100vw"
                 />
               </div>
@@ -150,16 +165,16 @@ export function ProjectExpanded({
       ) : null}
 
       {/* Shared 3-column grid */}
-      <LayoutGrid className="gap-y-10 py-10 text-sm">
+      <LayoutGrid mdCols={12} pxClassName={RAIL_X_PADDING_CLASS} className="gap-y-12 py-12 text-sm">
         {/* Left rail (col 1) */}
-        <aside className="md:sticky md:top-[88px] self-start">
-          <div className="mb-2 text-[10px] font-mono tracking-[0.25em] text-neutral-500">
+        <aside className="md:col-span-3 md:sticky md:top-[88px] self-start">
+          <div className="mb-2 text-[11px] font-mono tracking-[0.25em] meta-kicker">
             {project.category}
           </div>
-          <h1 className="text-3xl font-semibold tracking-tight text-neutral-100">
+          <h1 className="text-[2rem] md:text-[2.3rem] leading-tight font-semibold tracking-tight text-neutral-100">
             {project.title}
           </h1>
-          <p className="mt-2 text-neutral-400">{project.subtitle}</p>
+          <p className="mt-3 text-[15px] leading-relaxed text-neutral-300">{project.subtitle}</p>
 
           {/* Primary CTAs (left rail) */}
           {project.links ? (
@@ -169,14 +184,14 @@ export function ProjectExpanded({
                   href={project.links.demo}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#1c1c1c] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
+                  className="cta cta-primary w-full"
                 >
-                  <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
+                  <span>
                     Live demo
                   </span>
                   <span
                     aria-hidden
-                    className="text-neutral-400 group-hover:text-accent transition-colors"
+                    className="text-neutral-900/80"
                   >
                     →
                   </span>
@@ -188,14 +203,14 @@ export function ProjectExpanded({
                   href={project.links.repo}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#1c1c1c] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
+                  className="cta cta-secondary w-full"
                 >
-                  <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
+                  <span>
                     GitHub repo
                   </span>
                   <span
                     aria-hidden
-                    className="text-neutral-400 group-hover:text-accent transition-colors"
+                    className="text-neutral-500 group-hover:text-accent transition-colors"
                   >
                     →
                   </span>
@@ -207,14 +222,14 @@ export function ProjectExpanded({
                   href={project.links.caseStudy}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-center justify-between rounded-xl border border-neutral-800 bg-[#1c1c1c] px-5 py-4 text-neutral-200 hover:border-accent/70 transition-colors"
+                  className="cta cta-secondary w-full"
                 >
-                  <span className="font-mono text-[12px] tracking-[0.12em] uppercase">
+                  <span>
                     Case study
                   </span>
                   <span
                     aria-hidden
-                    className="text-neutral-400 group-hover:text-accent transition-colors"
+                    className="text-neutral-500 group-hover:text-accent transition-colors"
                   >
                     →
                   </span>
@@ -226,20 +241,28 @@ export function ProjectExpanded({
           <button
             type="button"
             onClick={handleClose}
-            className="mt-8 text-[13px] text-neutral-400 hover:text-accent transition-colors"
+            className="group cta-tertiary mt-9 inline-flex items-center gap-2 text-[12px] font-mono tracking-[0.14em] uppercase"
           >
-            ← Back to projects
+            <span className="relative transition-colors duration-200 ease-out hover:text-[#CFFF66] after:absolute after:left-0 after:-bottom-[2px] after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-[#ADFF2F] after:transition-transform after:duration-200 after:ease-out group-hover:after:scale-x-100">
+              Back to projects
+            </span>
+            <span
+              aria-hidden
+              className="transition-transform duration-200 ease-out group-hover:translate-x-[2px]"
+            >
+              ←
+            </span>
           </button>
         </aside>
 
         {/* Right stream (cols 2 + 3) */}
-        <section className="md:col-span-2 min-w-0">
+        <section className="md:col-span-9 min-w-0">
           {/* DESCRIPTION */}
           <div className="mb-10">
-            <div className="text-[10px] font-mono tracking-[0.25em] text-neutral-500">
+            <div className="text-[11px] font-mono tracking-[0.25em] meta-kicker">
               DESCRIPTION
             </div>
-            <p className="mt-4 text-neutral-200 leading-relaxed max-w-[70ch]">
+            <p className="mt-5 text-[15px] leading-7 text-neutral-200 max-w-[70ch]">
               {project.description}
             </p>
           </div>
@@ -253,7 +276,7 @@ export function ProjectExpanded({
 
           {/* Media stack */}
           {mediaStack.length > 0 ? (
-            <div className="mt-8 grid gap-6 md:grid-cols-2">
+            <div className="mt-8 grid gap-7 md:grid-cols-2">
               {mediaStack.map((m) => (
                 <MediaCard key={`${m.src}-${m.alt}`} media={m} />
               ))}
@@ -263,7 +286,7 @@ export function ProjectExpanded({
           {/* Conclusion / sources block */}
           {project.conclusion ? (
             <div className="mt-10 border-t border-neutral-800 pt-6">
-              <div className="mt-4 space-y-4 text-neutral-300 leading-relaxed">
+              <div className="mt-5 space-y-5 text-[15px] leading-7 text-neutral-300">
                 {project.conclusion.split("\n").map((line, idx) => {
                   const t = line.trim();
                   if (!t) return null;
@@ -277,7 +300,7 @@ export function ProjectExpanded({
                     return (
                       <h4
                         key={idx}
-                        className="text-[10px] font-mono tracking-[0.25em] text-neutral-500"
+                        className="text-[11px] font-mono tracking-[0.25em] meta-kicker"
                       >
                         {t}
                       </h4>

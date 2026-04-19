@@ -9,9 +9,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        ink: "#111111",
-        paper: "#FAFAFA",
-        mute: "#8a8f98",
+        ink: "#0E0E0E",
+        panel: "#131313",
+        elevate: "#1C1B1B",
+        paper: "#FFFFFF",
+        mute: "#A1A1A1",
 
         /**
          * ACCENT (TRANSITIONAL)
@@ -26,10 +28,10 @@ module.exports = {
          *
          * This exists only for legacy / transitional components.
          */
-        accent: "#58e877",
+        accent: "#ADFF2F",
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui"],
+        sans: ["var(--font-sans)", "Inter", "ui-sans-serif", "system-ui"],
         mono: ["JetBrains Mono", "ui-monospace", "SFMono-Regular"],
       },
       boxShadow: {

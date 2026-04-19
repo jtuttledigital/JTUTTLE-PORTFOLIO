@@ -1,7 +1,7 @@
 // app/page.tsx
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Header } from "@/components/Header";
 import { ProjectGrid } from "@/components/ProjectGrid";
 import { ProjectExpanded } from "@/components/ProjectExpanded";
@@ -18,6 +18,16 @@ export default function HomePage() {
   }, [activeSlug]);
 
   const projectOpen = Boolean(activeProject);
+
+  useEffect(() => {
+    if (!activeSlug) return;
+
+    // Ensure project-open always lands at the hero/top rail.
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    });
+  }, [activeSlug]);
 
   return (
     <>
@@ -43,16 +53,26 @@ export default function HomePage() {
                       ABOUT
                     </h2>
 
-                    <p className="max-w-[66ch] text-[15px] leading-7 text-neutral-200">
-                      I design tools, interfaces, and systems that connect{" "}
-                      <span className="font-semibold text-neutral-50">strategy, interaction, and execution</span>.
-                      My background spans agency work, large tech, and business ownership—from
-                      high-pressure brand and campaign work to building and running a profitable
-                      local company. Today, I focus on{" "}
-                      <span className="font-semibold text-neutral-50">product design and AI-enabled systems</span>,
-                      with an emphasis on clarity, craft, and shipping things that work in the
-                      real world.
-                    </p>
+                    <div className="max-w-[66ch] space-y-5 text-[15px] leading-7 text-neutral-200">
+                      <p>
+                        I design tools, interfaces, and systems that make{" "}
+                        <span className="font-semibold text-neutral-50">complex technology usable</span>.
+                        My work spans product design, visual systems, and prototyping, with a focus
+                        on building{" "}
+                        <span className="font-semibold text-neutral-50">real, functional experiences</span>{" "}
+                        - from AI-assisted workflows to operational tools and interactive media.
+                      </p>
+                      <p>
+                        My background includes agency work, Microsoft media systems, and building and
+                        running my own company, where I designed{" "}
+                        <span className="font-semibold text-neutral-50">products end-to-end</span> - from
+                        brand and UI to the workflows behind them. Today, I focus on
+                        design-technologist work at the intersection of design, engineering, and AI,
+                        shaping tools and interfaces that{" "}
+                        <span className="font-semibold text-neutral-50">cut through complexity</span>{" "}
+                        and turn powerful systems into clear, usable experiences.
+                      </p>
+                    </div>
                   </div>
                 </div>
 
@@ -67,42 +87,54 @@ export default function HomePage() {
                   </div>
 
                   <div className="grid gap-y-7">
-                    <div className="grid gap-y-2">
-                      <div className="text-[11px] font-mono tracking-[0.2em] text-neutral-500 uppercase">Independent</div>
-                      <div className="text-[16px] leading-relaxed font-medium text-neutral-100">
-                        Product Designer
+                    <div className="grid gap-y-1.5">
+                      <div className="grid gap-y-1 md:flex md:items-baseline md:gap-2.5">
+                        <div className="text-[16px] leading-tight font-medium text-neutral-100">Independent</div>
+                        <span aria-hidden className="hidden md:inline text-neutral-600">|</span>
+                        <div className="text-[11px] font-mono tracking-[0.2em] text-neutral-400 uppercase">
+                          Product Designer
+                        </div>
                       </div>
-                      <div className="text-[15px] leading-7 text-neutral-300">
+                      <div className="text-[15px] leading-6 text-neutral-300">
                         Systems, interaction, and AI-enabled tools.
                       </div>
                     </div>
 
-                    <div className="grid gap-y-2">
-                      <div className="text-[11px] font-mono tracking-[0.2em] text-neutral-500 uppercase">Alto Moving</div>
-                      <div className="text-[16px] leading-relaxed font-medium text-neutral-100">
-                        Founder & Product Lead
+                    <div className="grid gap-y-1.5">
+                      <div className="grid gap-y-1 md:flex md:items-baseline md:gap-2.5">
+                        <div className="text-[16px] leading-tight font-medium text-neutral-100">Alto Moving</div>
+                        <span aria-hidden className="hidden md:inline text-neutral-600">|</span>
+                        <div className="text-[11px] font-mono tracking-[0.2em] text-neutral-400 uppercase">
+                          Founder & Product Lead
+                        </div>
                       </div>
-                      <div className="text-[15px] leading-7 text-neutral-300">
+                      <div className="text-[15px] leading-6 text-neutral-300">
                         Product direction, brand systems, and automation.
                       </div>
                     </div>
 
-                    <div className="grid gap-y-2">
-                      <div className="text-[11px] font-mono tracking-[0.2em] text-neutral-500 uppercase">Microsoft (Media Acquisitions Digital Studio)</div>
-                      <div className="text-[16px] leading-relaxed font-medium text-neutral-100">
-                        Digital Production Artist
+                    <div className="grid gap-y-1.5">
+                      <div className="grid gap-y-1 md:flex md:items-baseline md:gap-2.5">
+                        <div className="text-[16px] leading-tight font-medium text-neutral-100">Microsoft (Media Acquisitions Digital Studio)</div>
+                        <span aria-hidden className="hidden md:inline text-neutral-600">|</span>
+                        <div className="text-[11px] font-mono tracking-[0.2em] text-neutral-400 uppercase">
+                          Digital Production Artist
+                        </div>
                       </div>
-                      <div className="text-[15px] leading-7 text-neutral-300">
+                      <div className="text-[15px] leading-6 text-neutral-300">
                         Motion, interaction, and media systems.
                       </div>
                     </div>
 
-                    <div className="grid gap-y-2">
-                      <div className="text-[11px] font-mono tracking-[0.2em] text-neutral-500 uppercase">Agencies (Morse Best Innovations, Virgen)</div>
-                      <div className="text-[16px] leading-relaxed font-medium text-neutral-100">
-                        Designer
+                    <div className="grid gap-y-1.5">
+                      <div className="grid gap-y-1 md:flex md:items-baseline md:gap-2.5">
+                        <div className="text-[16px] leading-tight font-medium text-neutral-100">Agencies (Morse Best Innovations, Virgen)</div>
+                        <span aria-hidden className="hidden md:inline text-neutral-600">|</span>
+                        <div className="text-[11px] font-mono tracking-[0.2em] text-neutral-400 uppercase">
+                          Designer
+                        </div>
                       </div>
-                      <div className="text-[15px] leading-7 text-neutral-300">
+                      <div className="text-[15px] leading-6 text-neutral-300">
                         Prototypes, UX systems, and narrative-driven product work.
                       </div>
                     </div>
@@ -112,14 +144,14 @@ export default function HomePage() {
               </LayoutGrid>
 
               {/* SELECTED WORK */}
-              <LayoutGrid className="gap-y-8">
+              <LayoutGrid pxClassName={RAIL_X_PADDING_CLASS} className="gap-y-[15px]">
                 <div className="md:col-span-3">
-                  <div className="mb-6">
+                  <div>
                     <div className="text-[11px] font-mono tracking-[0.25em] meta-kicker">
                       SELECTED WORK
                     </div>
                     <h2 className="mt-2.5 text-[1.6rem] leading-tight tracking-tight font-semibold text-neutral-100">
-                      Projects and Product Systems
+                      Selected Work — Systems, Tools, and Interfaces
                     </h2>
                   </div>
                 </div>

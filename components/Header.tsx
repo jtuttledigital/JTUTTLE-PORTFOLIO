@@ -44,7 +44,7 @@ export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
                   inline-flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-700/80
                   text-neutral-200
                   transition-colors
-                  hover:[color:var(--accent)] hover:[background-color:var(--accent-bg)]
+                  hover:[color:var(--accent)] hover:[background-color:var(--accent-bg)] hover:[border-color:rgba(173,255,47,0.45)]
                   focus-visible:[color:var(--accent)] focus-visible:[background-color:var(--accent-bg)]
                   focus-visible:outline-none
                 "
@@ -107,7 +107,7 @@ export function Header({ projectOpen = false, onCloseProject }: HeaderProps) {
                 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-700/80
                 text-neutral-200
                 transition-colors
-                hover:[color:var(--accent)] hover:[background-color:var(--accent-bg)]
+                hover:[color:var(--accent)] hover:[background-color:var(--accent-bg)] hover:[border-color:rgba(173,255,47,0.45)]
                 focus-visible:[color:var(--accent)] focus-visible:[background-color:var(--accent-bg)]
                 focus-visible:outline-none
               "

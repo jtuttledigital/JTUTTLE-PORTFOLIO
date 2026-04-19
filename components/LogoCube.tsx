@@ -6,6 +6,9 @@ import * as THREE from "three";
 type LogoCubeProps = {
   size?: number;
   fitPadding?: number;
+  cameraFovDeg?: number;
+  cameraOffsetX?: number;
+  cameraOffsetY?: number;
   interactive?: boolean;
   className?: string;
 };
@@ -45,6 +48,9 @@ function makeLogoTexture(size: number, rotationDeg: number): THREE.CanvasTexture
 export function LogoCube({
   size = 40,
   fitPadding = 1.3,
+  cameraFovDeg = 38,
+  cameraOffsetX = 0,
+  cameraOffsetY = 0,
   interactive = true,
   className,
 }: LogoCubeProps) {
@@ -63,7 +69,6 @@ export function LogoCube({
     mount.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
-    const cameraFovDeg = 38;
     const cameraAspect = 1;
     const camera = new THREE.PerspectiveCamera(cameraFovDeg, cameraAspect, 0.1, 100);
 
@@ -76,7 +81,7 @@ export function LogoCube({
     const fitDistanceX = (cubeBoundingRadius * fitPadding) / Math.sin(horizontalHalfFovRad);
     const fitDistance = Math.max(fitDistanceX, fitDistanceY);
 
-    camera.position.set(0, 0, fitDistance);
+    camera.position.set(cameraOffsetX, cameraOffsetY, fitDistance);
     camera.lookAt(0, 0, 0);
 
     const key = new THREE.DirectionalLight(0xffffff, 1.6);
@@ -159,7 +164,7 @@ export function LogoCube({
         mount.removeChild(renderer.domElement);
       }
     };
-  }, [size, fitPadding]);
+  }, [size, fitPadding, cameraFovDeg]);
 
   function handleClick(event: MouseEvent<HTMLDivElement>) {
     if (!interactive) return;

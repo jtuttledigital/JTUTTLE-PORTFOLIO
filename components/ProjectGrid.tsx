@@ -10,12 +10,22 @@ type ProjectGridProps = {
 };
 
 export function ProjectGrid({ onSelect }: ProjectGridProps) {
+  const preferredOrder = ["brand-designer", "dot-grid", "jt-cube"] as const;
+  const orderedProjects = [...projects].sort((a, b) => {
+    const aIndex = preferredOrder.indexOf(a.slug as (typeof preferredOrder)[number]);
+    const bIndex = preferredOrder.indexOf(b.slug as (typeof preferredOrder)[number]);
+    const aRank = aIndex === -1 ? Number.POSITIVE_INFINITY : aIndex;
+    const bRank = bIndex === -1 ? Number.POSITIVE_INFINITY : bIndex;
+    if (aRank !== bRank) return aRank - bRank;
+    return 0;
+  });
+
   return (
-    <div className="grid md:grid-cols-3 gap-6">
-      {projects.map((project: any) => (
+    <div className="grid md:grid-cols-3 gap-[15px]">
+      {orderedProjects.map((project: any) => (
         <article
           key={project.slug}
-          className="group rounded-xl border border-neutral-700/90 bg-panel/95 shadow-[0_8px_26px_rgba(0,0,0,0.28)] hover:border-neutral-500 hover:shadow-[0_12px_30px_rgba(0,0,0,0.32)] transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-[2px] overflow-hidden flex flex-col cursor-pointer"
+          className="project-tile-card group rounded-xl border border-neutral-700/90 bg-panel/95 shadow-[0_8px_26px_rgba(0,0,0,0.28)]"
           onClick={() => onSelect(project.slug)}
         >
           <div className="relative aspect-[16/10] bg-black overflow-hidden border-b border-neutral-800/90">
@@ -24,6 +34,8 @@ export function ProjectGrid({ onSelect }: ProjectGridProps) {
                 <LogoCube
                   size={360}
                   fitPadding={0.92}
+                  cameraFovDeg={50}
+                  cameraOffsetX={-0.16}
                   interactive={false}
                   className="drop-shadow-[0_10px_20px_rgba(0,0,0,0.55)]"
                 />
@@ -35,7 +47,7 @@ export function ProjectGrid({ onSelect }: ProjectGridProps) {
                 muted
                 playsInline
                 preload="metadata"
-                className="absolute inset-0 h-full w-full object-contain transition-transform duration-200 ease-out group-hover:scale-[1.01]"
+                className="project-tile-video transition-transform duration-200 ease-out group-hover:scale-[1.01]"
                 poster={project.tileImage}
               >
                 {project.tileVideoWebm ? (

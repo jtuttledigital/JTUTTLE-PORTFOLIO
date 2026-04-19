@@ -4,6 +4,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Project, ProjectMedia, ProjectFact } from "@/lib/projects";
+import { RAIL_X_PADDING_CLASS } from "@/lib/layout";
 import { LayoutGrid } from "./LayoutGrid";
 import { LogoCube } from "./LogoCube";
 
@@ -61,9 +62,19 @@ function FactsGrid({ facts }: { facts: ProjectFact[] }) {
   );
 }
 
-function heroWidthClass(_maxWidth: Project["heroMaxWidth"]) {
-  // Phase: full-canvas detail surface. Keep wrappers unconstrained.
-  return "max-w-none";
+function heroWidthClass(maxWidth: Project["heroMaxWidth"]) {
+  switch (maxWidth) {
+    case "md":
+      return "max-w-[960px]";
+    case "lg":
+      return "max-w-[1120px]";
+    case "xl":
+      return "max-w-[1280px]";
+    case "none":
+      return "max-w-none";
+    default:
+      return "max-w-none";
+  }
 }
 
 export function ProjectExpanded({
@@ -89,18 +100,19 @@ export function ProjectExpanded({
       : fallbackMedia;
 
   const heroClass = heroWidthClass(project.heroMaxWidth);
+  const centerHero = project.slug === "bing";
 
   return (
     <main className="w-full">
       {/* Hero: prefers component, then video, then image */}
       {project.heroComponent === "LogoCube" ? (
-        <LayoutGrid mdCols={12} className="pt-5">
+        <LayoutGrid mdCols={12} pxClassName={RAIL_X_PADDING_CLASS} className="pt-5">
           <div className="md:col-span-12">
             <div className={["w-full", heroClass].join(" ")}>
               <div className="flex w-full min-h-[380px] md:min-h-[680px] items-center justify-center rounded-xl border border-neutral-800/90 bg-panel">
                 <LogoCube
-                  size={520}
-                  fitPadding={1.34}
+                  size={650}
+                  fitPadding={1.18}
                   className="drop-shadow-[0_18px_38px_rgba(0,0,0,0.5)]"
                 />
               </div>
@@ -108,17 +120,17 @@ export function ProjectExpanded({
           </div>
         </LayoutGrid>
       ) : project.heroVideoWebm || project.heroVideoMp4 ? (
-        <LayoutGrid mdCols={12} className="pt-5">
-          <div className="md:col-span-12">
-            <div className={["w-full", heroClass].join(" ")}>
-              <div className="relative w-full bg-black">
+        <LayoutGrid mdCols={12} pxClassName={RAIL_X_PADDING_CLASS} className="pt-5">
+          <div className={["md:col-span-12", centerHero ? "flex justify-center" : ""].join(" ")}>
+            <div className={["project-hero-media-wrap", heroClass].join(" ")}>
+              <div className="relative">
                 <video
                   autoPlay
                   loop
                   muted
                   playsInline
                   preload="metadata"
-                  className="block w-full h-auto"
+                  className="project-hero-media"
                   poster={project.heroImage}
                 >
                   {project.heroVideoWebm ? (
@@ -133,17 +145,17 @@ export function ProjectExpanded({
           </div>
         </LayoutGrid>
       ) : project.heroImage ? (
-        <LayoutGrid mdCols={12} className="pt-5">
-          <div className="md:col-span-12">
-            <div className={["w-full", heroClass].join(" ")}>
-              <div className="relative w-full bg-black">
+        <LayoutGrid mdCols={12} pxClassName={RAIL_X_PADDING_CLASS} className="pt-5">
+          <div className={["md:col-span-12", centerHero ? "flex justify-center" : ""].join(" ")}>
+            <div className={["project-hero-media-wrap", heroClass].join(" ")}>
+              <div className="relative">
                 <Image
                   src={project.heroImage}
                   alt={project.title}
                   width={3000}
                   height={1688}
                   priority
-                  className="w-full h-auto"
+                  className="project-hero-media"
                   sizes="100vw"
                 />
               </div>
@@ -153,7 +165,7 @@ export function ProjectExpanded({
       ) : null}
 
       {/* Shared 3-column grid */}
-      <LayoutGrid mdCols={12} className="gap-y-12 py-12 text-sm">
+      <LayoutGrid mdCols={12} pxClassName={RAIL_X_PADDING_CLASS} className="gap-y-12 py-12 text-sm">
         {/* Left rail (col 1) */}
         <aside className="md:col-span-3 md:sticky md:top-[88px] self-start">
           <div className="mb-2 text-[11px] font-mono tracking-[0.25em] meta-kicker">
@@ -229,9 +241,17 @@ export function ProjectExpanded({
           <button
             type="button"
             onClick={handleClose}
-            className="mt-9 text-[14px] tracking-[0.06em] uppercase text-neutral-400 hover:text-accent transition-colors"
+            className="group cta-tertiary mt-9 inline-flex items-center gap-2 text-[12px] font-mono tracking-[0.14em] uppercase"
           >
-            ← Back to projects
+            <span className="relative transition-colors duration-200 ease-out hover:text-[#CFFF66] after:absolute after:left-0 after:-bottom-[2px] after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-[#ADFF2F] after:transition-transform after:duration-200 after:ease-out group-hover:after:scale-x-100">
+              Back to projects
+            </span>
+            <span
+              aria-hidden
+              className="transition-transform duration-200 ease-out group-hover:translate-x-[2px]"
+            >
+              ←
+            </span>
           </button>
         </aside>
 

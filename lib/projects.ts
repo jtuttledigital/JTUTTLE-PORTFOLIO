@@ -167,7 +167,7 @@ GOALS
     category: "AI PRODUCT TOOL",
     title: "Brand Designer",
     subtitle: "AI-assisted system for generating brand identity, assets, and design outputs.",
-    tileImage: "/projects/brand-designer/zip_2400x1350.png",
+    tileImage: "/projects/brand-designer/hero_3000.png",
 
     // Expanded hero
     heroImage: "/projects/brand-designer/hero_3000.png",
